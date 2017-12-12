@@ -20,6 +20,28 @@
     <Content Remove="ClientApp\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="ClientApp\app\components\about\about.component.ts" />
+    <None Remove="ClientApp\app\components\blog\blog.component.ts" />
+    <None Remove="ClientApp\app\components\contact\contact.component.ts" />
+    <None Remove="ClientApp\app\components\portfolio\portfolio.component.ts" />
+    <None Remove="ClientApp\app\components\shared\footer\footer.component.ts" />
+    <None Remove="ClientApp\app\components\shared\header\header.component.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\app\components\about\about.component.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\blog\blog.component.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\contact\contact.component.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\portfolio\portfolio.component.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\shared\footer\footer.component.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\shared\header\header.component.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\assets\" />
+  </ItemGroup>
+
   <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">
     <!-- Ensure Node.js is installed -->
     <Exec Command="node --version" ContinueOnError="true">
