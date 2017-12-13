@@ -1,0 +1,14 @@
+﻿
+
+Background ideas
+- Time keeps tickin
+
+Animations
+- Read about Greensock
+- Read about Particles
+
+Admin Panel
+- Authentcation
+- Dynnamically create, edit, and delete blog files.
+- Dynnamically create, edit, and delete portfolio files.
+- Gather information about users coming to website. devices, location, ect.
