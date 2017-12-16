@@ -2,6 +2,10 @@
 
 Background ideas
 - Time keeps tickin
+- Rain drops with color combination
+- Color blue #CAEBF2, Carbon #A9A9A9, Watermelon #FF383F, Neautral #EFEFEF
+- Particles with webgl
+- Animated clock that keeps updating the time
 
 Animations
 - Read about Greensock
@@ -12,3 +16,6 @@ Admin Panel
 - Dynnamically create, edit, and delete blog files.
 - Dynnamically create, edit, and delete portfolio files.
 - Gather information about users coming to website. devices, location, ect.
+
+Portfolio
+- writing code, and executing it in browser

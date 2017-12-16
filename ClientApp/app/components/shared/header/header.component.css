@@ -1,0 +1,35 @@
+﻿#nav-container {
+    position: fixed;
+    text-align: right;
+    padding: 1rem;
+    right: 2rem;
+    top: 2rem;
+    display: table;
+}
+
+#nav-container a {
+    opacity: .7;
+    padding-right: 1rem;
+    padding-left: 1rem;
+    padding-top: .25rem;
+    padding-bottom: .25rem;
+    color: #D8E2DC;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-block;
+}
+
+#nav-container a::first-letter {
+    text-transform: uppercase;
+}
+
+#nav-container a:hover, a.active {
+    color: #FF3B3F !important;
+}
+
+@media screen and (min-width: 30em) {
+    #nav-container a {
+        margin-right: .25rem;
+        margin-left: .25rem;
+    }
+}

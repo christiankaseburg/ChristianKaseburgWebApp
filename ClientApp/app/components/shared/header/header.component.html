@@ -1,2 +1,3 @@
-﻿<p>Header</p>
-<li *ngFor="let navigationPage of navigationURLS" (click)="navigateToPage(navigationPage)">{{navigationPage}}</li>
+﻿<nav id="nav-container">
+        <a *ngFor="let navigationPage of navigationURLS" [routerLinkActive]="['active']" [routerLink]="navigationPage">{{navigationPage}}</a>
+</nav>
