@@ -1,11 +1,26 @@
-﻿
+﻿Pages
+	Home
 
-Background ideas
-- Time keeps tickin
-- Rain drops with color combination
-- Color blue #CAEBF2, Carbon #A9A9A9, Watermelon #FF383F, Neautral #EFEFEF
-- Particles with webgl
-- Animated clock that keeps updating the time
+	About
+
+	Portfolio
+
+	Blog
+
+	Contact
+
+	Shared layout
+		Background ideas
+		- Time keeps tickin
+		- Rain drops with color combination
+		- Color blue #CAEBF2, Carbon #A9A9A9, Watermelon #FF383F, Neautral #EFEFEF
+		- Particles with webgl
+		- Animated clock that keeps updating the time
+
+		Header/footer
+		-Set up links through variables for social media
+		- possibly add underline for the active route. (Can do or not do. All preference.)
+
 
 Animations
 - Read about Greensock
@@ -17,5 +32,7 @@ Admin Panel
 - Dynnamically create, edit, and delete portfolio files.
 - Gather information about users coming to website. devices, location, ect.
 
-Portfolio
+Portfolio/ideas
 - writing code, and executing it in browser
+
+Googleanalytics?
