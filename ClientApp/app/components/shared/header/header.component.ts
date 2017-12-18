@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 @Component({
     selector: 'shared-header',
     templateUrl: './header.component.html',
-    styleUrls: ['./header.component.css']
+    styleUrls: ['./header.component.less']
 
 })
 

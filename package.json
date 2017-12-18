@@ -47,6 +47,8 @@
     "karma-cli": "1.0.1",
     "karma-jasmine": "1.1.0",
     "karma-webpack": "2.0.3",
+    "less": "^2.7.3",
+    "less-loader": "^4.0.5",
     "particle.js": "^1.0.7",
     "preboot": "4.5.2",
     "raw-loader": "0.5.1",
