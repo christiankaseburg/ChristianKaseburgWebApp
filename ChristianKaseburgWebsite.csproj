@@ -25,6 +25,7 @@
     <None Remove="ClientApp\app\components\blog\blog.component.ts" />
     <None Remove="ClientApp\app\components\contact\contact.component.ts" />
     <None Remove="ClientApp\app\components\portfolio\portfolio.component.ts" />
+    <None Remove="ClientApp\app\components\shared\background\background.component.ts" />
     <None Remove="ClientApp\app\components\shared\footer\footer.component.ts" />
     <None Remove="ClientApp\app\components\shared\header\header.component.ts" />
   </ItemGroup>
@@ -34,6 +35,8 @@
     <TypeScriptCompile Include="ClientApp\app\components\blog\blog.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\components\contact\contact.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\components\portfolio\portfolio.component.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\shared\background\background.component.ts" />
+    <TypeScriptCompile Include="wwwroot\assets\js\bundle.js" />
     <TypeScriptCompile Include="ClientApp\app\components\shared\footer\footer.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\components\shared\header\header.component.ts" />
   </ItemGroup>

@@ -7,12 +7,13 @@ import { RouterModule } from '@angular/router';
 // Import statements for components
 import { AppComponent } from './components/app/app.component';
 import { HeaderComponent } from './components/shared/header/header.component';
-import { FooterComponent } from './components/shared/footer/footer.component';
+import { BackgroundComponent } from './components/shared/background/background.component';
 import { HomeComponent } from './components/home/home.component';
 import { AboutComponent } from './components/about/about.component';
 import { PortfolioComponent } from './components/portfolio/portfolio.component';
 import { BlogComponent } from './components/blog/blog.component';
 import { ContactComponent } from './components/contact/contact.component';
+import { FooterComponent } from './components/shared/footer/footer.component';
 
 /*Declaration for NgModsule takes these metadata objects, and tells
  angular how to compile and launch the application. app.browser.module.ts
@@ -23,12 +24,13 @@ import { ContactComponent } from './components/contact/contact.component';
     declarations: [
         AppComponent,
         HeaderComponent,
-        FooterComponent,
+        BackgroundComponent,
         HomeComponent,
         AboutComponent,
         PortfolioComponent,
         BlogComponent,
-        ContactComponent
+        ContactComponent,
+        FooterComponent
     ],
     imports: [
         CommonModule,

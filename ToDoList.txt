@@ -1,30 +1,77 @@
 ﻿Pages
 	Home
+	- Fill up white space
+
 
 	About
+	- Crop picture and put into a circle
+	- Fill details in about myself
+	- Make responsive
 
 	Portfolio
+	- Build cards to fill layout for viewing portfolio
+	- make layout responsive
+		Actual projects
+		- All projects share the same layout, and explain the project
+		- Include demo that renders inside of the body so all the original app components are there.
 
 	Blog
-
+	- Build cards to fill layout for viewing all blogs
+	- Make layout responsive
+		Actual blogs
+		- Every blog that is being read shares the same layout, and the app layout.
+		- Each blog has a unique URL that is abled to be navigated to by just the url.
+		
 	Contact
+	- Build form for contacting
+	- Connect form to email myself and log it.
+
 
 	Shared layout
-		Background ideas
-		- Time keeps tickin
-		- Rain drops with color combination
-		- Color blue #CAEBF2, Carbon #A9A9A9, Watermelon #FF383F, Neautral #EFEFEF
-		- Particles with webgl
-		- Animated clock that keeps updating the time
+		Header
+		- Add logos into header that switch depending on the url.
+		- Build logo, and add into top right of header.
+		? - possibly add underline for the active route. (Can do or not do. All preference.)
+		DONE --> can be done better - Create function to control scrolling ability when hamburger menu is expanded, so people cannot scroll out of view. 
+		 - Make Header responsive for desktop, and phone views
 
-		Header/footer
-		-Set up links through variables for social media
-		- possibly add underline for the active route. (Can do or not do. All preference.)
+		Background
+		DONE - Create responsive animated background
+				-Different shapes
+				-Constantly moving
+		footer
+		DONE - Build footer, and add social media components
+		- Build in music into bottom footer
+		- Set up links through variables for social media
 
+			Styling
+				Text
+				- Text, and font size is consistent through the pages.
+
+			Colors
+			- Colors are consistent and follow same design.
+
+		Configuration
+		Not necessary at this time - Webpack configuration bundles all custom javascript starting at the ClientApp/app/components/ directory and traversals through.
+		- Remove bootstrap
+		Not necessary - webpack --progress shows that the client size bundle is 1.9mb, which is huge so it needs to be compressed.
+		- remove libaries that are not used
+		- Optimize client side javascript so the global javascript is at access, while the other javascript is not loaded unless component requires it.
+		
+		----- Get better at navigating with just the keyboard and using shortcuts -------
+
+		Font - Teko, and Overpass
+---- TO DO LATER ----
 
 Animations
 - Read about Greensock
 - Read about Particles
+- three.js
+- webGl
+
+Statistics
+- Googleanalytics?
+- grab users device information
 
 Admin Panel
 - Authentcation
@@ -32,7 +79,15 @@ Admin Panel
 - Dynnamically create, edit, and delete portfolio files.
 - Gather information about users coming to website. devices, location, ect.
 
+Background ideas
+- Time keeps tickin
+- Rain drops with color combination
+- Color blue #CAEBF2, Carbon #A9A9A9, Watermelon #FF383F, Neautral #EFEFEF
+- Particles with webgl
+- Animated clock that keeps updating the time
+
 Portfolio/ideas
 - writing code, and executing it in browser
 
-Googleanalytics?
+
+

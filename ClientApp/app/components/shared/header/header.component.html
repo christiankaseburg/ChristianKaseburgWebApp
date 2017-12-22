@@ -1,10 +1,9 @@
-﻿<nav id="nav-container">
-        <a *ngFor="let navigationPage of navigationURLS" [routerLinkActive]="['active']" [routerLink]="navigationPage">{{navigationPage}}</a>
-</nav>
-
-<nav id="nav-hamburger">
+﻿<nav id="nav-responsive">
+    <div class="directoryIcon">
+        <a><i class="fa fa-facebook fa-2x" aria-hidden="true"></i></a>
+    </div>
     <label>
-        <input type='checkbox'>
+        <input type='checkbox' (click)='hideOverflow()'>
         <span class='menu'>
             <span class='hamburger'></span>
         </span>
