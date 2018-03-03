@@ -1,8 +1,5 @@
 ﻿html
 
-css
-[] - CSS auto prefixer
-
 Pages
 
 		Header
@@ -50,26 +47,15 @@ Pages
 		[X] - Bundle css that all pages use into vendor.css
 		[X] - Bundle imgs/mp3/mp4 files
 		[X] - Fix production
+		[] - CSS auto prefixer ? not sure
 
 
 ---- TO DO LATER ----
-
-Animations
-- Read about Greensock
-- Read about Particles
-- three.js
-- webGl
-
 Statistics
 - Googleanalytics?
-- grab users device information
 
-Background ideas
-- Time keeps tickin
-- Rain drops with color combination
-- Color blue #CAEBF2, Carbon #A9A9A9, Watermelon #FF383F, Neautral #EFEFEF
-- Particles with webgl
-- Animated clock that keeps updating the time
+Logo idea -
+- Set a sun that switches to a moon based on my timezone for top left corner
 
 Portfolio/ideas
 - writing code, and executing it in browser
