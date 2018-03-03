@@ -3,26 +3,53 @@
 css
 [] - CSS auto prefixer
 
-javascript
-
-
 Pages
-	Shared components
 
 		Header
-		[X] - Setup routing to each page.
-		[X] - responsive for desktop, ipad, and mobile.
-		[] - Fix navbar from snapping to top when hamburger pressed
+		[X] - Setup routing to each page
+		[X] - responsive for desktop, ipad, and mobile
+		[X] - Fix navbar from snapping to top when hamburger pressed
 
-		Content
-		[] -
+		WebGl Content
+		[X] - Make mobile friendly
+		[X] - Make component more modular for reusing features for experiments
+		
 
 		Footer
-		[] -
-
+		[X] - Social icons
+		[X] - Social icons loaded with other CSS
+		
+		Experiments
+		[75%] - build experiment page mockup
+		[75%] - Fix javascript onResize listener for resizing videos aspect so it stays consistent across all devices
+		[X] - Setup editable Godrays experiment
+		[X] - Route experiments with there component
+		[99.999%] - Bundle experiment components with dat.gui
+		[] - Fix dat gui from accessing dom during server side pre rendering
+		[] - Remove dat gui from html when not on an experiment
+		
+		Portfolio
+		[] - Not to sure yet
+		
+		Contact 
+		[X] - Add form 
+		[X] - Send form to server
+		
+		Admin
+		[] - Admin panel ?
+		[] - View contact emails on admin panel or redirect to my email ?
+		
+		Miscellanious
+		[X] - Build service for collecting device data
+		[] - Structure ClientApp/app for easier to read img/css/video/font assets
+		
 		Bundling
-		[] - bundle all javascript that every page needs together
+		[X] - Load Sass files and compile them down to css for bundling
+		[X] - Bundle shader code and give components through requiring the shader
+		[X] - bundle all javascript that every page needs together
 		[X] - Bundle css that all pages use into vendor.css
+		[X] - Bundle imgs/mp3/mp4 files
+		[X] - Fix production
 
 
 ---- TO DO LATER ----
@@ -36,12 +63,6 @@ Animations
 Statistics
 - Googleanalytics?
 - grab users device information
-
-Admin Panel
-- Authentcation
-- Dynnamically create, edit, and delete blog files.
-- Dynnamically create, edit, and delete portfolio files.
-- Gather information about users coming to website. devices, location, ect.
 
 Background ideas
 - Time keeps tickin
