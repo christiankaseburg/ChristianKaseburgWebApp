@@ -6,32 +6,31 @@ import { RouterModule } from '@angular/router';
 
 // Import statements for components
 import { AppComponent } from './components/app/app.component';
-import { HeaderComponent } from './components/shared/header/header.component';
-import { BackgroundComponent } from './components/shared/background/background.component';
+import { BackgroundComponent } from './components/background/background.component';
 import { HomeComponent } from './components/home/home.component';
-import { AboutComponent } from './components/about/about.component';
 import { PortfolioComponent } from './components/portfolio/portfolio.component';
-import { BlogComponent } from './components/blog/blog.component';
+import { ExperimentsComponent } from './components/experiments/experiments.component';
 import { ContactComponent } from './components/contact/contact.component';
-import { FooterComponent } from './components/shared/footer/footer.component';
 
-/*Declaration for NgModsule takes these metadata objects, and tells
+//import statements for services
+import { DeviceDetectorService } from './services/shared/device-detector/device-detector.service'
+
+/*
+ Declaration for NgModsule takes these metadata objects, and tells
  angular how to compile and launch the application. app.browser.module.ts
  has the bootstrap, which is the root component angular takes to create and insert into the host index.html
-    i.e. the renderbody.
+ i.e. the renderbody.
 */
 @NgModule({
     declarations: [
         AppComponent,
-        HeaderComponent,
         BackgroundComponent,
         HomeComponent,
-        AboutComponent,
         PortfolioComponent,
-        BlogComponent,
-        ContactComponent,
-        FooterComponent
+        ExperimentsComponent,
+        ContactComponent
     ],
+    providers: [ DeviceDetectorService ],
     imports: [
         CommonModule,
         HttpModule,
@@ -39,13 +38,13 @@ import { FooterComponent } from './components/shared/footer/footer.component';
         RouterModule.forRoot([
             { path: '', redirectTo: 'home', pathMatch: 'full' },
             { path: 'home', component: HomeComponent },
-            { path: 'about', component: AboutComponent },
             { path: 'portfolio', component: PortfolioComponent },
-            { path: 'blog', component: BlogComponent },
+            { path: 'experiments', component: ExperimentsComponent },
             { path: 'contact', component: ContactComponent },
             { path: '**', redirectTo: 'home' }
         ])
     ]
 })
+
 export class AppModuleShared {
 }

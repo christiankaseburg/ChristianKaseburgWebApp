@@ -21,24 +21,37 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="ClientApp\app\components\about\about.component.ts" />
-    <None Remove="ClientApp\app\components\blog\blog.component.ts" />
-    <None Remove="ClientApp\app\components\contact\contact.component.ts" />
-    <None Remove="ClientApp\app\components\portfolio\portfolio.component.ts" />
-    <None Remove="ClientApp\app\components\shared\background\background.component.ts" />
-    <None Remove="ClientApp\app\components\shared\footer\footer.component.ts" />
-    <None Remove="ClientApp\app\components\shared\header\header.component.ts" />
+    <Content Remove="wwwroot\assets\img\logo.svg" />
   </ItemGroup>
 
   <ItemGroup>
-    <TypeScriptCompile Include="ClientApp\app\components\about\about.component.ts" />
-    <TypeScriptCompile Include="ClientApp\app\components\blog\blog.component.ts" />
+    <None Remove="ClientApp\app\components\background\background.component.ts" />
+    <None Remove="ClientApp\app\components\experiments\projects\helpers\backgroundScene.component.ts" />
+    <None Remove="ClientApp\app\components\background\PingPongTexture.ts" />
+    <None Remove="ClientApp\app\components\contact\contact.component.ts" />
+    <None Remove="ClientApp\app\components\portfolio\portfolio.component.ts" />
+    <None Remove="ClientApp\app\components\background\simulation.ts" />
+    <None Remove="ClientApp\app\services\shared\device-detector\device-detector.constants.ts" />
+    <None Remove="Properties\PublishProfiles\CustomProfile.pubxml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\app\components\experiments\projects\helpers\PingPongTexture.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\experiments\projects\postprocessing\godrays.ts" />
+    <TypeScriptCompile Include="ClientApp\app\services\shared\device-detector\device-detector.constants.ts" />
+    <TypeScriptCompile Include="ClientApp\app\services\shared\device-detector\device-detector.service.ts" />
     <TypeScriptCompile Include="ClientApp\app\components\contact\contact.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\components\portfolio\portfolio.component.ts" />
-    <TypeScriptCompile Include="ClientApp\app\components\shared\background\background.component.ts" />
-    <TypeScriptCompile Include="wwwroot\assets\js\bundle.js" />
-    <TypeScriptCompile Include="ClientApp\app\components\shared\footer\footer.component.ts" />
-    <TypeScriptCompile Include="ClientApp\app\components\shared\header\header.component.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\background\background.component.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ClientApp\app\assets\videos\" />
+    <Folder Include="Properties\PublishProfiles\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\assets\img\logo.svg" />
   </ItemGroup>
 
   <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">

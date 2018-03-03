@@ -2,7 +2,8 @@
 
 @Component({
     selector: 'portfolio',
-    templateUrl: './portfolio.component.html'
+    templateUrl: './portfolio.component.html',
+    styleUrls: ['./portfolio.component.scss']
 })
 export class PortfolioComponent {
     constructor() {

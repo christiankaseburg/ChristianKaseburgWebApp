@@ -1,7 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const merge = require('webpack-merge');
-const AotPlugin = require('@ngtools/webpack').AotPlugin;
+const AotPlugin = require('@ngtools/webpack').AngularCompilerPlugin;
 const CheckerPlugin = require('awesome-typescript-loader').CheckerPlugin;
 
 module.exports = (env) => {
@@ -18,10 +18,13 @@ module.exports = (env) => {
         module: {
             rules: [
                 { test: /\.ts$/, use: isDevBuild ? ['awesome-typescript-loader?silent=true', 'angular2-template-loader', 'angular2-router-loader'] : '@ngtools/webpack' },
-                { test: /\.html$/, use: 'html-loader?minimize=false' },
+                { test: /\.html$/, use: 'html-loader?minimize=false?attrs[]=video:src' },
                 { test: /\.css$/, use: ['to-string-loader', isDevBuild ? 'css-loader' : 'css-loader?minimize'] },
-                { test: /\.less/, include: /ClientApp/, loader: 'raw-loader!less-loader' },
-                { test: /\.(png|jpg|jpeg|gif|svg)$/, use: 'url-loader?limit=25000' }
+                { test: /\.scss$/, include: /ClientApp/, loader: 'raw-loader!sass-loader' },
+                { test: /\.(png|jpg|jpeg|gif|svg)$/, use: 'url-loader?limit=25000' },
+                { test: /\.(glsl|frag|vert)$/, exclude: /node_modules/, use: 'raw-loader' },
+                { test: /\.(glsl|frag|vert)$/, exclude: /node_modules/, use: 'glslify-loader' },
+                { test: /\.mp4/,use: { loader: 'url-loader', options: { limit: 10000,mimtetype: 'video/mp4', } } },
             ]
         },
         plugins: [new CheckerPlugin()]

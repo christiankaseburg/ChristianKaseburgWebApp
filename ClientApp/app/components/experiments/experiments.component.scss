@@ -1,0 +1,27 @@
+﻿.carousel {
+    display: block;
+    width: 100%;
+    height: 100vh;
+    transform: matrix(0.75, 0, 0, 0.75, 0, 75);
+
+    .project {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        margin: 0 auto;
+
+        .video-container {
+            overflow: hidden;
+
+            video {
+                transform: matrix(1,0,0,1,0,25);
+            }
+        }
+
+        .hover-info {
+            position: absolute;
+            top: 100px;
+            right: 100px;
+        }
+    }
+}

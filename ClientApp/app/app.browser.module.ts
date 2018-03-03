@@ -13,6 +13,7 @@ import { AppComponent } from './components/app/app.component';
         { provide: 'BASE_URL', useFactory: getBaseUrl }
     ]
 })
+
 export class AppModule {
 }
 

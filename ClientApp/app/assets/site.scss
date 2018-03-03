@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css?family=Overpass|Teko');
+@import "css/fontello.css";
+
+/* Remove scroll bar start */
+html {
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+    width: 0px; /* remove scrollbar space */
+    background: transparent; /* optional: just make scrollbar invisible */
+}
+/*remove scroll bar end */
+
+/*Removing selection blue borders or outlines  from all browsers and devices. */
+*::selection {
+    background-color: transparent;
+}
+
+*::-moz-selection {
+    background-color: transparent;
+}
+
+* {
+    -webkit-user-select: none;
+    -moz-user-select: -moz-none;
+    -ms-user-select: none;
+    user-select: none;
+    /*You just need this if you are only concerned with android and not desktop browsers.*/
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+input[type="text"], textarea, [contenteditable] {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+}
+/* End of removing selection blue borders or outlines */
+
+* {
+    margin: 0;
+}
+
+html, body, .viewport {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+body {
+
+    font-family: 'Teko', sans-serif;
+    font-size: 16px;
+    height: 100vh;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+home, about, portfolio, experiments, contact {
+    display: flex;
+    flex: 1 0 auto;
+}
+
+shared-footer {
+    flex-shrink: 0;
+}
+
+a {
+    color: black;
+    cursor: pointer;
+    text-decoration: none;
+
+    &:visited {
+        text-decoration: none;
+    }
+
+    &:hover {
+        text-decoration: none;
+    }
+
+    &:focus {
+        text-decoration: none;
+    }
+
+    &:hover, &:active {
+        text-decoration: none;
+    }
+}
+
+li {
+    outline: 0;
+}
+
+label {
+    cursor: pointer;
+}

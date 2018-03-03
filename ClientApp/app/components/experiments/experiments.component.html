@@ -1,0 +1,46 @@
+﻿<!--<background></background>-->
+
+<div class="carousel" (window:resize)="onResize($event)">
+    <!--Bar here-->
+    <div class="project">
+        <div class="video-container" >
+            <video src="{{godrays}}" id="godrays" type="video/mp4" [ngStyle]="{'width': videoWidth+'px', 'height': videoHeight+'px'}" autoplay loop></video>
+        </div>
+        <div class="hover-info">
+            <p class="description">
+                <br />
+                <span></span>
+            </p>
+            <h1></h1>
+            <h2></h2>
+        </div>
+    </div>
+    <!--Bar here-->
+    <div class="project">
+        <div class="video-container">
+            <video src="{{godrays}}" type="video/mp4" autoplay loop (window:resize)="onResize($event)"></video>
+        </div>
+        <div class="hover-info">
+            <p class="description">
+                <br />
+                <span></span>
+            </p>
+            <h1></h1>
+            <h2></h2>
+        </div>
+    </div>
+    <!--Bar here-->
+    <div class="project">
+        <div class="video-container" [ngStyle]="{'width': videoContainerWidth+'px', 'height': videoContainerHeight+'px'}">
+            <video src="{{godrays}}" type="video/mp4" [ngStyle]="{'width': videoWidth+'px', 'height': videoHeight+'px'}" autoplay loop (window:resize)="onResize($event)"></video>
+        </div>
+        <div class="hover-info">
+            <p class="description">
+                <br />
+                <span></span>
+            </p>
+            <h1></h1>
+            <h2></h2>
+        </div>
+    </div>
+</div>

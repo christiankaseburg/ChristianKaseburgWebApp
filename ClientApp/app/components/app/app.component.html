@@ -1,6 +1,24 @@
-<div class='main-container'>
-    <shared-header></shared-header>
-    <shared-background></shared-background>
+<div class="container">
+    <a class="logo" [routerLink]="['home']">Christian Kaseburg</a>
+    <div class="navigation">
+        <input class="hide" type="checkbox" id="navCheck" (click)='hideOverflow()' />
+        <div class="hamburger" style="direction:rtl">
+            <span class="line"></span>
+            <span class="line"></span>
+            <span class="line"></span>
+        </div>
+        <ul>
+            <li *ngFor="let navigationPage of navigationURLS" [routerLinkActive]="['active']" [routerLink]="navigationPage"><a><label for="navCheck">{{navigationPage}}</label></a></li>
+        </ul>
+    </div>
+
+    <!--<background></background>-->
     <router-outlet></router-outlet>
-    <shared-footer></shared-footer>
+    <footer [class.show]="showSocial">
+            <span></span>
+            <a class="c-link c-link--facebook c-tooltip" aria-label="Facebook" href="https://www.facebook.com/ChristianKaseburg" target="blank"><i class="icon-facebook"></i></a>
+            <a class="c-link c-link--instagram c-tooltip" aria-label="Instagram" href="https://www.instagram.com/chriskaseburg94/" target="blank"><i class="icon-instagram"></i></a>
+            <a class="c-link c-link--github c-tooltip" aria-label="Github" href="https://github.com/christiankaseburg" target="blank"><i class="icon-github-circled"></i></a>
+            <a class="c-link c-link--linkedin c-tooltip" aria-label="LinkedIn" href="https://www.linkedin.com/in/christian-kaseburg-29b276145" target="blank"><i class="icon-linkedin"></i></a>
+    </footer>
 </div>

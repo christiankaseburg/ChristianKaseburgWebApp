@@ -2,7 +2,8 @@
 
 @Component({
     selector: 'contact',
-    templateUrl: './contact.component.html'
+    templateUrl: './contact.component.html',
+    styleUrls: ['./contact.component.scss']
 })
 export class ContactComponent {
     constructor() {
