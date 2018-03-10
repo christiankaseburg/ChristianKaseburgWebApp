@@ -62,7 +62,11 @@ body {
     height: 100vh;
 }
 
-home, about, portfolio, experiments, contact {
+experiments {
+    display: block;
+}
+
+home, about, portfolio, contact {
     display: flex;
     flex: 1 0 auto;
 }

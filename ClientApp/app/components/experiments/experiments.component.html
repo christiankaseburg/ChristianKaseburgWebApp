@@ -1,10 +1,10 @@
 ﻿<!--<background></background>-->
 
-<div class="carousel" (window:resize)="onResize($event)">
+<div class="carousel" (window:resize)="onResize()" (window:scroll)="onScroll()" (window:focus)="isVideoVisible()" (window:blur)="pauseVideos()">
     <!--Bar here-->
     <div class="project">
-        <div class="video-container" >
-            <video src="{{godrays}}" id="godrays" type="video/mp4" [ngStyle]="{'width': videoWidth+'px', 'height': videoHeight+'px'}" autoplay loop></video>
+        <div class="video-container">
+            <video src="{{videoRef.godrays}}" id="godrays" type="video/mp4" webkit-playsinline playsinline autoplay muted loop></video>
         </div>
         <div class="hover-info">
             <p class="description">
@@ -18,7 +18,7 @@
     <!--Bar here-->
     <div class="project">
         <div class="video-container">
-            <video src="{{godrays}}" type="video/mp4" autoplay loop (window:resize)="onResize($event)"></video>
+            <video src="{{videoRef.godrays}}" id="godrays2" type="video/mp4" webkit-playsinline playsinline autoplay muted loop></video>
         </div>
         <div class="hover-info">
             <p class="description">
@@ -31,8 +31,8 @@
     </div>
     <!--Bar here-->
     <div class="project">
-        <div class="video-container" [ngStyle]="{'width': videoContainerWidth+'px', 'height': videoContainerHeight+'px'}">
-            <video src="{{godrays}}" type="video/mp4" [ngStyle]="{'width': videoWidth+'px', 'height': videoHeight+'px'}" autoplay loop (window:resize)="onResize($event)"></video>
+        <div class="video-container">
+            <video src="{{videoRef.godrays}}" id="godrays3" type="video/mp4" webkit-playsinline playsinline autoplay muted loop></video>
         </div>
         <div class="hover-info">
             <p class="description">
@@ -42,5 +42,26 @@
             <h1></h1>
             <h2></h2>
         </div>
+    </div>
+</div>
+
+<div id="carousel-slider">
+    <div id="carousel-Slider-Container">
+        <img src="../../assets/imgs/godraysIMG.png" draggable="false" />
+        <img src="../../assets/imgs/godraysIMG.png" draggable="false" />
+        <img src="../../assets/imgs/godraysIMG.png" draggable="false" />
+        <img src="../../assets/imgs/godraysIMG.png" draggable="false" />
+        <img src="../../assets/imgs/godraysIMG.png" draggable="false" />
+        <img src="../../assets/imgs/godraysIMG.png" draggable="false" />
+        <img src="../../assets/imgs/godraysIMG.png" draggable="false" />
+        <img src="../../assets/imgs/godraysIMG.png" draggable="false" />
+    </div>
+</div>
+
+<div id="seperator">
+    <div id="counter">
+        <i class="icon-angle-up bounce" (click)="expandCarouselSlider()"></i>
+        <span id="count-current">01 </span>
+        <span id="count-length">/08</span>
     </div>
 </div>
