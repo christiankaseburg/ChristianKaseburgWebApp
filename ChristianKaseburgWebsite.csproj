@@ -32,6 +32,8 @@
     <None Remove="ClientApp\app\components\portfolio\portfolio.component.ts" />
     <None Remove="ClientApp\app\components\background\simulation.ts" />
     <None Remove="ClientApp\app\services\shared\device-detector\device-detector.constants.ts" />
+    <None Remove="ClientApp\app\services\shared\eventListeners\horizontalScroll.service.ts" />
+    <None Remove="ClientApp\app\services\shared\eventListeners\verticalScroll.service.ts" />
     <None Remove="Properties\PublishProfiles\CustomProfile.pubxml" />
   </ItemGroup>
 
@@ -43,6 +45,8 @@
     <TypeScriptCompile Include="ClientApp\app\components\contact\contact.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\components\portfolio\portfolio.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\components\background\background.component.ts" />
+    <TypeScriptCompile Include="ClientApp\app\services\shared\eventListeners\horizontalScroll.service.ts" />
+    <TypeScriptCompile Include="ClientApp\app\services\shared\eventListeners\verticalScroll.service.ts" />
   </ItemGroup>
 
   <ItemGroup>

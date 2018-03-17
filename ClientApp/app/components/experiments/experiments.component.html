@@ -1,67 +1,144 @@
-﻿<!--<background></background>-->
-
-<div class="carousel" (window:resize)="onResize()" (window:scroll)="onScroll()" (window:focus)="isVideoVisible()" (window:blur)="pauseVideos()">
-    <!--Bar here-->
-    <div class="project">
-        <div class="video-container">
-            <video src="{{videoRef.godrays}}" id="godrays" type="video/mp4" webkit-playsinline playsinline autoplay muted loop></video>
+﻿<div class="carousel" (window:resize)="onResize()" (window:focus)="playActiveVideo()" (window:blur)="pauseActiveVideo()">
+    <div class="carousel-content">
+        <!-- Counter -->
+        <div id="counter">
+            <span id="current-project">0{{currentActiveExperiment + 1}} </span>
+            <span id="total-projects">/0{{totalExperiments}}</span>
         </div>
-        <div class="hover-info">
-            <p class="description">
-                <br />
-                <span></span>
-            </p>
-            <h1></h1>
-            <h2></h2>
+        <!-- Arrow buttons -->
+        <i id="prev-button" class="icon-angle-up not-clickable" (click)="switchExperiment(-1)"></i>
+        <i id="next-button" class="icon-angle-down" (click)="switchExperiment(1)"></i>
+        <!-- Projects -->
+        <div class="project">
+            <div class="video-container">
+                <video src="{{projectVideo.godrays}}" type="video/mp4" preload="auto" webkit-playsinline playsinline muted loop></video>
+            </div>
+            <div class="hover-info">
+                <h1>Godrays</h1>
+                <span class="bar"></span>
+                <p class="description">[ WebGl / Instanced / PostProcessing / GPGPU ]<br />
+                    <span>[ Volumetric Lighting ]</span>
+                </p>
+                <a class="box-btn">Demo The Experiment</a>
+            </div>
         </div>
-    </div>
-    <!--Bar here-->
-    <div class="project">
-        <div class="video-container">
-            <video src="{{videoRef.godrays}}" id="godrays2" type="video/mp4" webkit-playsinline playsinline autoplay muted loop></video>
+        <!--Bar here-->
+        <div class="project hidden">
+            <div class="video-container">
+                <video src="{{projectVideo.godrays}}" type="video/mp4" preload="metadata" webkit-playsinline playsinline muted loop></video>
+            </div>
+            <div class="hover-info">
+                <h1>Godrays</h1>
+                <span class="bar"></span>
+                <p class="description">
+                    [ WebGl / Instanced / PostProcessing / GPGPU ]<br />
+                    <span>[ Volumetric Lighting ]</span>
+                </p>
+                <a class="box-btn">Demo The Experiment</a>
+            </div>
         </div>
-        <div class="hover-info">
-            <p class="description">
-                <br />
-                <span></span>
-            </p>
-            <h1></h1>
-            <h2></h2>
+        <!--Bar here-->
+        <div class="project hidden">
+            <div class="video-container">
+                <video src="{{projectVideo.godrays}}" type="video/mp4" preload="metadata" webkit-playsinline playsinline muted loop></video>
+            </div>
+            <div class="hover-info">
+                <h1>Godrays</h1>
+                <span class="bar"></span>
+                <p class="description">
+                    [ WebGl / Instanced / PostProcessing / GPGPU ]<br />
+                    <span>[ Volumetric Lighting ]</span>
+                </p>
+                <a class="box-btn">Demo The Experiment</a>
+            </div>
         </div>
-    </div>
-    <!--Bar here-->
-    <div class="project">
-        <div class="video-container">
-            <video src="{{videoRef.godrays}}" id="godrays3" type="video/mp4" webkit-playsinline playsinline autoplay muted loop></video>
+        <!--Bar here-->
+        <div class="project hidden">
+            <div class="video-container">
+                <video src="{{projectVideo.godrays}}" type="video/mp4" preload="metadata" webkit-playsinline playsinline muted loop></video>
+            </div>
+            <div class="hover-info">
+                <h1>Godrays</h1>
+                <span class="bar"></span>
+                <p class="description">
+                    [ WebGl / Instanced / PostProcessing / GPGPU ]<br />
+                    <span>[ Volumetric Lighting ]</span>
+                </p>
+                <a class="box-btn">Demo The Experiment</a>
+            </div>
         </div>
-        <div class="hover-info">
-            <p class="description">
-                <br />
-                <span></span>
-            </p>
-            <h1></h1>
-            <h2></h2>
+        <!--Bar here-->
+        <div class="project hidden">
+            <div class="video-container">
+                <video src="{{projectVideo.godrays}}" type="video/mp4" preload="metadata" webkit-playsinline playsinline muted loop></video>
+            </div>
+            <div class="hover-info">
+                <h1>Godrays</h1>
+                <span class="bar"></span>
+                <p class="description">
+                    [ WebGl / Instanced / PostProcessing / GPGPU ]<br />
+                    <span>[ Volumetric Lighting ]</span>
+                </p>
+                <a class="box-btn">Demo The Experiment</a>
+            </div>
+        </div>
+        <!--Bar here-->
+        <div class="project hidden">
+            <div class="video-container">
+                <video src="{{projectVideo.godrays}}" type="video/mp4" preload="metadata" webkit-playsinline playsinline muted loop></video>
+            </div>
+            <div class="hover-info">
+                <h1>Godrays</h1>
+                <span class="bar"></span>
+                <p class="description">
+                    [ WebGl / Instanced / PostProcessing / GPGPU ]<br />
+                    <span>[ Volumetric Lighting ]</span>
+                </p>
+                <a class="box-btn">Demo The Experiment</a>
+            </div>
+        </div>
+        <!--Bar here-->
+        <div class="project hidden">
+            <div class="video-container">
+                <video src="{{projectVideo.godrays}}" type="video/mp4" preload="metadata" webkit-playsinline playsinline muted loop></video>
+            </div>
+            <div class="hover-info">
+                <h1>Godrays</h1>
+                <span class="bar"></span>
+                <p class="description">
+                    [ WebGl / Instanced / PostProcessing / GPGPU ]<br />
+                    <span>[ Volumetric Lighting ]</span>
+                </p>
+                <a class="box-btn">Demo The Experiment</a>
+            </div>
+        </div>
+        <!--Bar here-->
+        <div class="project hidden">
+            <div class="video-container">
+                <video src="{{projectVideo.godrays}}" type="video/mp4" preload="metadata" webkit-playsinline playsinline muted loop></video>
+            </div>
+            <div class="hover-info">
+                <h1>Godrays</h1>
+                <span class="bar"></span>
+                <p class="description">
+                    [ WebGl / Instanced / PostProcessing / GPGPU ]<br />
+                    <span>[ Volumetric Lighting ]</span>
+                </p>
+                <a class="box-btn">Demo The Experiment</a>
+            </div>
         </div>
     </div>
 </div>
 
 <div id="carousel-slider">
-    <div id="carousel-Slider-Container">
-        <img src="../../assets/imgs/godraysIMG.png" draggable="false" />
-        <img src="../../assets/imgs/godraysIMG.png" draggable="false" />
-        <img src="../../assets/imgs/godraysIMG.png" draggable="false" />
-        <img src="../../assets/imgs/godraysIMG.png" draggable="false" />
-        <img src="../../assets/imgs/godraysIMG.png" draggable="false" />
-        <img src="../../assets/imgs/godraysIMG.png" draggable="false" />
-        <img src="../../assets/imgs/godraysIMG.png" draggable="false" />
-        <img src="../../assets/imgs/godraysIMG.png" draggable="false" />
-    </div>
-</div>
-
-<div id="seperator">
-    <div id="counter">
-        <i class="icon-angle-up bounce" (click)="expandCarouselSlider()"></i>
-        <span id="count-current">01 </span>
-        <span id="count-length">/08</span>
+    <div id="carousel-slider-container">
+        <div class="project-name-container"><span class="proj-span active" (click)="setActiveProject(0)">01/ Godrays</span></div>
+        <div class="project-name-container"><span class="proj-span" (click)="setActiveProject(1)">02/ Godrays</span></div>
+        <div class="project-name-container"><span class="proj-span" (click)="setActiveProject(2)">03/ Godrays</span></div>
+        <div class="project-name-container"><span class="proj-span" (click)="setActiveProject(3)">04/ Godrays</span></div>
+        <div class="project-name-container"><span class="proj-span" (click)="setActiveProject(4)">05/ Godrays</span></div>
+        <div class="project-name-container"><span class="proj-span" (click)="setActiveProject(5)">06/ Godrays</span></div>
+        <div class="project-name-container"><span class="proj-span" (click)="setActiveProject(6)">07/ Godrays</span></div>
+        <div class="project-name-container"><span class="proj-span" (click)="setActiveProject(7)">08/ Godrays</span></div>
     </div>
 </div>

@@ -17,16 +17,19 @@ Pages
 		[X] - Social icons loaded with other CSS
 		
 		Experiments
-		[75%] - build experiment page mockup
-		[75%] - Fix javascript onResize listener for resizing videos aspect so it stays consistent across all devices
-		[X] - Setup editable Godrays experiment
-		[X] - Route experiments with there component
-		[99.999%] - Bundle experiment components with dat.gui
-		[] - Fix dat gui from accessing dom during server side pre rendering
-		[] - Remove dat gui from html when not on an experiment
+		[X] - build experiment page mockup
+		[X] - Fix javascript onResize listener for resizing videos aspect so it stays consistent across all devices
+		[X] - Load videos, pause videos, and play videos handled for mobile and desktop devices.
+		[X] - Component handles everything related to carousel with variables to prevent user bugs.
+		[ ? ] - Add page animation to match the rest of the website when switching project and loading experiment page.
+
+		[] - When user clicks Demo I need to serve a new page with the project information.
+
+			Projects
+			[X] - Setup editable Godrays experiment
 		
 		Portfolio
-		[] - Not to sure yet
+		[] - Will not have portfolio page until I finish another project besides this website.
 		
 		Contact 
 		[X] - Add form 
@@ -38,7 +41,8 @@ Pages
 		
 		Miscellanious
 		[X] - Build service for collecting device data
-		[] - Structure ClientApp/app for easier to read img/css/video/font assets
+		[X] - Structure ClientApp/app for easier to read img/css/video/font assets
+		[ ] - Create loader for when website is loading different components, videos, ect...
 		
 		Bundling
 		[X] - Load Sass files and compile them down to css for bundling

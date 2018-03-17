@@ -351,6 +351,7 @@ export class BackgroundComponent { // Project 1
         }
     }
 
+    /* Events */
     private onWindowResize(event: Event) {
 
         let dPR = .5 * window.devicePixelRatio;

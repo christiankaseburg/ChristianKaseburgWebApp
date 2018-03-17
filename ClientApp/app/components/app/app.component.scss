@@ -3,7 +3,7 @@
 }
 
 .logo {
-    position: fixed;
+    position: absolute;
     top: 2rem;
     left: 2rem;
     letter-spacing: 5px;
@@ -11,7 +11,7 @@
 
 /* Side bar navigation desktop View */
 .navigation {
-    position: fixed;
+    position: absolute;
     display: inline-block;
     top: 1rem;
     right: 2rem;
@@ -53,6 +53,10 @@
                 &:hover {
                     opacity: 1;
                 }
+
+                label {
+                    cursor: pointer;
+                }
             }
 
             &.active {
@@ -61,7 +65,7 @@
                     letter-spacing: 5px;
 
                     &:after {
-                        width: 40px;
+                        width: 30px;
                     }
                 }
             }

@@ -1,170 +1,212 @@
 ﻿import { Component, ElementRef, HostListener } from '@angular/core';
+import { VerticalScrollService } from '../../services/shared/eventListeners/verticalScroll.service';
 
 const godraysVideo = require('../../assets/videos/godrays.mp4');
 
 @Component({
     selector: 'experiments',
     templateUrl: './experiments.component.html',
-    styleUrls: ['./experiments.component.scss']
+    styleUrls: ['./experiments.component.scss'],
+    providers: [VerticalScrollService] 
 })
 
 export class ExperimentsComponent {
 
-    private videoRef = { godrays: godraysVideo };
-    private video;
+    private projectVideo = { godrays: godraysVideo };
 
-    constructor(private element: ElementRef) {
+    private videos;
+    private projects;
+    private experiments;
+    private carouselSliderContainer;
+
+    private currentActiveExperiment: number = 0;
+    private prevActiveExperiment: number = 0;
+    private totalExperiments: number;
+
+    private carouselNameContainerHeight: number;
+
+    constructor(private element: ElementRef, private _verticalScroll : VerticalScrollService) {
     }
 
-    onResize() {
-        setTimeout(this.resizeVideo(), 500);
+    /**
+     * Call onResize when a window resize event is detected.
+     */
+    private onResize() {
+
+        setTimeout(this.setProperties(), 200);
+
     }
 
-    onScroll() {
-        setTimeout(this.isVideoVisible(), 200);
-    }
+    /**
+     * Set the positioning for all the elements to be responsive to the device.
+     */
+    private setProperties() {
 
-    /*
-    * Fix for loading mp4's on iOS, and android devices.
-    */
-    loadVideo() {
+        //video container
+        let videoRect = document.getElementsByClassName('project')[this.currentActiveExperiment].getBoundingClientRect();
 
-        for (let i = 0; i < 0; i++) {
-            let playPromise = this.video[i].play();
+        //counter
+        let counter = document.getElementById('counter');
 
-            if (playPromise !== undefined) {
-                playPromise.then(_ => {
-                    // Automatic playback started!
-                    // Show playing UI.
-                    // We can now safely pause video...
-                    this.video[i].pause();
-                })
-                    .catch(error => {
-                        // Auto-play was prevented
-                        // Show paused UI.
-                    });
-            }
-        }
-    }
-
-    /*
-    * Resize videos to keep a consistent scale across all screen sizes.
-    */
-    resizeVideo() {
-        let windowWidth = window.innerWidth,
-            windowHeight = window.innerHeight;
-        let windowAspectRatio = windowHeight / windowWidth;
-
-        let videos = document.getElementsByTagName('video');
+        // Carousel slider
         let carouselSlider = document.getElementById('carousel-slider');
-        let carouselSliderContainer = document.getElementById('carousel-Slider-Container');
-        let seperator = document.getElementById('seperator');
-        let carouselSliderHeight = Math.round(window.innerHeight * .138);
-        let seperatorBottom = Math.round(window.innerHeight * .03);
+        let carouselNameContainer = document.getElementsByClassName('project-name-container');
+        let carouselNameContainerSpan = document.getElementsByClassName('proj-span');
+        let prevButton = document.getElementById('prev-button');
+        let nextButton = document.getElementById('next-button');
 
-        for (let i = 0; i < videos.length; i++) {
-            let video = videos[i];
-            let videoWidth = video!.clientWidth + Math.random();
-            let videoHeight = video!.clientHeight;
-            let videoAspectRatio = videoHeight / videoWidth;
+        this.carouselNameContainerHeight = (((window.innerHeight - videoRect.bottom) - 5) / 3);
+        let carouselNameContainerSpainLineHeight = ((window.innerHeight - videoRect.bottom) / 3);
 
-            //compare window ratio to image ratio so you know which way the image should fill
-            if (windowAspectRatio < videoAspectRatio) {
-                // we are fill width
-                video!.style.width = windowWidth + "px";
-                // and applying the correct aspect to the height now
-                video!.style.height = (windowWidth * videoAspectRatio) + "px";
-            } else { // same thing as above but filling height instead
-                carouselSlider!.style.height = carouselSliderHeight + "px";
-                carouselSliderContainer!.style.height = carouselSliderHeight + "px";
-                seperator!.style.bottom = seperatorBottom + "px";
-                video!.style.height = windowHeight + "px";
-                video!.style.width = (windowHeight / videoAspectRatio) + "px";
-            }
+        carouselSlider!.style.height = (videoRect.top - 5) + "px";
+        carouselSlider!.style.width = ((videoRect.right - videoRect.left)) + 'px';
+
+        counter!.style.top = (videoRect.top - 25) + 'px';
+        counter!.style.left = videoRect.left + 'px';
+
+        prevButton!.style.top = (window.innerHeight / 2) - 31 + 'px';
+        prevButton!.style.left = videoRect.right + 'px';
+        nextButton!.style.top = (window.innerHeight / 2) + 31 + 'px';
+        nextButton!.style.left = videoRect.right + 'px';
+
+        this.carouselSliderContainer.style.transform = 'translate3d(0px,' + this.carouselNameContainerHeight + 'px' + ', 0px)';
+
+        for (let i = 0; i < carouselNameContainer.length; i++) {
+            (carouselNameContainer[i] as any)!.style.height = this.carouselNameContainerHeight + 'px';
+            (carouselNameContainerSpan[i] as any)!.style.lineHeight = carouselNameContainerSpainLineHeight + 'px';
         }
+
     }
 
-    /*
-    * Play the video that is in the current viewport.
-    * getBoundingClientRect is supported across all browsers, and intersectobserver is not.
-    */
-    isVideoVisible() {
+    /**
+     * Transform slider to center the current experiment in the slider.
+     * @param experimentNum
+     */
+    private transformSlider(experimentNum) {
 
-        for (let i = 0; i < this.video.length; i++) {
+        this.carouselSliderContainer.style.transform = 'translate3d(0px,' + -(this.carouselNameContainerHeight * (experimentNum - 1)) + 'px' + ', 0px)';
 
-            let videoRect = this.video[i].getBoundingClientRect();
-            let offset = Math.ceil(videoRect.height / 2);
-            let videoTop = videoRect.top + offset, videoBottom = videoRect.bottom - offset;
-
-            let isVisible = (videoTop >= 0) && (videoBottom <= window.innerHeight);
-
-            if (isVisible) {
-                this.video[i].play();
-            } else {
-                this.video[i].pause();
-            }
-        }
     }
 
-    /*
-    * Pause videos when viewport is not in focus.
-    */
-    pauseVideos() {
-        Object.keys(this.video).forEach(i => {
-            this.video[i].pause();
-        });
-    }
+    /**
+     * Swap previousActiveExperiment with current Active experiment and then add and remove active.
+     * swap the prevActiveExperiment video with the active experiments video.
+     * @param event
+     */
+    private setActiveProject(experimentNum: number) {
 
-    horizontalScroll(event: Event) {
+        if (experimentNum < this.totalExperiments) {
+            this.prevActiveExperiment = this.currentActiveExperiment;
+            this.currentActiveExperiment = experimentNum;
 
-        let delta = (<any>event).detail ? (<any>event).detail * (-60) : (<any>event).wheelDelta * (.5); //+60 scroll up, -60 scroll down (Wheel delta returns 120)
-        (<any>event).currentTarget.scrollLeft -= delta;
+            this.experiments[this.prevActiveExperiment].classList.remove('active');
+            this.experiments[this.currentActiveExperiment].classList.add('active');
 
-        event.preventDefault();
-    }
+            this.projects[this.prevActiveExperiment].classList.add('hidden');
+            this.projects[this.currentActiveExperiment].classList.remove('hidden');
 
-    horizontalDragScroll(event: Event) {
-
-        console.log('mousedown');
-        event.preventDefault();
-    }
-
-    expandCarouselSlider() {
-        let carouselSlider = document.getElementById('carousel-slider');
-        if (carouselSlider!.style.display == "block") {
-            carouselSlider!.style.display = "none";
+            this.transformSlider(experimentNum);
+            this.disableArrow();
+            this.playActiveVideo();
         } else {
-            carouselSlider!.style.display = "block";
+            console.log('There is only ' + this.totalExperiments + ' experiments.');
         }
 
     }
 
-    // Server side pre rendering work around
+    /**
+     *  Arrows that are out of the totalExperiments range will have the not-clickable class added and vice versa.
+     */
+    private disableArrow() {
+
+        let prevArrow = document.getElementById('prev-button');
+        let nextArrow = document.getElementById('next-button');
+
+        if (this.currentActiveExperiment != 0 && prevArrow!.classList.contains('not-clickable')) {
+            prevArrow!.classList.remove('not-clickable');
+        } else if (this.currentActiveExperiment == 0 && !prevArrow!.classList.contains('not-clickable')) {
+            prevArrow!.classList.add('not-clickable');
+        } else if (this.currentActiveExperiment == this.totalExperiments - 1 && !nextArrow!.classList.contains('not-clickable')) {
+            nextArrow!.classList.add('not-clickable');
+        } else if (this.currentActiveExperiment != this.totalExperiments - 1 && nextArrow!.classList.contains('not-clickable')) {
+            nextArrow!.classList.remove('not-clickable');
+        }
+
+    }
+
+    /**
+     * When the next or previous button is clicked this method will
+     * either iterate down the experiments 1 or -1.
+     * @param iterate
+     */
+    private switchExperiment(iterate: number) {
+
+        let nextExperiment = this.currentActiveExperiment + iterate;
+
+        if (nextExperiment >= 0 && nextExperiment < this.totalExperiments) {
+            this.setActiveProject(nextExperiment);
+            this.disableArrow();
+        }
+
+    }
+
+    /**
+     * Pause previous video if playing, and play current video.
+     */
+    private playActiveVideo() {
+
+        if (this.videos[this.prevActiveExperiment].paused != true) {
+            this.videos[this.prevActiveExperiment].pause();
+        }
+
+        this.videos[this.currentActiveExperiment].play();
+
+    }
+
+    /**
+     * Pause active video
+     */
+    private pauseActiveVideo() {
+
+        this.videos[this.currentActiveExperiment].pause();
+
+    }
+
+    /**
+     * DOMException: The play() request was interrupted error fix for autoplay on mobile devices.
+     */
+    private loadVideo() {
+
+        // Show loading animation.
+        var playPromise = this.videos[this.currentActiveExperiment].play();
+
+        if (playPromise !== undefined) {
+            playPromise.then(_ => {
+                // Automatic playback started!
+                // Show playing UI.
+            })
+                .catch(error => {
+                    // Auto-play was prevented
+                    // Show paused UI.
+                    this.videos[this.currentActiveExperiment].play();
+                });
+        }
+
+    }
+
+    /**
+     * Server side pre rendering work around to set variables, and positioning.
+     */
     ngOnInit() {
-        let slider = document.getElementById('carousel-slider');
 
-        //mouse scroll
-        if ((slider as any)!.attachEvent) (slider as any)!.attachEvent("on" + (/Gecko\//i.test(navigator.userAgent)) ? "DOMMouseScroll" : "mousewheel", this.horizontalScroll);
-        else if (slider!.addEventListener) slider!.addEventListener((/Gecko\//i.test(navigator.userAgent)) ? "DOMMouseScroll" : "mousewheel", this.horizontalScroll, false);
+        this.videos = document.getElementsByTagName('video');
+        this.projects = document.getElementsByClassName('project');
+        this.experiments = document.getElementsByClassName('proj-span');
+        this.carouselSliderContainer = document.getElementById('carousel-slider-container');
+        this.totalExperiments = this.experiments.length;
 
-        // Drag scroll horizontal. (CONVERT ALL HORIZONTAL SCROLLING INTO A MODULE IN HELPER LIBRARY)
-        let curXPos: number = 0;
-        let prevChangeInX: number = 0;
-        let curDown: boolean = false;
-
-        slider!.addEventListener('mousemove', function(event){ 
-            if (curDown === true) {
-                // not really needed
-                //let delta = prevChangeInX > (curXPos - event.pageX) ? -3 : 3;
-                slider!.scrollLeft -= prevChangeInX - (curXPos - event.pageX);
-                prevChangeInX = (curXPos - event.pageX);
-            }
-        });
-        slider!.addEventListener('mousedown', function (event) { curDown = true; curXPos = event.pageX; prevChangeInX = (curXPos - event.pageX)});
-        document.addEventListener('mouseup', function (event){ curDown = false; }); 
-
-        this.video = document.getElementsByTagName('video');
-        this.resizeVideo();
         this.loadVideo();
+        this.setProperties();
+
     }
 }
