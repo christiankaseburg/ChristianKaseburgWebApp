@@ -1,31 +1,32 @@
 ﻿import { Component, ElementRef, HostListener } from '@angular/core';
-import { VerticalScrollService } from '../../services/shared/eventListeners/verticalScroll.service';
 
 const godraysVideo = require('../../assets/videos/godrays.mp4');
 
 @Component({
     selector: 'experiments',
     templateUrl: './experiments.component.html',
-    styleUrls: ['./experiments.component.scss'],
-    providers: [VerticalScrollService] 
+    styleUrls: ['./experiments.component.scss']
 })
 
 export class ExperimentsComponent {
 
     private projectVideo = { godrays: godraysVideo };
 
-    private videos;
-    private projects;
     private experiments;
-    private carouselSliderContainer;
+    private videos;
+
+    private experimentContainer;
+    private experimentSpans;
+    private prevArrow;
+    private nextArrow;
 
     private currentActiveExperiment: number = 0;
     private prevActiveExperiment: number = 0;
     private totalExperiments: number;
 
-    private carouselNameContainerHeight: number;
+    private experimentNameCarouselHeight: number;
 
-    constructor(private element: ElementRef, private _verticalScroll : VerticalScrollService) {
+    constructor(private element: ElementRef) {
     }
 
     /**
@@ -43,23 +44,23 @@ export class ExperimentsComponent {
     private setProperties() {
 
         //video container
-        let videoRect = document.getElementsByClassName('project')[this.currentActiveExperiment].getBoundingClientRect();
+        let videoRect = document.getElementsByClassName('experiment')[this.currentActiveExperiment].getBoundingClientRect();
 
         //counter
         let counter = document.getElementById('counter');
 
         // Carousel slider
-        let carouselSlider = document.getElementById('carousel-slider');
-        let carouselNameContainer = document.getElementsByClassName('project-name-container');
-        let carouselNameContainerSpan = document.getElementsByClassName('proj-span');
+        let experimentNameCarousel = document.getElementById('experiment-name-carousel');
+        let experimentName = document.getElementsByClassName('experiment-name');
+        let experimentSpan = document.getElementsByClassName('experiment-span');
         let prevButton = document.getElementById('prev-button');
         let nextButton = document.getElementById('next-button');
 
-        this.carouselNameContainerHeight = (((window.innerHeight - videoRect.bottom) - 5) / 3);
-        let carouselNameContainerSpainLineHeight = ((window.innerHeight - videoRect.bottom) / 3);
+        this.experimentNameCarouselHeight = (((window.innerHeight - videoRect.bottom) - 5) / 3);
+        let experimentNameLineHeight = ((window.innerHeight - videoRect.bottom) / 3);
 
-        carouselSlider!.style.height = (videoRect.top - 5) + "px";
-        carouselSlider!.style.width = ((videoRect.right - videoRect.left)) + 'px';
+        experimentNameCarousel!.style.height = (videoRect.top - 5) + "px";
+        experimentNameCarousel!.style.width = ((videoRect.right - videoRect.left)) + 'px';
 
         counter!.style.top = (videoRect.top - 25) + 'px';
         counter!.style.left = videoRect.left + 'px';
@@ -69,11 +70,11 @@ export class ExperimentsComponent {
         nextButton!.style.top = (window.innerHeight / 2) + 31 + 'px';
         nextButton!.style.left = videoRect.right + 'px';
 
-        this.carouselSliderContainer.style.transform = 'translate3d(0px,' + this.carouselNameContainerHeight + 'px' + ', 0px)';
+        this.experimentContainer.style.transform = 'translate3d(0px,' + this.experimentNameCarouselHeight + 'px' + ', 0px)';
 
-        for (let i = 0; i < carouselNameContainer.length; i++) {
-            (carouselNameContainer[i] as any)!.style.height = this.carouselNameContainerHeight + 'px';
-            (carouselNameContainerSpan[i] as any)!.style.lineHeight = carouselNameContainerSpainLineHeight + 'px';
+        for (let i = 0; i < experimentName.length; i++) {
+            (experimentName[i] as any)!.style.height = this.experimentNameCarouselHeight + 'px';
+            (experimentSpan[i] as any)!.style.lineHeight = experimentNameLineHeight + 'px';
         }
 
     }
@@ -84,7 +85,7 @@ export class ExperimentsComponent {
      */
     private transformSlider(experimentNum) {
 
-        this.carouselSliderContainer.style.transform = 'translate3d(0px,' + -(this.carouselNameContainerHeight * (experimentNum - 1)) + 'px' + ', 0px)';
+        this.experimentContainer.style.transform = 'translate3d(0px,' + -(this.experimentNameCarouselHeight * (experimentNum - 1)) + 'px' + ', 0px)';
 
     }
 
@@ -99,11 +100,11 @@ export class ExperimentsComponent {
             this.prevActiveExperiment = this.currentActiveExperiment;
             this.currentActiveExperiment = experimentNum;
 
-            this.experiments[this.prevActiveExperiment].classList.remove('active');
-            this.experiments[this.currentActiveExperiment].classList.add('active');
+            this.experimentSpans[this.prevActiveExperiment].classList.remove('active');
+            this.experimentSpans[this.currentActiveExperiment].classList.add('active');
 
-            this.projects[this.prevActiveExperiment].classList.add('hidden');
-            this.projects[this.currentActiveExperiment].classList.remove('hidden');
+            this.experiments[this.prevActiveExperiment].classList.add('hidden');
+            this.experiments[this.currentActiveExperiment].classList.remove('hidden');
 
             this.transformSlider(experimentNum);
             this.disableArrow();
@@ -119,17 +120,14 @@ export class ExperimentsComponent {
      */
     private disableArrow() {
 
-        let prevArrow = document.getElementById('prev-button');
-        let nextArrow = document.getElementById('next-button');
-
-        if (this.currentActiveExperiment != 0 && prevArrow!.classList.contains('not-clickable')) {
-            prevArrow!.classList.remove('not-clickable');
-        } else if (this.currentActiveExperiment == 0 && !prevArrow!.classList.contains('not-clickable')) {
-            prevArrow!.classList.add('not-clickable');
-        } else if (this.currentActiveExperiment == this.totalExperiments - 1 && !nextArrow!.classList.contains('not-clickable')) {
-            nextArrow!.classList.add('not-clickable');
-        } else if (this.currentActiveExperiment != this.totalExperiments - 1 && nextArrow!.classList.contains('not-clickable')) {
-            nextArrow!.classList.remove('not-clickable');
+        if (this.currentActiveExperiment != 0 && this.prevArrow!.classList.contains('disable')) {
+            this.prevArrow!.classList.remove('disable');
+        } else if (this.currentActiveExperiment == 0 && !this.prevArrow!.classList.contains('disable')) {
+            this.prevArrow!.classList.add('disable');
+        } else if (this.currentActiveExperiment == this.totalExperiments - 1 && !this.nextArrow!.classList.contains('disable')) {
+            this.nextArrow!.classList.add('disable');
+        } else if (this.currentActiveExperiment != this.totalExperiments - 1 && this.nextArrow!.classList.contains('disable')) {
+            this.nextArrow!.classList.remove('disable');
         }
 
     }
@@ -173,7 +171,7 @@ export class ExperimentsComponent {
     }
 
     /**
-     * DOMException: The play() request was interrupted error fix for autoplay on mobile devices.
+     * Fix for autoplay on devices : DOMException: The play() request was interrupted error.
      */
     private loadVideo() {
 
@@ -200,10 +198,12 @@ export class ExperimentsComponent {
     ngOnInit() {
 
         this.videos = document.getElementsByTagName('video');
-        this.projects = document.getElementsByClassName('project');
-        this.experiments = document.getElementsByClassName('proj-span');
-        this.carouselSliderContainer = document.getElementById('carousel-slider-container');
-        this.totalExperiments = this.experiments.length;
+        this.experiments = document.getElementsByClassName('experiment');
+        this.experimentSpans = document.getElementsByClassName('experiment-span');
+        this.experimentContainer = document.getElementById('experiment-container');
+        this.totalExperiments = this.experimentSpans.length;
+        this.prevArrow = document.getElementById('prev-button');
+        this.nextArrow = document.getElementById('next-button');
 
         this.loadVideo();
         this.setProperties();

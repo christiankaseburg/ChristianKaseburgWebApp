@@ -187,6 +187,16 @@ li {
     display: none !important;
 }
 
+
+/*
+ * Change elements opacity to seem disabled.
+ */
+
+.disable {
+    cursor: default !important;
+    opacity: .4;
+}
+
 /*
  * Hide only visually, but have it available for screen readers:
  * https://snook.ca/archives/html_and_css/hiding-content-for-accessibility
