@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { DeviceDetectorService } from '../../services/shared/device-detector/device-detector.service'
+import { Router } from '@angular/router';
+import { routerTransition } from '../shared/router.animations';
 
 @Component({
     selector: 'app',
+    animations: [ routerTransition ],
     templateUrl: './app.component.html',
     styleUrls: ['app.component.scss']
 })
@@ -15,8 +18,12 @@ export class AppComponent {
     hamburgerClicked: boolean = false;
     showSocial: boolean = false;
 
-    constructor(private _deviceDetector: DeviceDetectorService) {
+    constructor(private _deviceDetector: DeviceDetectorService, private router: Router) {
 
+    }
+
+    getState(outlet) {
+        return outlet.activatedRouteData.state;
     }
 
     //Toggles the overflow because when the hamburger expands you can still scroll in the background.
@@ -31,6 +38,13 @@ export class AppComponent {
             document.body.removeAttribute("style");
             this.showSocial = false;
         }
+    }
+
+    experimentRoute(route: Router) {
+        if (this.router.url.includes('/experiments/')) {
+            return false;
+        }
+        return true;
     }
 
     ngOnInit() {

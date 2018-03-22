@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+﻿import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
@@ -37,10 +37,11 @@ import { DeviceDetectorService } from './services/shared/device-detector/device-
         FormsModule,
         RouterModule.forRoot([
             { path: '', redirectTo: 'home', pathMatch: 'full' },
-            { path: 'home', component: HomeComponent },
-            { path: 'portfolio', component: PortfolioComponent },
-            { path: 'experiments', component: ExperimentsComponent },
-            { path: 'contact', component: ContactComponent },
+            { path: 'home', component: HomeComponent, data: { state: 'home' } },
+            { path: 'portfolio', component: PortfolioComponent, data: { state: 'portfolio' } },
+            { path: 'experiments', component: ExperimentsComponent, data: { state: 'experiments' } },
+            { path: 'experiments/godrays', component: BackgroundComponent },
+            { path: 'contact', component: ContactComponent, data: { state: 'contact' } },
             { path: '**', redirectTo: 'home' }
         ])
     ]

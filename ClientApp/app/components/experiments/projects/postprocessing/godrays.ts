@@ -18,6 +18,7 @@ export class Godrays {
     public occlusionComposer: THREE.EffectComposer;
     public composer: THREE.EffectComposer;
     public uniforms;
+
     private VolumetricLightShader = {
         uniforms: {
             tDiffuse: { value: null },
@@ -31,6 +32,7 @@ export class Godrays {
         vertexShader: require('../glsl/godrays/volumetricLight.vert'),
         fragmentShader: require('../glsl/godrays/volumetricLight.frag')
     };
+
     private AdditiveBlendingShader = {
         uniforms: {
             tDiffuse: { value: null },

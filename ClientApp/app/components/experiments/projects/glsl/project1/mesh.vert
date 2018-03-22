@@ -44,7 +44,7 @@ varying vec3 e;
             
 		// Stops flickering objects
 		if( i.w == 100. || p.w == 100. ) {
-			vPosition.x += 10000.;
+			vPosition.x += 100000.;
 		}
             
 		vec4 mvp = modelViewMatrix * vec4( vPosition, 1.0 );

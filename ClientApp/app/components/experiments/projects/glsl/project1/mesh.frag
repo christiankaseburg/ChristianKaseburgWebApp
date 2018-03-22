@@ -19,5 +19,5 @@ varying float vDiffuse;
 			spec = vec4(.35) * pow(intSpec, .5); // Increasing vec4 will increase the brightness on the normal
 		}
 
-		gl_FragColor = max(intensity * vec4(color, 1.0) + spec, 0.0);
+		gl_FragColor = max(intensity * (vec4(color, 1.0) + spec), 0.0);
 	}

@@ -56,10 +56,10 @@ export class BackgroundComponent { // Project 1
 
     private volumetricLightingSettings = {
         postProcessing: true,
-        exposure: 0.18,
+        exposure: 0.3,
         decay: 0.95,
         density: 0.9,
-        weight: 0.8,
+        weight: 0.4,
         samples: 100
     };
 
@@ -67,7 +67,7 @@ export class BackgroundComponent { // Project 1
         animate: true,
         persistence: 1.0,
         speed: .05,
-        decay: .5,
+        decay: .1,
     };
 
     private renderingSettings = {
@@ -161,9 +161,6 @@ export class BackgroundComponent { // Project 1
         volumetricLighting.add(this.volumetricLightingSettings, 'weight', 0, 1);
         volumetricLighting.add(this.volumetricLightingSettings, 'samples', 0, 100);
 
-        simulation.open();
-        rendering.open();
-        volumetricLighting.open();
         gui.close();
     }
 
@@ -195,7 +192,7 @@ export class BackgroundComponent { // Project 1
             let phi = Math.random() * 2 * Math.PI;
             let costheta = Math.random() * 2 - 1;
             let theta = Math.acos(costheta);
-            let r = 100 - (Math.random() * 1);
+            let r = 75 - (Math.random() * 1); // 100 instead of 75 before
 
             positions[i * 4] = r * Math.sin(theta) * Math.cos(phi);
             positions[i * 4 + 1] = r * Math.sin(theta) * Math.sin(phi);
@@ -234,7 +231,7 @@ export class BackgroundComponent { // Project 1
             uniforms: {
                 curPos: { type: 't', value: this.posTexture },
                 prevPos: { type: 't', value: this.posTexture },
-                lightPos: { type: 'v3', value: new THREE.Vector3(0, 0, 0) },
+                lightPos: { type: 'v3', value: new THREE.Vector3(0.5, 0.5, 0) },
                 scale: { type: 'v3', value: new THREE.Vector3(1, 1, 1) },
                 color: { type: 'v3', value: new THREE.Color(0x000000)}
             },

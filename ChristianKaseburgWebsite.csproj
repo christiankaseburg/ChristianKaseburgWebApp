@@ -31,6 +31,7 @@
     <None Remove="ClientApp\app\components\contact\contact.component.ts" />
     <None Remove="ClientApp\app\components\portfolio\portfolio.component.ts" />
     <None Remove="ClientApp\app\components\background\simulation.ts" />
+    <None Remove="ClientApp\app\components\shared\router.animations.ts" />
     <None Remove="ClientApp\app\services\shared\device-detector\device-detector.constants.ts" />
     <None Remove="ClientApp\app\services\shared\eventListeners\horizontalScroll.service.ts" />
     <None Remove="ClientApp\app\services\shared\eventListeners\verticalScroll.service.ts" />
@@ -40,6 +41,7 @@
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\app\components\experiments\projects\helpers\PingPongTexture.ts" />
     <TypeScriptCompile Include="ClientApp\app\components\experiments\projects\postprocessing\godrays.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\shared\router.animations.ts" />
     <TypeScriptCompile Include="ClientApp\app\services\shared\device-detector\device-detector.constants.ts" />
     <TypeScriptCompile Include="ClientApp\app\services\shared\device-detector\device-detector.service.ts" />
     <TypeScriptCompile Include="ClientApp\app\components\contact\contact.component.ts" />

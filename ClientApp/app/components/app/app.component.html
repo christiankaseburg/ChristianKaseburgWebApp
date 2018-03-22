@@ -1,6 +1,6 @@
-<div class="container">
-    <a class="logo" [routerLink]="['home']">Christian Kaseburg</a>
-    <div class="navigation">
+<div class="container" [@routerTransition]="getState(o)">
+    <a *ngIf="experimentRoute(router.url)" id="logo" [routerLink]="['home']"><span id="available-status"></span><span id="logo-text">Available</span></a>
+    <div *ngIf="experimentRoute(router.url)" class="navigation">
         <input class="hide" type="checkbox" id="navCheck" (click)='hideOverflow()' />
         <div class="hamburger" style="direction:rtl">
             <span class="line"></span>
@@ -13,8 +13,8 @@
     </div>
 
     <!--<background></background>-->
-    <router-outlet></router-outlet>
-    <footer [class.show]="showSocial">
+    <router-outlet #o="outlet"></router-outlet>
+    <footer *ngIf="experimentRoute(router.url)" [class.show]="showSocial">
             <span></span>
             <a class="c-link c-link--facebook c-tooltip" aria-label="Facebook" href="https://www.facebook.com/ChristianKaseburg" target="blank"><i class="icon-facebook"></i></a>
             <a class="c-link c-link--instagram c-tooltip" aria-label="Instagram" href="https://www.instagram.com/chriskaseburg94/" target="blank"><i class="icon-instagram"></i></a>

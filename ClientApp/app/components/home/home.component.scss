@@ -1,6 +1,28 @@
-﻿.wrapper {
-display: flex;
-flex: 1 0 auto;
-justify-content: center;
-align-items: center;
+﻿.title-container {
+    position: absolute;
+    display: block;
+    text-align: center;
+    text-transform: uppercase;
+    top: 105px;
+    left: 0;
+    right: 0;
+    margin: auto;
+
+    #title {
+        font-size: 38px;
+        letter-spacing: 1px;
+        transform: translate3d(0px, -20px, 0px);
+        transition: all 1s ease-in;
+        opacity: 0;
+        margin: 0;
+    }
+
+    #subtitle {
+        font-weight: 300;
+        font-size: 26px;
+        letter-spacing: 1px;
+        transform: translate3d(0px, -20px, 0px);
+        transition: all 1.3s ease-in;
+        opacity: 0;
+    }
 }

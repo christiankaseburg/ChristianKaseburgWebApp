@@ -11,7 +11,7 @@
         <!-- Projects -->
         <div class="experiment">
             <div class="video-container">
-                <video src="{{projectVideo.godrays}}" type="video/mp4" preload="auto" webkit-playsinline playsinline muted loop></video>
+                <video src="{{experimentVideo.godrays}}" type="video/mp4" preload="auto" webkit-playsinline playsinline muted loop></video>
             </div>
             <div class="info">
                 <h1>Godrays</h1>
@@ -19,13 +19,13 @@
                 <p class="description">[ WebGl / Instanced / PostProcessing / GPGPU ]<br />
                     <span>[ Volumetric Lighting ]</span>
                 </p>
-                <a class="demo-box">Demo The Experiment</a>
+                <a class="demo-box" [routerLink]="['/experiments/godrays']" target="blank" >Demo The Experiment</a>
             </div>
         </div>
 
         <div class="experiment hidden">
             <div class="video-container">
-                <video src="{{projectVideo.godrays}}" type="video/mp4" preload="metadata" webkit-playsinline playsinline muted loop></video>
+                <video src="{{experimentVideo.godrays}}" type="video/mp4" preload="metadata" webkit-playsinline playsinline muted loop></video>
             </div>
             <div class="info">
                 <h1>Godrays</h1>
@@ -40,7 +40,7 @@
 
         <div class="experiment hidden">
             <div class="video-container">
-                <video src="{{projectVideo.godrays}}" type="video/mp4" preload="metadata" webkit-playsinline playsinline muted loop></video>
+                <video src="{{experimentVideo.godrays}}" type="video/mp4" preload="metadata" webkit-playsinline playsinline muted loop></video>
             </div>
             <div class="info">
                 <h1>Godrays</h1>
@@ -55,7 +55,7 @@
 
         <div class="experiment hidden">
             <div class="video-container">
-                <video src="{{projectVideo.godrays}}" type="video/mp4" preload="metadata" webkit-playsinline playsinline muted loop></video>
+                <video src="{{experimentVideo.godrays}}" type="video/mp4" preload="metadata" webkit-playsinline playsinline muted loop></video>
             </div>
             <div class="info">
                 <h1>Godrays</h1>
@@ -70,7 +70,7 @@
 
         <div class="experiment hidden">
             <div class="video-container">
-                <video src="{{projectVideo.godrays}}" type="video/mp4" preload="metadata" webkit-playsinline playsinline muted loop></video>
+                <video src="{{experimentVideo.godrays}}" type="video/mp4" preload="metadata" webkit-playsinline playsinline muted loop></video>
             </div>
             <div class="info">
                 <h1>Godrays</h1>
@@ -85,7 +85,7 @@
 
         <div class="experiment hidden">
             <div class="video-container">
-                <video src="{{projectVideo.godrays}}" type="video/mp4" preload="metadata" webkit-playsinline playsinline muted loop></video>
+                <video src="{{experimentVideo.godrays}}" type="video/mp4" preload="metadata" webkit-playsinline playsinline muted loop></video>
             </div>
             <div class="info">
                 <h1>Godrays</h1>
@@ -100,7 +100,7 @@
 
         <div class="experiment hidden">
             <div class="video-container">
-                <video src="{{projectVideo.godrays}}" type="video/mp4" preload="metadata" webkit-playsinline playsinline muted loop></video>
+                <video src="{{experimentVideo.godrays}}" type="video/mp4" preload="metadata" webkit-playsinline playsinline muted loop></video>
             </div>
             <div class="info">
                 <h1>Godrays</h1>
@@ -115,7 +115,7 @@
 
         <div class="experiment hidden">
             <div class="video-container">
-                <video src="{{projectVideo.godrays}}" type="video/mp4" preload="metadata" webkit-playsinline playsinline muted loop></video>
+                <video src="{{experimentVideo.godrays}}" type="video/mp4" preload="metadata" webkit-playsinline playsinline muted loop></video>
             </div>
             <div class="info">
                 <h1>Godrays</h1>
@@ -133,13 +133,13 @@
 <!-- Experiment names carousel-->
 <div id="experiment-name-carousel">
     <div id="experiment-container">
-        <div class="experiment-name"><span class="experiment-span active" (click)="setActiveProject(0)">01/ Godrays</span></div>
-        <div class="experiment-name"><span class="experiment-span" (click)="setActiveProject(1)">02/ Godrays</span></div>
-        <div class="experiment-name"><span class="experiment-span" (click)="setActiveProject(2)">03/ Godrays</span></div>
-        <div class="experiment-name"><span class="experiment-span" (click)="setActiveProject(3)">04/ Godrays</span></div>
-        <div class="experiment-name"><span class="experiment-span" (click)="setActiveProject(4)">05/ Godrays</span></div>
-        <div class="experiment-name"><span class="experiment-span" (click)="setActiveProject(5)">06/ Godrays</span></div>
-        <div class="experiment-name"><span class="experiment-span" (click)="setActiveProject(6)">07/ Godrays</span></div>
-        <div class="experiment-name"><span class="experiment-span" (click)="setActiveProject(7)">08/ Godrays</span></div>
+        <div class="experiment-name"><span class="experiment-span active" (click)="setActiveExperiment(0)">01/ Godrays</span></div>
+        <div class="experiment-name"><span class="experiment-span" (click)="setActiveExperiment(1)">02/ Godrays</span></div>
+        <div class="experiment-name"><span class="experiment-span" (click)="setActiveExperiment(2)">03/ Godrays</span></div>
+        <div class="experiment-name"><span class="experiment-span" (click)="setActiveExperiment(3)">04/ Godrays</span></div>
+        <div class="experiment-name"><span class="experiment-span" (click)="setActiveExperiment(4)">05/ Godrays</span></div>
+        <div class="experiment-name"><span class="experiment-span" (click)="setActiveExperiment(5)">06/ Godrays</span></div>
+        <div class="experiment-name"><span class="experiment-span" (click)="setActiveExperiment(6)">07/ Godrays</span></div>
+        <div class="experiment-name"><span class="experiment-span" (click)="setActiveExperiment(7)">08/ Godrays</span></div>
     </div>
 </div>

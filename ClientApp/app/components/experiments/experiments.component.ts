@@ -10,15 +10,16 @@ const godraysVideo = require('../../assets/videos/godrays.mp4');
 
 export class ExperimentsComponent {
 
-    private projectVideo = { godrays: godraysVideo };
+    private experimentVideo = { godrays: godraysVideo };
 
-    private experiments;
-    private videos;
+    private experiments: HTMLCollectionOf<Element>;
+    private videos: NodeListOf<HTMLVideoElement>;
 
-    private experimentContainer;
-    private experimentSpans;
-    private prevArrow;
-    private nextArrow;
+    private experimentContainer: HTMLElement|null;
+    private experimentSpans: HTMLCollectionOf<Element>;
+    private prevArrow: HTMLElement | null;
+    private nextArrow: HTMLElement | null;
+    private infoBox: HTMLCollectionOf<Element>;
 
     private currentActiveExperiment: number = 0;
     private prevActiveExperiment: number = 0;
@@ -70,7 +71,8 @@ export class ExperimentsComponent {
         nextButton!.style.top = (window.innerHeight / 2) + 31 + 'px';
         nextButton!.style.left = videoRect.right + 'px';
 
-        this.experimentContainer.style.transform = 'translate3d(0px,' + this.experimentNameCarouselHeight + 'px' + ', 0px)';
+        this.infoTransition()
+        this.transformSlider(this.currentActiveExperiment);
 
         for (let i = 0; i < experimentName.length; i++) {
             (experimentName[i] as any)!.style.height = this.experimentNameCarouselHeight + 'px';
@@ -80,23 +82,14 @@ export class ExperimentsComponent {
     }
 
     /**
-     * Transform slider to center the current experiment in the slider.
-     * @param experimentNum
-     */
-    private transformSlider(experimentNum) {
-
-        this.experimentContainer.style.transform = 'translate3d(0px,' + -(this.experimentNameCarouselHeight * (experimentNum - 1)) + 'px' + ', 0px)';
-
-    }
-
-    /**
      * Swap previousActiveExperiment with current Active experiment and then add and remove active.
      * swap the prevActiveExperiment video with the active experiments video.
      * @param event
      */
-    private setActiveProject(experimentNum: number) {
+    private setActiveExperiment(experimentNum: number) {
 
         if (experimentNum < this.totalExperiments) {
+
             this.prevActiveExperiment = this.currentActiveExperiment;
             this.currentActiveExperiment = experimentNum;
 
@@ -107,11 +100,50 @@ export class ExperimentsComponent {
             this.experiments[this.currentActiveExperiment].classList.remove('hidden');
 
             this.transformSlider(experimentNum);
+            this.infoTransition();
             this.disableArrow();
             this.playActiveVideo();
         } else {
             console.log('There is only ' + this.totalExperiments + ' experiments.');
         }
+
+    }
+
+    /**
+    * When the next or previous button is clicked this method will
+    * either iterate down the experiments 1 or -1.
+    * @param iterate
+     */
+    private switchExperiment(iterate: number) {
+
+        let nextExperiment = this.currentActiveExperiment + iterate;
+
+        if (nextExperiment >= 0 && nextExperiment < this.totalExperiments) {
+
+            this.setActiveExperiment(nextExperiment);
+
+        }
+
+    }
+
+    /**
+     * Have the active info fade in for transition effects
+     */
+    private infoTransition() {
+        (this.infoBox[this.currentActiveExperiment] as any).removeAttribute('style');
+        setTimeout(() => {
+            (this.infoBox[this.currentActiveExperiment] as any).setAttribute(
+                "style", "opacity: 1; left: 0;");
+        }, 40); 
+    }
+
+    /**
+     * Transform slider to center the current experiment in the slider.
+     * @param experimentNum
+     */
+    private transformSlider(experimentNum) {
+
+        this.experimentContainer!.style.transform = 'translate3d(0px,' + -(this.experimentNameCarouselHeight * (experimentNum - 1)) + 'px' + ', 0px)';
 
     }
 
@@ -128,22 +160,6 @@ export class ExperimentsComponent {
             this.nextArrow!.classList.add('disable');
         } else if (this.currentActiveExperiment != this.totalExperiments - 1 && this.nextArrow!.classList.contains('disable')) {
             this.nextArrow!.classList.remove('disable');
-        }
-
-    }
-
-    /**
-     * When the next or previous button is clicked this method will
-     * either iterate down the experiments 1 or -1.
-     * @param iterate
-     */
-    private switchExperiment(iterate: number) {
-
-        let nextExperiment = this.currentActiveExperiment + iterate;
-
-        if (nextExperiment >= 0 && nextExperiment < this.totalExperiments) {
-            this.setActiveProject(nextExperiment);
-            this.disableArrow();
         }
 
     }
@@ -204,6 +220,7 @@ export class ExperimentsComponent {
         this.totalExperiments = this.experimentSpans.length;
         this.prevArrow = document.getElementById('prev-button');
         this.nextArrow = document.getElementById('next-button');
+        this.infoBox = document.getElementsByClassName('info');
 
         this.loadVideo();
         this.setProperties();

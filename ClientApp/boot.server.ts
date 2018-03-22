@@ -1,4 +1,4 @@
-import 'reflect-metadata';
+﻿import 'reflect-metadata';
 import 'zone.js';
 import 'rxjs/add/operator/first';
 import { APP_BASE_HREF } from '@angular/common';

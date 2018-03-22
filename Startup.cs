@@ -49,8 +49,8 @@ namespace ChristianKaseburgWebsite
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
-                    
-            //Fall back route so everything gets handled over to angular application
+
+                //Fall back route so everything gets handled over to angular application
                 routes.MapSpaFallbackRoute(
                     name: "spa-fallback",
                     defaults: new { controller = "Home", action = "Index" });

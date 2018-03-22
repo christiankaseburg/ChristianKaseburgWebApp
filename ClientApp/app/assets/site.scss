@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Overpass|Teko');
+@import url('https://fonts.googleapis.com/css?family=Teko:300,700');
 @import "css/fontello.css";
 @import "normalize.scss";
 
@@ -195,6 +195,14 @@ li {
 .disable {
     cursor: default !important;
     opacity: .4;
+}
+
+/*
+ * Change elements opacity to seem disabled.
+ */
+
+.animated {
+    opacity: 0;
 }
 
 /*
