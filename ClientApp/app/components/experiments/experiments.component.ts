@@ -10,7 +10,7 @@ const godraysVideo = require('../../assets/videos/godrays.mp4');
 
 export class ExperimentsComponent {
 
-    private experimentVideo = { godrays: godraysVideo };
+    public experimentVideo = { godrays: godraysVideo };
 
     private experiments: HTMLCollectionOf<Element>;
     private videos: NodeListOf<HTMLVideoElement>;
@@ -21,9 +21,9 @@ export class ExperimentsComponent {
     private nextArrow: HTMLElement | null;
     private infoBox: HTMLCollectionOf<Element>;
 
-    private currentActiveExperiment: number = 0;
-    private prevActiveExperiment: number = 0;
-    private totalExperiments: number;
+    public currentActiveExperiment: number = 0;
+    public prevActiveExperiment: number = 0;
+    public totalExperiments: number;
 
     private experimentNameCarouselHeight: number;
 
@@ -33,7 +33,7 @@ export class ExperimentsComponent {
     /**
      * Call onResize when a window resize event is detected.
      */
-    private onResize() {
+    public onResize() {
 
         setTimeout(this.setProperties(), 200);
 
@@ -86,7 +86,7 @@ export class ExperimentsComponent {
      * swap the prevActiveExperiment video with the active experiments video.
      * @param event
      */
-    private setActiveExperiment(experimentNum: number) {
+    public setActiveExperiment(experimentNum: number) {
 
         if (experimentNum < this.totalExperiments) {
 
@@ -114,7 +114,7 @@ export class ExperimentsComponent {
     * either iterate down the experiments 1 or -1.
     * @param iterate
      */
-    private switchExperiment(iterate: number) {
+    public switchExperiment(iterate: number) {
 
         let nextExperiment = this.currentActiveExperiment + iterate;
 
@@ -167,7 +167,7 @@ export class ExperimentsComponent {
     /**
      * Pause previous video if playing, and play current video.
      */
-    private playActiveVideo() {
+    public playActiveVideo() {
 
         if (this.videos[this.prevActiveExperiment].paused != true) {
             this.videos[this.prevActiveExperiment].pause();
@@ -180,7 +180,7 @@ export class ExperimentsComponent {
     /**
      * Pause active video
      */
-    private pauseActiveVideo() {
+    public pauseActiveVideo() {
 
         this.videos[this.currentActiveExperiment].pause();
 

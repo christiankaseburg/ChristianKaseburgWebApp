@@ -18,7 +18,7 @@ export class AppComponent {
     hamburgerClicked: boolean = false;
     showSocial: boolean = false;
 
-    constructor(private _deviceDetector: DeviceDetectorService, private router: Router) {
+    constructor(private _deviceDetector: DeviceDetectorService, public router: Router) {
 
     }
 
@@ -40,7 +40,7 @@ export class AppComponent {
         }
     }
 
-    experimentRoute(route: Router) {
+    experimentRoute(route: string) {
         if (this.router.url.includes('/experiments/')) {
             return false;
         }

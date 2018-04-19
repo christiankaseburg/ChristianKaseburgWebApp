@@ -349,7 +349,7 @@ export class BackgroundComponent { // Project 1
     }
 
     /* Events */
-    private onWindowResize(event: Event) {
+    public onWindowResize(event: Event) {
 
         let dPR = .5 * window.devicePixelRatio;
         this.resolution.set(this.canvas.clientWidth * dPR, this.canvas.clientHeight * dPR);
