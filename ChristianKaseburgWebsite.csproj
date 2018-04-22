@@ -35,6 +35,11 @@
     <None Remove="ClientApp\app\services\shared\device-detector\device-detector.constants.ts" />
     <None Remove="ClientApp\app\services\shared\eventListeners\horizontalScroll.service.ts" />
     <None Remove="ClientApp\app\services\shared\eventListeners\verticalScroll.service.ts" />
+    <None Remove="Properties\PublishProfiles\ChristianKaseburgWebsite20180419095524 - Web Deploy.pubxml" />
+    <None Remove="Properties\PublishProfiles\ChristianKaseburgWebsite20180419100932 - Web Deploy.pubxml" />
+    <None Remove="Properties\PublishProfiles\ChristianKaseburgWebsite20180419104646 - Web Deploy.pubxml" />
+    <None Remove="Properties\PublishProfiles\ChristianKaseburgWebsite20180419105609 - Web Deploy.pubxml" />
+    <None Remove="Properties\PublishProfiles\ChristianKaseburgWebsite20180419105817 - Web Deploy.pubxml" />
     <None Remove="Properties\PublishProfiles\CustomProfile.pubxml" />
   </ItemGroup>
 
