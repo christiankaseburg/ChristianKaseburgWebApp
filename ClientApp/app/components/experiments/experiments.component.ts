@@ -1,167 +1,199 @@
-﻿import { Component, ElementRef, HostListener } from '@angular/core';
+﻿import { Component, ElementRef, HostListener, AfterViewInit } from '@angular/core';
 
-const godraysVideo = require('../../assets/videos/godrays.mp4');
+import { TweenLite, TweenMax } from 'gsap';
+import { EXPERIMENTS } from './mock-experiments';
 
 @Component({
     selector: 'experiments',
     templateUrl: './experiments.component.html',
-    styleUrls: ['./experiments.component.scss']
+    styleUrls: ['./experiments.component.scss'],
 })
 
-export class ExperimentsComponent {
+export class ExperimentsComponent implements AfterViewInit {
 
-    public experimentVideo = { godrays: godraysVideo };
+    public experiments = EXPERIMENTS;
 
-    private experiments: HTMLCollectionOf<Element>;
-    private videos: NodeListOf<HTMLVideoElement>;
+    public currentVideo: number = 0;
+    public previousVideo: number = 0;
+    public sliderPosX: number = 0;
+    public mousePosX = null;
+    public minDragDistance: number = 40;
+    public animating: boolean = false;
 
-    private experimentContainer: HTMLElement|null;
-    private experimentSpans: HTMLCollectionOf<Element>;
-    private prevArrow: HTMLElement | null;
-    private nextArrow: HTMLElement | null;
-    private infoBox: HTMLCollectionOf<Element>;
+    public slideShowContainer: HTMLCollectionOf<Element>;
+    public videoContainer: HTMLCollectionOf<Element>;
+    public slides: HTMLCollectionOf<Element>;
+    public videos: NodeListOf<HTMLVideoElement>;
+    public slidesVideoInfo: HTMLCollectionOf<Element>;
+    public sliderContainerWidth: number;
+    public videoSize: number;
+    public centerVideoOffset: number;
 
-    public currentActiveExperiment: number = 0;
-    public prevActiveExperiment: number = 0;
-    public totalExperiments: number;
-
-    private experimentNameCarouselHeight: number;
-
-    constructor(private element: ElementRef) {
+    // @HostListener('window:resize', ['$event']) <-- Another solution besdies adding into inline html
+    onResize(event) {
+        this.setSliderValues();
     }
 
     /**
-     * Call onResize when a window resize event is detected.
+     * Set the slider variables for the container, and the slides.
      */
-    public onResize() {
+    public setSliderValues() {
+        // video padding
+        let videoPadding = 40;
 
-        setTimeout(this.setProperties(), 200);
+        // Set slider elements to variables
+        this.slideShowContainer = document.getElementsByClassName('slideshow__container');
+        this.videoContainer = document.getElementsByClassName('slideshow__video-container');
+        this.slides = document.getElementsByClassName('slideshow__slide');
+        this.videos = document.getElementsByTagName('video');
+        this.slidesVideoInfo = document.getElementsByClassName('slide-video-info');
+        this.sliderContainerWidth = (this.slideShowContainer[0] as HTMLElement).clientWidth;
+        this.videoSize = (this.videoContainer[0] as HTMLElement).clientWidth + videoPadding;
 
+        // Calculate offset to center video
+        this.centerVideoOffset = (window.innerWidth - this.videoSize) / 2;
+
+        // Set Slider position
+        this.sliderPosX = (this.centerVideoOffset - (this.currentVideo * this.videoSize));
+
+        // Apply styles to Container
+        setTimeout((this.slideShowContainer[0] as HTMLElement).removeAttribute('style'), 50);
+        setTimeout((this.slideShowContainer[0] as HTMLElement).setAttribute('style',
+            'width: ' + (this.videoSize * this.experiments.length) + 'px; ' + 'transform: matrix(1, 0, 0, 1, ' + this.sliderPosX +
+            ', 0); touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);'), 100);
     }
 
     /**
-     * Set the positioning for all the elements to be responsive to the device.
+     * Switch through the videos based on the direction the user supplies.
+     * @param direction
+     * The user supplies a direction, and the container will move based on that.
      */
-    private setProperties() {
+    public switchVideo(direction: string) {
+        // True as long if video positioned at front is moving to next video,
+        // currentVideo is within the 0 and total experiment limit,
+        // and if currentvideo is last video and is moving backwards
+        if ((this.currentVideo === 0 && direction === '-'
+            || (0 < this.currentVideo && this.currentVideo < this.experiments.length - 1)
+            || this.currentVideo === this.experiments.length - 1 && direction === '+') && !this.animating) {
 
-        //video container
-        let videoRect = document.getElementsByClassName('experiment')[this.currentActiveExperiment].getBoundingClientRect();
+            // Set previous Video to currentVideo
+            this.previousVideo = this.currentVideo;
 
-        //counter
-        let counter = document.getElementById('counter');
+            // If direction is backwards - from slider position
+            // else if add to the sliderPosX
+            if (direction === '-') {
+                this.currentVideo++;
+                this.sliderPosX -= this.videoSize;
+            } else if (direction === '+') {
+                this.currentVideo--;
+                this.sliderPosX += this.videoSize;
+            }
 
-        // Carousel slider
-        let experimentNameCarousel = document.getElementById('experiment-name-carousel');
-        let experimentName = document.getElementsByClassName('experiment-name');
-        let experimentSpan = document.getElementsByClassName('experiment-span');
-        let prevButton = document.getElementById('prev-button');
-        let nextButton = document.getElementById('next-button');
+            // Start Tween, and then set activeslides for animation
+            TweenLite.to(this.slideShowContainer, .75, { x: this.sliderPosX, delay: .25 });
+            this.setActiveSlide();
 
-        this.experimentNameCarouselHeight = (((window.innerHeight - videoRect.bottom) - 5) / 3);
-        let experimentNameLineHeight = ((window.innerHeight - videoRect.bottom) / 3);
-
-        experimentNameCarousel!.style.height = (videoRect.top - 5) + "px";
-        experimentNameCarousel!.style.width = ((videoRect.right - videoRect.left)) + 'px';
-
-        counter!.style.top = (videoRect.top - 25) + 'px';
-        counter!.style.left = videoRect.left + 'px';
-
-        prevButton!.style.top = (window.innerHeight / 2) - 31 + 'px';
-        prevButton!.style.left = videoRect.right + 'px';
-        nextButton!.style.top = (window.innerHeight / 2) + 31 + 'px';
-        nextButton!.style.left = videoRect.right + 'px';
-
-        this.infoTransition()
-        this.transformSlider(this.currentActiveExperiment);
-
-        for (let i = 0; i < experimentName.length; i++) {
-            (experimentName[i] as any)!.style.height = this.experimentNameCarouselHeight + 'px';
-            (experimentSpan[i] as any)!.style.lineHeight = experimentNameLineHeight + 'px';
+            // Prevent user from scrolling through fast
+            this.animating = true;
+            setTimeout(() => this.animating = false, 1500);
         }
 
     }
 
     /**
-     * Swap previousActiveExperiment with current Active experiment and then add and remove active.
-     * swap the prevActiveExperiment video with the active experiments video.
+     * Set the current slide to be active, and previous slide to unactive.
+     */
+    public setActiveSlide() {
+        this.slides[this.previousVideo].classList.remove('active');
+        this.slides[this.currentVideo].classList.add('active');
+        this.playActiveVideo();
+    }
+
+    /**
+     * Once the page has loaded start the load in animation.
+     */
+
+    // https://codepen.io/anon/pen/KRmaxZ remember
+    public pageLoadedAnimation() {
+
+        // Set Active slide
+        this.setActiveSlide();
+
+        // Start tween to push slider in
+        TweenLite.fromTo(this.slideShowContainer, .5, { x: window.innerWidth }, { x: this.centerVideoOffset, delay: .5 });
+    }
+
+    /**
+     * Set event listeners for slider
+     */
+    public setEventListeners() {
+
+        // Event listener for scrolling through slides
+        (this.slideShowContainer[0] as HTMLElement).addEventListener('wheel', event => this.findScrollDirection(event), false);
+
+        (this.slideShowContainer[0] as HTMLElement).addEventListener('mousedown', event => this.lock(event), false);
+        (this.slideShowContainer[0] as HTMLElement).addEventListener('touchstart', event => this.lock(event), false);
+
+        (this.slideShowContainer[0] as HTMLElement).addEventListener('mouseup', event => this.move(event), false);
+        (this.slideShowContainer[0] as HTMLElement).addEventListener('touchend', event => this.move(event), false);
+    }
+
+    /**
+     * Check for changed touches, and if there are change touches
+     * switch to that touch and if not return the regular event.
      * @param event
      */
-    public setActiveExperiment(experimentNum: number) {
+    public unify(event) { return event.changedTouches ? event.changedTouches[0] : event };
 
-        if (experimentNum < this.totalExperiments) {
+    /**
+     * set the x coordinate of the mouse.
+     * @param event
+     */
+    public lock(event) { this.mousePosX = this.unify(event).clientX };
 
-            this.prevActiveExperiment = this.currentActiveExperiment;
-            this.currentActiveExperiment = experimentNum;
+    /**
+     * This is where the magic happens :D
+     * @param event
+     */
+    public move(event) {
+        if (this.mousePosX || this.mousePosX === 0) {
+            let dx = this.unify(event).clientX - (this.mousePosX as any), s = Math.sign(dx);
 
-            this.experimentSpans[this.prevActiveExperiment].classList.remove('active');
-            this.experimentSpans[this.currentActiveExperiment].classList.add('active');
+            if (dx !== 0) {
+                if (dx < this.minDragDistance) {
+                    this.switchVideo('-');
+                } else if (dx > -(this.minDragDistance)) {
+                    this.switchVideo('+');
+                }
+            }
 
-            this.experiments[this.prevActiveExperiment].classList.add('hidden');
-            this.experiments[this.currentActiveExperiment].classList.remove('hidden');
+            this.mousePosX = null;
+        }
+    };
 
-            this.transformSlider(experimentNum);
-            this.infoTransition();
-            this.disableArrow();
-            this.playActiveVideo();
+    /**
+     * Calculate the direction the user scrolled, and then
+     * switch the video to the next video or previous.
+     * @param event
+     */
+    public findScrollDirection(event) {
+        let delta;
+        let direction;
+
+        if (event.wheelDelta) {
+            delta = event.wheelDelta;
         } else {
-            console.log('There is only ' + this.totalExperiments + ' experiments.');
+            delta = -1 * event.deltaY;
         }
 
-    }
-
-    /**
-    * When the next or previous button is clicked this method will
-    * either iterate down the experiments 1 or -1.
-    * @param iterate
-     */
-    public switchExperiment(iterate: number) {
-
-        let nextExperiment = this.currentActiveExperiment + iterate;
-
-        if (nextExperiment >= 0 && nextExperiment < this.totalExperiments) {
-
-            this.setActiveExperiment(nextExperiment);
-
+        if (delta < 0) {
+            direction = '-';
+        } else if (delta > 0) {
+            direction = '+';
         }
 
-    }
-
-    /**
-     * Have the active info fade in for transition effects
-     */
-    private infoTransition() {
-        (this.infoBox[this.currentActiveExperiment] as any).removeAttribute('style');
-        setTimeout(() => {
-            (this.infoBox[this.currentActiveExperiment] as any).setAttribute(
-                "style", "opacity: 1; left: 0;");
-        }, 40); 
-    }
-
-    /**
-     * Transform slider to center the current experiment in the slider.
-     * @param experimentNum
-     */
-    private transformSlider(experimentNum) {
-
-        this.experimentContainer!.style.transform = 'translate3d(0px,' + -(this.experimentNameCarouselHeight * (experimentNum - 1)) + 'px' + ', 0px)';
-
-    }
-
-    /**
-     *  Arrows that are out of the totalExperiments range will have the not-clickable class added and vice versa.
-     */
-    private disableArrow() {
-
-        if (this.currentActiveExperiment != 0 && this.prevArrow!.classList.contains('disable')) {
-            this.prevArrow!.classList.remove('disable');
-        } else if (this.currentActiveExperiment == 0 && !this.prevArrow!.classList.contains('disable')) {
-            this.prevArrow!.classList.add('disable');
-        } else if (this.currentActiveExperiment == this.totalExperiments - 1 && !this.nextArrow!.classList.contains('disable')) {
-            this.nextArrow!.classList.add('disable');
-        } else if (this.currentActiveExperiment != this.totalExperiments - 1 && this.nextArrow!.classList.contains('disable')) {
-            this.nextArrow!.classList.remove('disable');
-        }
-
+        this.switchVideo(direction);
+        event.preventDefault();
     }
 
     /**
@@ -169,12 +201,11 @@ export class ExperimentsComponent {
      */
     public playActiveVideo() {
 
-        if (this.videos[this.prevActiveExperiment].paused != true) {
-            this.videos[this.prevActiveExperiment].pause();
+        if (this.videos[this.previousVideo].paused != true) {
+            this.videos[this.previousVideo].pause();
         }
 
-        this.videos[this.currentActiveExperiment].play();
-
+        setTimeout(() => this.videos[this.currentVideo].play(), 1000);
     }
 
     /**
@@ -182,48 +213,17 @@ export class ExperimentsComponent {
      */
     public pauseActiveVideo() {
 
-        this.videos[this.currentActiveExperiment].pause();
-
+        this.videos[this.currentVideo].pause();
     }
 
     /**
-     * Fix for autoplay on devices : DOMException: The play() request was interrupted error.
+     * After view has been initialized call onResize to set styles,
+     * and then start page Loaded animation to slide the slider in.
      */
-    private loadVideo() {
-
-        // Show loading animation.
-        var playPromise = this.videos[this.currentActiveExperiment].play();
-
-        if (playPromise !== undefined) {
-            playPromise.then(_ => {
-                // Automatic playback started!
-                // Show playing UI.
-            })
-                .catch(error => {
-                    // Auto-play was prevented
-                    // Show paused UI.
-                    this.videos[this.currentActiveExperiment].play();
-                });
-        }
-
-    }
-
-    /**
-     * Server side pre rendering work around to set variables, and positioning.
-     */
-    ngOnInit() {
-
-        this.videos = document.getElementsByTagName('video');
-        this.experiments = document.getElementsByClassName('experiment');
-        this.experimentSpans = document.getElementsByClassName('experiment-span');
-        this.experimentContainer = document.getElementById('experiment-container');
-        this.totalExperiments = this.experimentSpans.length;
-        this.prevArrow = document.getElementById('prev-button');
-        this.nextArrow = document.getElementById('next-button');
-        this.infoBox = document.getElementsByClassName('info');
-
-        this.loadVideo();
-        this.setProperties();
+    ngAfterViewInit() {
+        this.onResize(event);
+        this.setEventListeners();
+        this.pageLoadedAnimation();
 
     }
 }

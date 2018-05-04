@@ -1,145 +1,26 @@
-﻿<div class="carousel" (window:resize)="onResize()" (window:focus)="playActiveVideo()" (window:blur)="pauseActiveVideo()">
-    <div class="carousel-content">
-        <!-- Counter -->
-        <div id="counter">
-            <span id="current-project">0{{currentActiveExperiment + 1}} </span>
-            <span id="total-projects">/0{{totalExperiments}}</span>
-        </div>
-        <!-- Arrow buttons -->
-        <i id="prev-button" class="icon-angle-up disable" (click)="switchExperiment(-1)"></i>
-        <i id="next-button" class="icon-angle-down" (click)="switchExperiment(1)"></i>
-        <!-- Projects -->
-        <div class="experiment">
-            <div class="video-container">
-                <video src="{{experimentVideo.godrays}}" type="video/mp4" preload="auto" webkit-playsinline playsinline muted loop></video>
-            </div>
-            <div class="info">
-                <h1>Godrays</h1>
-                <span class="bar"></span>
-                <p class="description">[ WebGl / Instanced / PostProcessing / GPGPU ]<br />
-                    <span>[ Volumetric Lighting ]</span>
-                </p>
-                <a class="demo-box" [routerLink]="['/experiments/godrays']" target="blank" >Demo The Experiment</a>
+﻿<div class="slideshow" (window:resize)="onResize($event)" (window:focus)="playActiveVideo()" (window:blur)="pauseActiveVideo()">
+    <!--<div class="slide-titles">
+        <div class="slide-titles-container">
+            <div class="title-element" *ngFor="let experiment of experiments">
+                <span class="title-element-title">{{experiment.title}}</span>
             </div>
         </div>
-
-        <div class="experiment hidden">
-            <div class="video-container">
-                <video src="{{experimentVideo.godrays}}" type="video/mp4" preload="metadata" webkit-playsinline playsinline muted loop></video>
-            </div>
-            <div class="info">
-                <h1>Godrays</h1>
-                <span class="bar"></span>
-                <p class="description">
-                    [ WebGl / Instanced / PostProcessing / GPGPU ]<br />
-                    <span>[ Volumetric Lighting ]</span>
-                </p>
-                <a class="demo-box">Demo The Experiment</a>
-            </div>
+    </div>-->
+    <div #slideshow__container class="slideshow__container">
+        <div class="slideshow__slide" *ngFor="let experiment of experiments">
+            <article class="slideshow__content">
+                <div class="slideshow__info slideshow__info--slide-up">
+                    <span>{{experiment.subtitle}}</span>
+                    <span>{{experiment.date}}</span>
+                </div>
+                <a class="slideshow__info slideshow__info--slide-down" [routerLink]="[experiment.route]" target="blank">
+                    <span>Visit Experiment</span>
+                </a>
+                <div class="slideshow__video-container">
+                    <img src="{{experiment.image}}" />
+                    <video class="slide-video__video" src="{{experiment.video}}" type="video/mp4" preload="metadata" webkit-playsinline playsinline muted loop></video>
+                </div>
+            </article>
         </div>
-
-        <div class="experiment hidden">
-            <div class="video-container">
-                <video src="{{experimentVideo.godrays}}" type="video/mp4" preload="metadata" webkit-playsinline playsinline muted loop></video>
-            </div>
-            <div class="info">
-                <h1>Godrays</h1>
-                <span class="bar"></span>
-                <p class="description">
-                    [ WebGl / Instanced / PostProcessing / GPGPU ]<br />
-                    <span>[ Volumetric Lighting ]</span>
-                </p>
-                <a class="demo-box">Demo The Experiment</a>
-            </div>
-        </div>
-
-        <div class="experiment hidden">
-            <div class="video-container">
-                <video src="{{experimentVideo.godrays}}" type="video/mp4" preload="metadata" webkit-playsinline playsinline muted loop></video>
-            </div>
-            <div class="info">
-                <h1>Godrays</h1>
-                <span class="bar"></span>
-                <p class="description">
-                    [ WebGl / Instanced / PostProcessing / GPGPU ]<br />
-                    <span>[ Volumetric Lighting ]</span>
-                </p>
-                <a class="demo-box">Demo The Experiment</a>
-            </div>
-        </div>
-
-        <div class="experiment hidden">
-            <div class="video-container">
-                <video src="{{experimentVideo.godrays}}" type="video/mp4" preload="metadata" webkit-playsinline playsinline muted loop></video>
-            </div>
-            <div class="info">
-                <h1>Godrays</h1>
-                <span class="bar"></span>
-                <p class="description">
-                    [ WebGl / Instanced / PostProcessing / GPGPU ]<br />
-                    <span>[ Volumetric Lighting ]</span>
-                </p>
-                <a class="demo-box">Demo The Experiment</a>
-            </div>
-        </div>
-
-        <div class="experiment hidden">
-            <div class="video-container">
-                <video src="{{experimentVideo.godrays}}" type="video/mp4" preload="metadata" webkit-playsinline playsinline muted loop></video>
-            </div>
-            <div class="info">
-                <h1>Godrays</h1>
-                <span class="bar"></span>
-                <p class="description">
-                    [ WebGl / Instanced / PostProcessing / GPGPU ]<br />
-                    <span>[ Volumetric Lighting ]</span>
-                </p>
-                <a class="demo-box">Demo The Experiment</a>
-            </div>
-        </div>
-
-        <div class="experiment hidden">
-            <div class="video-container">
-                <video src="{{experimentVideo.godrays}}" type="video/mp4" preload="metadata" webkit-playsinline playsinline muted loop></video>
-            </div>
-            <div class="info">
-                <h1>Godrays</h1>
-                <span class="bar"></span>
-                <p class="description">
-                    [ WebGl / Instanced / PostProcessing / GPGPU ]<br />
-                    <span>[ Volumetric Lighting ]</span>
-                </p>
-                <a class="demo-box">Demo The Experiment</a>
-            </div>
-        </div>
-
-        <div class="experiment hidden">
-            <div class="video-container">
-                <video src="{{experimentVideo.godrays}}" type="video/mp4" preload="metadata" webkit-playsinline playsinline muted loop></video>
-            </div>
-            <div class="info">
-                <h1>Godrays</h1>
-                <span class="bar"></span>
-                <p class="description">
-                    [ WebGl / Instanced / PostProcessing / GPGPU ]<br />
-                    <span>[ Volumetric Lighting ]</span>
-                </p>
-                <a class="demo-box">Demo The Experiment</a>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Experiment names carousel-->
-<div id="experiment-name-carousel">
-    <div id="experiment-container">
-        <div class="experiment-name"><span class="experiment-span active" (click)="setActiveExperiment(0)">01/ Godrays</span></div>
-        <div class="experiment-name"><span class="experiment-span" (click)="setActiveExperiment(1)">02/ Godrays</span></div>
-        <div class="experiment-name"><span class="experiment-span" (click)="setActiveExperiment(2)">03/ Godrays</span></div>
-        <div class="experiment-name"><span class="experiment-span" (click)="setActiveExperiment(3)">04/ Godrays</span></div>
-        <div class="experiment-name"><span class="experiment-span" (click)="setActiveExperiment(4)">05/ Godrays</span></div>
-        <div class="experiment-name"><span class="experiment-span" (click)="setActiveExperiment(5)">06/ Godrays</span></div>
-        <div class="experiment-name"><span class="experiment-span" (click)="setActiveExperiment(6)">07/ Godrays</span></div>
-        <div class="experiment-name"><span class="experiment-span" (click)="setActiveExperiment(7)">08/ Godrays</span></div>
     </div>
 </div>

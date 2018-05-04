@@ -29,8 +29,8 @@ export class Godrays {
             weight: { value: 0.8 },
             samples: { value: 100 }
         },
-        vertexShader: require('../glsl/godrays/volumetricLight.vert'),
-        fragmentShader: require('../glsl/godrays/volumetricLight.frag')
+        vertexShader: require('../../shaders/godrays/volumetricLight.vert'),
+        fragmentShader: require('../../shaders/godrays/volumetricLight.frag')
     };
 
     private AdditiveBlendingShader = {
@@ -38,8 +38,8 @@ export class Godrays {
             tDiffuse: { value: null },
             tAdd: { value: null }
         },
-        vertexShader: require('../glsl/godrays/additiveBlending.vert'),
-        fragmentShader: require('../glsl/godrays/additiveBlending.frag')
+        vertexShader: require('../../shaders/godrays/additiveBlending.vert'),
+        fragmentShader: require('../../shaders/godrays/additiveBlending.frag')
     }
 
     constructor(scene: THREE.Scene, camera: THREE.Camera, renderer: THREE.WebGLRenderer, lightMesh: THREE.Mesh, occlusionMesh: THREE.Mesh) {

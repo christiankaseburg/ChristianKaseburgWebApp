@@ -26,12 +26,14 @@
 
   <ItemGroup>
     <None Remove="ClientApp\app\components\background\background.component.ts" />
-    <None Remove="ClientApp\app\components\experiments\projects\helpers\backgroundScene.component.ts" />
     <None Remove="ClientApp\app\components\background\PingPongTexture.ts" />
     <None Remove="ClientApp\app\components\contact\contact.component.ts" />
+    <None Remove="ClientApp\app\components\experiments\experiments.routes.ts" />
+    <None Remove="ClientApp\app\components\experiments\experiment\godraysExperiment\godrays.experiment.component.ts" />
+    <None Remove="ClientApp\app\components\experiments\mock-experiments.ts" />
+    <None Remove="ClientApp\app\components\experiments\shared\models\experiment.model.ts" />
     <None Remove="ClientApp\app\components\portfolio\portfolio.component.ts" />
     <None Remove="ClientApp\app\components\background\simulation.ts" />
-    <None Remove="ClientApp\app\components\shared\router.animations.ts" />
     <None Remove="ClientApp\app\services\shared\device-detector\device-detector.constants.ts" />
     <None Remove="ClientApp\app\services\shared\eventListeners\horizontalScroll.service.ts" />
     <None Remove="ClientApp\app\services\shared\eventListeners\verticalScroll.service.ts" />
@@ -44,9 +46,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <TypeScriptCompile Include="ClientApp\app\components\experiments\projects\helpers\PingPongTexture.ts" />
-    <TypeScriptCompile Include="ClientApp\app\components\experiments\projects\postprocessing\godrays.ts" />
-    <TypeScriptCompile Include="ClientApp\app\components\shared\router.animations.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\experiments\experiments.routes.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\experiments\experiment\godraysExperiment\godrays.experiment.component.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\experiments\mock-experiments.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\experiments\shared\helpers\PingPongTexture.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\experiments\shared\helpers\postprocessing\godrays.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\experiments\shared\models\experiment.model.ts" />
     <TypeScriptCompile Include="ClientApp\app\services\shared\device-detector\device-detector.constants.ts" />
     <TypeScriptCompile Include="ClientApp\app\services\shared\device-detector\device-detector.service.ts" />
     <TypeScriptCompile Include="ClientApp\app\components\contact\contact.component.ts" />
@@ -57,7 +62,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="ClientApp\app\assets\font\hkgrotesk\" />
     <Folder Include="ClientApp\app\assets\videos\" />
+    <Folder Include="ClientApp\app\components\shared\" />
     <Folder Include="Properties\PublishProfiles\" />
   </ItemGroup>
 
