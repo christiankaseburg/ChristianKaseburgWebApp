@@ -2,14 +2,12 @@
 import { ServerModule } from '@angular/platform-server';
 import { AppModuleShared } from './app.shared.module';
 import { AppComponent } from './components/app/app.component';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
     bootstrap: [ AppComponent ],
     imports: [
         ServerModule,
-        AppModuleShared,
-        NoopAnimationsModule
+        AppModuleShared
     ]
 })
 export class AppModule {

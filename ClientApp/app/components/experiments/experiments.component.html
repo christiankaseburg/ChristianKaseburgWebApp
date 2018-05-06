@@ -7,7 +7,7 @@
         </div>
     </div>-->
     <div #slideshow__container class="slideshow__container">
-        <div class="slideshow__slide" *ngFor="let experiment of experiments">
+        <div #slideshow__slide class="slideshow__slide" *ngFor="let experiment of experiments">
             <article class="slideshow__content">
                 <div class="slideshow__info slideshow__info--slide-up">
                     <span>{{experiment.subtitle}}</span>
@@ -16,7 +16,7 @@
                 <a class="slideshow__info slideshow__info--slide-down" [routerLink]="[experiment.route]" target="blank">
                     <span>Visit Experiment</span>
                 </a>
-                <div class="slideshow__video-container">
+                <div #slideshow__video_container class="slideshow__video-container">
                     <img src="{{experiment.image}}" />
                     <video class="slide-video__video" src="{{experiment.video}}" type="video/mp4" preload="metadata" webkit-playsinline playsinline muted loop></video>
                 </div>

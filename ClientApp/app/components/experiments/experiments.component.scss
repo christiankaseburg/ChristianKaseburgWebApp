@@ -78,6 +78,7 @@
     transition: -webkit-transform .3s ease-out;
     transition: transform .3s ease-out;
     transition: transform .3s ease-out,-webkit-transform .3s ease-out;
+    overflow: visible;
 }
 
 .slideshow__info--slide-up {
@@ -134,7 +135,8 @@
 
 
 .slide-titles-container {
-    height: 205px;
+    height: 105px;
+    overflow: hidden;
 }
 
 .title-element {
@@ -143,6 +145,7 @@
 }
 
 .title-element-title {
+    color: #3D72A4;
     font-size: 90px;
     display: block;
 }
@@ -171,4 +174,13 @@ video, img {
     .slide-titles {
         margin: 8px;
     }
+
+}
+
+@media only screen and (max-width: 500px) {
+
+    .slideshow__info {
+        font-size: .6rem;
+    }
+
 }

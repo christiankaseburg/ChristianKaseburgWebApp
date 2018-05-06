@@ -1,14 +1,14 @@
 @import "css/fontello.css";
 @import "normalize.scss";
 
-/*! HTML5 Boilerplate v6.0.1 | MIT License | https://html5boilerplate.com/ */
+$title-color: #3D72A4;
 
+/*! HTML5 Boilerplate v6.0.1 | MIT License | https://html5boilerplate.com/ */
 /*
  * What follows is the result of much research on cross-browser styling.
  * Credit left inline and big thanks to Nicolas Gallagher, Jonathan Neal,
  * Kroc Camen, and the H5BP dev community and team.
  */
-
 /* ==========================================================================
    Fonts
    ========================================================================== */
@@ -41,20 +41,28 @@ html, body, .viewport {
     box-sizing: border-box;
 }
 
-html {
+html, body {
     color: #222;
-    font-size: 1em;
+    min-width: 280px;
+    font-family: hkgrotesk, sans-serif;
+    font-size: 18px;
+    font-weight: 300;
     line-height: 1.4;
+    height: 100%;
+}
+
+html {
+    padding: 10px;
 }
 
 body {
-    min-width: 320px;
-    font-family: hkgrotesk, sans-serif;
-    font-size: 16px;
+    border: 1px solid;
 }
 
-body, html {
-    height: 100%;
+@media only screen and (min-width: 768px) {
+    html {
+        padding: 30px;
+    }
 }
 
 /*
@@ -167,23 +175,7 @@ input[type="text"], textarea, [contenteditable] {
 app {
     height: 100%;
     width: 100%;
-    display: flex;
-    flex-direction: column;
-}
-
-/* font-sizes */
-
-.title-font {
-    font-weight: bold;
-}
-
-.subtitle-font {
-    font-weight: 500;
-}
-
-.regular-font {
-    font-size: 18px !important;
-    font-weight: 300;
+    display: block;
 }
 
 /* Anchors */
@@ -211,6 +203,14 @@ a {
     }
 }
 
+/* Headings */
+h1 {
+    color: $title-color;
+}
+
+h2 {
+    opacity: .4;
+}
 /* Unordered list , and list item */
 li {
     outline: 0;

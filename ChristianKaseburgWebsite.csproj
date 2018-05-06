@@ -42,6 +42,7 @@
     <None Remove="Properties\PublishProfiles\ChristianKaseburgWebsite20180419104646 - Web Deploy.pubxml" />
     <None Remove="Properties\PublishProfiles\ChristianKaseburgWebsite20180419105609 - Web Deploy.pubxml" />
     <None Remove="Properties\PublishProfiles\ChristianKaseburgWebsite20180419105817 - Web Deploy.pubxml" />
+    <None Remove="Properties\PublishProfiles\ChristianKaseburgWebsite20180419110048 - Web Deploy.pubxml" />
     <None Remove="Properties\PublishProfiles\CustomProfile.pubxml" />
   </ItemGroup>
 

@@ -15,6 +15,7 @@ export class AppComponent implements AfterViewInit {
 
     @ViewChild('clock') public clock: ElementRef;
     @ViewChild('status') public status: ElementRef;
+    @ViewChild('heart_rate_pulse') public heart_rate_pulse: ElementRef;
     public showMenu = false;
 
     constructor(private _deviceDetector: DeviceDetectorService, public router: Router) {
@@ -31,26 +32,34 @@ export class AppComponent implements AfterViewInit {
 
     /**
      * Update my status.
+     * Can make it more precise, but not a priority lol.
      */
     public updateStatus() {
 
         let weekend,
-        hour = (moment as any).tz('America/Los_Angeles').format('h'),
-        timePeriod = (moment as any).tz('America/Los_Angeles').format('A');
-        (moment as any).tz('America/Los_Angeles').format('dddd') == 'Friday' || 'Saturday' || 'Sunday' ? weekend = true : weekend = false;
+        hour = (moment as any).tz('America/Los_Angeles').format('HH');
+        //(moment as any).tz('America/Los_Angeles').format('dddd') == 'Friday' || 'Saturday' || 'Sunday' ? weekend = true : weekend = false;
 
-        let currentStatus: string;
+        let currentStatus: string,
+            heartRateColor: string;
 
-        if (hour < 5 && timePeriod == 'AM' || hour >= 10 && timePeriod == 'PM') {
+        if (hour <= 5 || hour >= 22) {
             currentStatus = 'Snoozin\'';
-        } else if (hour >= 6 && timePeriod == 'AM' || hour <= 5 && timePeriod == 'PM') {
+        } else if (hour >= 6 && hour <= 16) {
             currentStatus = 'Workin\'';
-        } else if (hour >= 6 && timePeriod == 'PM' && hour <= 9 && timePeriod == 'PM') {
+        } else if (hour >= 17) {
             currentStatus = 'Hangin\'';
         } else {
-            currentStatus = 'Available';
+            currentStatus = 'Eatin\'';
         }
 
+        if (currentStatus === 'Snoozin\'' || currentStatus === 'Workin\'') {
+            heartRateColor = 'header__heart-rate-pulse--red';
+        } else {
+            heartRateColor = 'header__heart-rate-pulse--green';
+        }
+
+        this.heart_rate_pulse.nativeElement.classList.add(heartRateColor);
         this.status.nativeElement.innerHTML = currentStatus + ' : ';
     }
 

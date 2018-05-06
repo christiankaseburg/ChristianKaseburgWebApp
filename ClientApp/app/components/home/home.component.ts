@@ -1,35 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { TweenLite, TimelineLite } from 'gsap';
 
 @Component({
     selector: 'home',
     templateUrl: './home.component.html',
     styleUrls: ['./home.component.scss']
 })
-export class HomeComponent {
+export class HomeComponent implements AfterViewInit {
 
-    private title: HTMLElement|null;
-    private subTitle: HTMLElement | null;
+    @ViewChild('title') public title: ElementRef;
+    @ViewChild('subtitle') public subtitle: ElementRef;
+    @ViewChild('test') public test: ElementRef;
 
-    slideInTitle() {
-        //(this.infoBox[this.currentActiveExperiment] as any).removeAttribute('style');
-        setTimeout(() => {
-            this.title!.setAttribute('style', 'opacity: 1; transform: translate3d(0px, 0px, 0px);');
-        }, 650); 
+    public startPageLoadedAnimations() {
+
+        let tl = new TimelineLite();
+        tl.fromTo(this.title.nativeElement, .75, { y: 105, opacity: 0 }, { y: 0, opacity: 1})
+        .fromTo(this.subtitle.nativeElement, .75, { y: 105, opacity: 0 }, { y: 0, opacity: .2}, "-=0.5");
     }
 
-    slideInSubTitle() {
-        //(this.infoBox[this.currentActiveExperiment] as any).removeAttribute('style');
-        setTimeout(() => {
-            this.subTitle!.setAttribute('style', 'opacity: .4; transform: translate3d(0px, 0px, 0px);');
-        }, 900);
-    }
-
-    ngOnInit() {
-
-        this.title = document.getElementById('title');
-        this.subTitle = document.getElementById('subtitle');
-
-        this.slideInTitle();
-        this.slideInSubTitle();
+    ngAfterViewInit() {
+        this.startPageLoadedAnimations();
     }
 }

@@ -1,4 +1,4 @@
-﻿import { Component, ElementRef, HostListener, AfterViewInit } from '@angular/core';
+﻿import { Component, ElementRef, HostListener, AfterViewInit, ViewChild } from '@angular/core';
 
 import { TweenLite, TweenMax } from 'gsap';
 import { EXPERIMENTS } from './mock-experiments';
@@ -20,16 +20,18 @@ export class ExperimentsComponent implements AfterViewInit {
     public minDragDistance: number = 40;
     public animating: boolean = false;
 
-    public slideShowContainer: HTMLCollectionOf<Element>;
-    public videoContainer: HTMLCollectionOf<Element>;
-    public slides: HTMLCollectionOf<Element>;
-    public videos: NodeListOf<HTMLVideoElement>;
-    public slidesVideoInfo: HTMLCollectionOf<Element>;
+    @ViewChild('slideshow__container') public slideshow__container: ElementRef;
+    @ViewChild('slideshow__video_container') public slideshow__video_container: ElementRef;
+    public slideshow__slide: HTMLCollectionOf<Element>;
+    public slideshow__videos: NodeListOf<HTMLVideoElement>;
     public sliderContainerWidth: number;
     public videoSize: number;
     public centerVideoOffset: number;
 
-    // @HostListener('window:resize', ['$event']) <-- Another solution besdies adding into inline html
+    /**
+     * On resize event reset slider values to new screen size
+     * @param event
+     */
     onResize(event) {
         this.setSliderValues();
     }
@@ -42,23 +44,22 @@ export class ExperimentsComponent implements AfterViewInit {
         let videoPadding = 40;
 
         // Set slider elements to variables
-        this.slideShowContainer = document.getElementsByClassName('slideshow__container');
-        this.videoContainer = document.getElementsByClassName('slideshow__video-container');
-        this.slides = document.getElementsByClassName('slideshow__slide');
-        this.videos = document.getElementsByTagName('video');
-        this.slidesVideoInfo = document.getElementsByClassName('slide-video-info');
-        this.sliderContainerWidth = (this.slideShowContainer[0] as HTMLElement).clientWidth;
-        this.videoSize = (this.videoContainer[0] as HTMLElement).clientWidth + videoPadding;
+        this.slideshow__slide = document.getElementsByClassName('slideshow__slide');
+        this.slideshow__videos = document.getElementsByTagName('video');
+
+        // Set sizes from DOM elements
+        this.sliderContainerWidth = this.slideshow__container.nativeElement.clientWidth;
+        this.videoSize = this.slideshow__video_container.nativeElement.clientWidth + videoPadding;
 
         // Calculate offset to center video
-        this.centerVideoOffset = (window.innerWidth - this.videoSize) / 2;
+        this.centerVideoOffset = (document.body.clientWidth - this.videoSize) / 2;
 
         // Set Slider position
         this.sliderPosX = (this.centerVideoOffset - (this.currentVideo * this.videoSize));
 
         // Apply styles to Container
-        setTimeout((this.slideShowContainer[0] as HTMLElement).removeAttribute('style'), 50);
-        setTimeout((this.slideShowContainer[0] as HTMLElement).setAttribute('style',
+        setTimeout(this.slideshow__container.nativeElement.removeAttribute('style'), 50);
+        setTimeout(this.slideshow__container.nativeElement.setAttribute('style',
             'width: ' + (this.videoSize * this.experiments.length) + 'px; ' + 'transform: matrix(1, 0, 0, 1, ' + this.sliderPosX +
             ', 0); touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);'), 100);
     }
@@ -76,11 +77,8 @@ export class ExperimentsComponent implements AfterViewInit {
             || (0 < this.currentVideo && this.currentVideo < this.experiments.length - 1)
             || this.currentVideo === this.experiments.length - 1 && direction === '+') && !this.animating) {
 
-            // Set previous Video to currentVideo
             this.previousVideo = this.currentVideo;
 
-            // If direction is backwards - from slider position
-            // else if add to the sliderPosX
             if (direction === '-') {
                 this.currentVideo++;
                 this.sliderPosX -= this.videoSize;
@@ -89,11 +87,10 @@ export class ExperimentsComponent implements AfterViewInit {
                 this.sliderPosX += this.videoSize;
             }
 
-            // Start Tween, and then set activeslides for animation
-            TweenLite.to(this.slideShowContainer, .75, { x: this.sliderPosX, delay: .25 });
+            TweenLite.to(this.slideshow__container.nativeElement, .75, { x: this.sliderPosX, delay: .25 });
             this.setActiveSlide();
 
-            // Prevent user from scrolling through fast
+            // Using setTimeout to prevent users from scrolling through slides fast.
             this.animating = true;
             setTimeout(() => this.animating = false, 1500);
         }
@@ -104,8 +101,8 @@ export class ExperimentsComponent implements AfterViewInit {
      * Set the current slide to be active, and previous slide to unactive.
      */
     public setActiveSlide() {
-        this.slides[this.previousVideo].classList.remove('active');
-        this.slides[this.currentVideo].classList.add('active');
+        this.slideshow__slide[this.previousVideo].classList.remove('active');
+        this.slideshow__slide[this.currentVideo].classList.add('active');
         this.playActiveVideo();
     }
 
@@ -120,7 +117,7 @@ export class ExperimentsComponent implements AfterViewInit {
         this.setActiveSlide();
 
         // Start tween to push slider in
-        TweenLite.fromTo(this.slideShowContainer, .5, { x: window.innerWidth }, { x: this.centerVideoOffset, delay: .5 });
+        TweenLite.fromTo(this.slideshow__container.nativeElement, .5, { x: window.innerWidth }, { x: this.centerVideoOffset, delay: .5 });
     }
 
     /**
@@ -129,13 +126,13 @@ export class ExperimentsComponent implements AfterViewInit {
     public setEventListeners() {
 
         // Event listener for scrolling through slides
-        (this.slideShowContainer[0] as HTMLElement).addEventListener('wheel', event => this.findScrollDirection(event), false);
+        this.slideshow__container.nativeElement.addEventListener('wheel', event => this.findScrollDirection(event), false);
 
-        (this.slideShowContainer[0] as HTMLElement).addEventListener('mousedown', event => this.lock(event), false);
-        (this.slideShowContainer[0] as HTMLElement).addEventListener('touchstart', event => this.lock(event), false);
+        this.slideshow__container.nativeElement.addEventListener('mousedown', event => this.lock(event), false);
+        this.slideshow__container.nativeElement.addEventListener('touchstart', event => this.lock(event), false);
 
-        (this.slideShowContainer[0] as HTMLElement).addEventListener('mouseup', event => this.move(event), false);
-        (this.slideShowContainer[0] as HTMLElement).addEventListener('touchend', event => this.move(event), false);
+        this.slideshow__container.nativeElement.addEventListener('mouseup', event => this.move(event), false);
+        this.slideshow__container.nativeElement.addEventListener('touchend', event => this.move(event), false);
     }
 
     /**
@@ -201,11 +198,11 @@ export class ExperimentsComponent implements AfterViewInit {
      */
     public playActiveVideo() {
 
-        if (this.videos[this.previousVideo].paused != true) {
-            this.videos[this.previousVideo].pause();
+        if (this.slideshow__videos[this.previousVideo].paused != true) {
+            this.slideshow__videos[this.previousVideo].pause();
         }
 
-        setTimeout(() => this.videos[this.currentVideo].play(), 1000);
+        setTimeout(() => this.slideshow__videos[this.currentVideo].play(), 1000);
     }
 
     /**
@@ -213,7 +210,7 @@ export class ExperimentsComponent implements AfterViewInit {
      */
     public pauseActiveVideo() {
 
-        this.videos[this.currentVideo].pause();
+        this.slideshow__videos[this.currentVideo].pause();
     }
 
     /**

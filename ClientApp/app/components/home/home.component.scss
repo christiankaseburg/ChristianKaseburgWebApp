@@ -7,22 +7,38 @@
     left: 0;
     right: 0;
     margin: auto;
+    overflow: hidden;
+}
 
-    #title {
-        font-size: 38px;
-        letter-spacing: 1px;
-        transform: translate3d(0px, -20px, 0px);
-        transition: all 1s ease-in;
-        opacity: 0;
-        margin: 0;
+#title-container__title {
+    font-size: 3rem;
+    margin: 0;
+}
+
+#title-container__subtitle {
+    font-weight: lighter;
+    font-size: 2rem;
+    letter-spacing: 1px;
+}
+
+@media only screen and (max-width: 625px) {
+
+    #title-container__title {
+        font-size: 2.5rem;
+    }
+    #title-container__subtitle {
+        font-size: 1.5rem;
+    }
+}
+
+
+@media only screen and (max-width: 476px) {
+
+    #title-container__title {
+        font-size: 1.7rem;
     }
 
-    #subtitle {
-        font-weight: 300;
-        font-size: 26px;
-        letter-spacing: 1px;
-        transform: translate3d(0px, -20px, 0px);
-        transition: all 1.3s ease-in;
-        opacity: 0;
+    #title-container__subtitle {
+        font-size: .9rem;
     }
 }

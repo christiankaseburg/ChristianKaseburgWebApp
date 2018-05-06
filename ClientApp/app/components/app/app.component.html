@@ -11,19 +11,26 @@
         </div>
 
         <!-- Status -->
-        <a *ngIf="checkRoute(router.url)" class="header__status regular-font">
-            <span class="header__status-icon header__status-icon--green"></span>
-            <span #status >Available : </span>
-            <span #clock ></span>
+        <a *ngIf="checkRoute(router.url)" class="header__status">
+            <div class="header__heart-rate-container">
+                <svg class="header__heart-rate" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="35px" height="21px" viewBox="0 0 35 21" preserveAspectRatio="xMidYMid meet">
+                    <rect id="svgEditorBackground" x="0" y="0" width="35" height="21" style="fill: none; stroke: none;" />
+                    <path #heart_rate_pulse class="header__heart-rate-pulse" style="fill:none;stroke-width:1px;" d="M0 10.5 10 10.5 12.5 7.5 15 13.5 17.5 0 20 21 22.5 5.5 25 14.5 27.5 10.5 35 10.5" />
+                </svg>
+                <div class="header__heart-rate-fade-in"></div>
+                <div class="header__heart-rate-fade-out"></div>
+            </div>
+            <span #status>Available : </span>
+            <span #clock></span>
         </a>
 
         <!-- Nav links -->
         <div *ngIf="checkRoute(router.url)" id="header__navigation">
-            <ul id="header__nav-list" class="regular-font">
-                <li class="header__nav-list-item" (click)='toggleNavMenu()' [routerLinkActive]="['active']" [routerLinkActiveOptions]="{ exact: true }" [routerLink]="['/'] "><a class="header__route-link">Home</a></li>
-                <li class="header__nav-list-item" (click)='toggleNavMenu()' [routerLinkActive]="['active']" [routerLink]="['portfolio']"><a class="header__route-link">Portfolio</a></li>
-                <li class="header__nav-list-item" (click)='toggleNavMenu()' [routerLinkActive]="['active']" [routerLink]="['experiments']"><a class="header__route-link">Experiments</a></li>
-                <li class="header__nav-list-item" (click)='toggleNavMenu()' [routerLinkActive]="['active']" [routerLink]="['contact']"><a class="header__route-link">Contact</a></li>
+            <ul id="header__nav-list">
+                <li class="header__nav-list-item" (click)='toggleNavMenu()' [routerLinkActive]="['active']" [routerLinkActiveOptions]="{ exact: true }" [routerLink]="['/'] "><a class="header__route-link">Home<span class="header__tick"></span></a></li>
+                <li class="header__nav-list-item" (click)='toggleNavMenu()' [routerLinkActive]="['active']" [routerLink]="['portfolio']"><a class="header__route-link">Portfolio<span class="header__tick"></span></a></li>
+                <li class="header__nav-list-item" (click)='toggleNavMenu()' [routerLinkActive]="['active']" [routerLink]="['experiments']"><a class="header__route-link">Experiments<span class="header__tick"></span></a></li>
+                <li class="header__nav-list-item" (click)='toggleNavMenu()' [routerLinkActive]="['active']" [routerLink]="['contact']"><a class="header__route-link">Contact<span class="header__tick"></span></a></li>
 
             </ul>
         </div>
