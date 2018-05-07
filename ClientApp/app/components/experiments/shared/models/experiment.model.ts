@@ -1,6 +1,6 @@
 ﻿export class Experiment {
     id: number;
-    title: string;
+    title: any;
     subtitle: string;
     details: string;
     date: string;

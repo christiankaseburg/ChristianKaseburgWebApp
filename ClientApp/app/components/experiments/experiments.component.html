@@ -1,11 +1,13 @@
 ﻿<div class="slideshow" (window:resize)="onResize($event)" (window:focus)="playActiveVideo()" (window:blur)="pauseActiveVideo()">
-    <!--<div class="slide-titles">
-        <div class="slide-titles-container">
-            <div class="title-element" *ngFor="let experiment of experiments">
-                <span class="title-element-title">{{experiment.title}}</span>
+    <div class="slideshow__slide-titles">
+        <div class="slideshow__slide-titles-container">
+            <div class="slideshow__title-elements slideshow__title-elements--hidden" *ngFor="let experiment of experiments">
+                <div class="slideshow__title-elements-char" *ngFor="let letter of experiment.title">
+                    {{letter}}
+                </div>
             </div>
         </div>
-    </div>-->
+    </div>
     <div #slideshow__container class="slideshow__container">
         <div #slideshow__slide class="slideshow__slide" *ngFor="let experiment of experiments">
             <article class="slideshow__content">
@@ -22,5 +24,10 @@
                 </div>
             </article>
         </div>
+    </div>
+    <div #showTitleBtn (click)="toggleTitleMenu()" class="slideshow__view-all">
+        <span class="slideshow_view-all-bar"></span>
+        <span class="slideshow_view-all-bar"></span>
+        <span class="slideshow_view-all-text">View All</span>
     </div>
 </div>

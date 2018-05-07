@@ -16,7 +16,7 @@ export class HomeComponent implements AfterViewInit {
 
         let tl = new TimelineLite();
         tl.fromTo(this.title.nativeElement, .75, { y: 105, opacity: 0 }, { y: 0, opacity: 1})
-        .fromTo(this.subtitle.nativeElement, .75, { y: 105, opacity: 0 }, { y: 0, opacity: .2}, "-=0.5");
+        .fromTo(this.subtitle.nativeElement, .75, { y: 105, opacity: 0 }, { y: 0, opacity: .5}, "-=0.5");
     }
 
     ngAfterViewInit() {

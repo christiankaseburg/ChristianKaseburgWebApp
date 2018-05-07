@@ -1,6 +1,6 @@
 ﻿import { Component, ElementRef, HostListener, AfterViewInit, ViewChild } from '@angular/core';
 
-import { TweenLite, TweenMax } from 'gsap';
+import { TweenLite, TweenMax, TimelineMax } from 'gsap';
 import { EXPERIMENTS } from './mock-experiments';
 
 @Component({
@@ -19,10 +19,13 @@ export class ExperimentsComponent implements AfterViewInit {
     public mousePosX = null;
     public minDragDistance: number = 40;
     public animating: boolean = false;
+    public titleMenuExpanded: boolean = false;
 
     @ViewChild('slideshow__container') public slideshow__container: ElementRef;
     @ViewChild('slideshow__video_container') public slideshow__video_container: ElementRef;
+    @ViewChild('showTitleBtn') public showTitleBtn: ElementRef;
     public slideshow__slide: HTMLCollectionOf<Element>;
+    public slideshow__slideTitles: HTMLCollectionOf<Element>;
     public slideshow__videos: NodeListOf<HTMLVideoElement>;
     public sliderContainerWidth: number;
     public videoSize: number;
@@ -40,11 +43,11 @@ export class ExperimentsComponent implements AfterViewInit {
      * Set the slider variables for the container, and the slides.
      */
     public setSliderValues() {
-        // video padding
         let videoPadding = 40;
 
         // Set slider elements to variables
         this.slideshow__slide = document.getElementsByClassName('slideshow__slide');
+        this.slideshow__slideTitles = document.getElementsByClassName('slideshow__title-elements');
         this.slideshow__videos = document.getElementsByTagName('video');
 
         // Set sizes from DOM elements
@@ -75,7 +78,8 @@ export class ExperimentsComponent implements AfterViewInit {
         // and if currentvideo is last video and is moving backwards
         if ((this.currentVideo === 0 && direction === '-'
             || (0 < this.currentVideo && this.currentVideo < this.experiments.length - 1)
-            || this.currentVideo === this.experiments.length - 1 && direction === '+') && !this.animating) {
+            || this.currentVideo === this.experiments.length - 1 && direction === '+')
+            && !this.animating) {
 
             this.previousVideo = this.currentVideo;
 
@@ -87,14 +91,46 @@ export class ExperimentsComponent implements AfterViewInit {
                 this.sliderPosX += this.videoSize;
             }
 
-            TweenLite.to(this.slideshow__container.nativeElement, .75, { x: this.sliderPosX, delay: .25 });
-            this.setActiveSlide();
+            let switchVideoTimeLine = new TimelineMax();
+            switchVideoTimeLine.to(this.slideshow__slideTitles[this.previousVideo].children, 1, {
+                y: function (index) {
+                    return (index + 1) * 105;
+                }, onComplete: this.slideshow__slideTitles[this.currentVideo].classList.remove('slideshow__title-elements--hidden')
+            })
+                .to(this.slideshow__container.nativeElement, .75, { x: this.sliderPosX, delay: .25 }, '-=.5')
+                .fromTo(this.slideshow__slideTitles[this.currentVideo].children, .75, {
+                    y: function (index) {
+                        return (index + 1) * 105;
+                    }
+                },
+                {
+                    y: function (index) {
+                        return (index + 1) * 0;
+                    }
+                }, '-=.2');
 
-            // Using setTimeout to prevent users from scrolling through slides fast.
+            setTimeout(() => this.setActiveSlide(), 300);
+
+            // Using setTimeout to prevent users from scrolling through slides fast
+            // and remove the hidden class from the title element.
             this.animating = true;
-            setTimeout(() => this.animating = false, 1500);
+            setTimeout(() => this.animating = false,
+            this.slideshow__slideTitles[this.previousVideo].classList.remove('slideshow__title-elements--hidden')
+            , 1500);
         }
+    }
 
+    /**
+     * Toggle the title menu when the View All button is clicked.
+     */
+    public toggleTitleMenu() {
+        this.titleMenuExpanded = !this.titleMenuExpanded;
+
+        if (this.titleMenuExpanded) {
+            this.showTitleBtn.nativeElement.classList.add('slideshow__view-all--active');
+        } else {
+            this.showTitleBtn.nativeElement.classList.remove('slideshow__view-all--active');
+        }
     }
 
     /**
@@ -112,12 +148,16 @@ export class ExperimentsComponent implements AfterViewInit {
 
     // https://codepen.io/anon/pen/KRmaxZ remember
     public pageLoadedAnimation() {
+        let pageLoadTimeLine = new TimelineMax({ onComplete: this.setActiveSlide() });
 
-        // Set Active slide
-        this.setActiveSlide();
+        this.slideshow__slideTitles[this.currentVideo].classList.remove('slideshow__title-elements--hidden');
+        pageLoadTimeLine.fromTo(this.slideshow__container.nativeElement, .5, { x: window.innerWidth }, { x: this.centerVideoOffset, delay: .5 })
+            .from(this.slideshow__slideTitles[this.currentVideo].children, 1, {
+                y: function (index) {
+                    return (index + 1) * 105;
+                }
+            });
 
-        // Start tween to push slider in
-        TweenLite.fromTo(this.slideshow__container.nativeElement, .5, { x: window.innerWidth }, { x: this.centerVideoOffset, delay: .5 });
     }
 
     /**
@@ -137,7 +177,7 @@ export class ExperimentsComponent implements AfterViewInit {
 
     /**
      * Check for changed touches, and if there are change touches
-     * switch to that touch and if not return the regular event.
+     * switch to that touch and if not use event.
      * @param event
      */
     public unify(event) { return event.changedTouches ? event.changedTouches[0] : event };
@@ -149,7 +189,7 @@ export class ExperimentsComponent implements AfterViewInit {
     public lock(event) { this.mousePosX = this.unify(event).clientX };
 
     /**
-     * This is where the magic happens :D
+     * This is where the magic happens.
      * @param event
      */
     public move(event) {

@@ -6,7 +6,7 @@ const godraysImage = require('../../assets/imgs/godraysIMG.png')
 export const EXPERIMENTS: Experiment[] = [
     {
         id: 0,
-        title: 'Godrays',
+        title: ['G','o','d','r','a','y','s'],
         subtitle: 'Volumetric Lighting',
         details: '[ WebGl / Instanced / PostProcessing / GPGPU ]',
         date: 'Feb 2017',
@@ -16,7 +16,7 @@ export const EXPERIMENTS: Experiment[] = [
     },
     {
         id: 1,
-        title: 'Godrays',
+        title: ['G', 'o', 'd', 'r', 'a', 'y', 's'],
         subtitle: 'Volumetric Lighting',
         details: '[ WebGl / Instanced / PostProcessing / GPGPU ]',
         date: 'Feb 2017',
@@ -26,7 +26,7 @@ export const EXPERIMENTS: Experiment[] = [
     },
     {
         id: 2,
-        title: 'Godrays',
+        title: ['G', 'o', 'd', 'r', 'a', 'y', 's'],
         subtitle: 'Volumetric Lighting',
         details: '[ WebGl / Instanced / PostProcessing / GPGPU ]',
         date: 'Feb 2017',
