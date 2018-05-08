@@ -1,7 +1,7 @@
 ﻿<div class="slideshow" (window:resize)="onResize($event)" (window:focus)="playActiveVideo()" (window:blur)="pauseActiveVideo()">
-    <div class="slideshow__slide-titles">
+    <div #slideTitlesBlock class="slideshow__slide-titles">
         <div class="slideshow__slide-titles-container">
-            <div class="slideshow__title-elements slideshow__title-elements--hidden" *ngFor="let experiment of experiments">
+            <div class="slideshow__title-elements slideshow__title-elements--hidden" *ngFor="let experiment of experiments"  (click)="slideToTitle(experiment.id)">
                 <div class="slideshow__title-elements-char" *ngFor="let letter of experiment.title">
                     {{letter}}
                 </div>

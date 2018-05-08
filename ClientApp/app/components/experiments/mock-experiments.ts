@@ -1,7 +1,7 @@
 ﻿import { Experiment } from './shared/models/experiment.model';
 
 const godraysVideo = require('../../assets/videos/godrays.mp4');
-const godraysImage = require('../../assets/imgs/godraysIMG.png')
+const godraysImage = require('../../assets/imgs/godrays.png')
 
 export const EXPERIMENTS: Experiment[] = [
     {

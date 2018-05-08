@@ -92,6 +92,14 @@ export class GodraysExperimentComponent { // Project 1
 
         this.size = this.mobileDevice ? 64 : 128;
         this.floatType = this.mobileDevice ? THREE.HalfFloatType : THREE.FloatType;
+
+        if (this.mobileDevice) {
+
+        this.simulationSettings.persistence = .56;
+        this.simulationSettings.speed = .4;
+        this.simulationSettings.decay = .25;
+
+        }
     }
 
     private createScene() {

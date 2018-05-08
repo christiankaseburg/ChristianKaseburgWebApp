@@ -24,6 +24,7 @@ export class ExperimentsComponent implements AfterViewInit {
     @ViewChild('slideshow__container') public slideshow__container: ElementRef;
     @ViewChild('slideshow__video_container') public slideshow__video_container: ElementRef;
     @ViewChild('showTitleBtn') public showTitleBtn: ElementRef;
+    @ViewChild('slideTitlesBlock') public slideShowTitlesContainer: ElementRef;
     public slideshow__slide: HTMLCollectionOf<Element>;
     public slideshow__slideTitles: HTMLCollectionOf<Element>;
     public slideshow__videos: NodeListOf<HTMLVideoElement>;
@@ -72,7 +73,10 @@ export class ExperimentsComponent implements AfterViewInit {
      * @param direction
      * The user supplies a direction, and the container will move based on that.
      */
-    public switchVideo(direction: string) {
+    public switchVideo(nextVideo: number) {
+        let direction;
+        this.currentVideo < nextVideo ? direction = '-' : direction = '+';
+        
         // True as long if video positioned at front is moving to next video,
         // currentVideo is within the 0 and total experiment limit,
         // and if currentvideo is last video and is moving backwards
@@ -81,23 +85,29 @@ export class ExperimentsComponent implements AfterViewInit {
             || this.currentVideo === this.experiments.length - 1 && direction === '+')
             && !this.animating) {
 
+            this.animating = true;
             this.previousVideo = this.currentVideo;
+            this.currentVideo = nextVideo;
 
-            if (direction === '-') {
-                this.currentVideo++;
-                this.sliderPosX -= this.videoSize;
-            } else if (direction === '+') {
-                this.currentVideo--;
-                this.sliderPosX += this.videoSize;
-            }
+            this.currentVideo > this.previousVideo
+                ? this.sliderPosX -= ((this.currentVideo - this.previousVideo) * this.videoSize)
+                : this.sliderPosX += ((this.previousVideo - this.currentVideo) * this.videoSize);
 
             let switchVideoTimeLine = new TimelineMax();
-            switchVideoTimeLine.to(this.slideshow__slideTitles[this.previousVideo].children, 1, {
-                y: function (index) {
-                    return (index + 1) * 105;
-                }, onComplete: this.slideshow__slideTitles[this.currentVideo].classList.remove('slideshow__title-elements--hidden')
-            })
-                .to(this.slideshow__container.nativeElement, .75, { x: this.sliderPosX, delay: .25 }, '-=.5')
+
+            switchVideoTimeLine
+                .call(() => this.slideshow__videos[this.previousVideo].pause())
+                .to(this.slideshow__slideTitles[this.previousVideo].children, 1, {
+                    y: function (index) {
+                        return (index + 1) * 105;
+                    }
+                    })
+                .set(this.slideshow__slideTitles[this.previousVideo].children, { clearProps: "all" })
+                .set(this.slideshow__slide[this.previousVideo], { className: "-=active" }, this.slideshow__slideTitles[this.previousVideo].children)
+                .set(this.slideshow__slideTitles[this.previousVideo], { className: "+=slideshow__title-elements--hidden" })
+                .set(this.slideshow__slideTitles[this.currentVideo], { className: "-=slideshow__title-elements--hidden" })
+                .to(this.slideshow__container.nativeElement, .75, { x: this.sliderPosX }, '-=.5')
+                .set(this.slideshow__slide[this.currentVideo], { className: "+=active" }, this.slideshow__container.nativeElement)
                 .fromTo(this.slideshow__slideTitles[this.currentVideo].children, .75, {
                     y: function (index) {
                         return (index + 1) * 105;
@@ -105,18 +115,11 @@ export class ExperimentsComponent implements AfterViewInit {
                 },
                 {
                     y: function (index) {
-                        return (index + 1) * 0;
+                        return 0;
                     }
-                }, '-=.2');
-
-            setTimeout(() => this.setActiveSlide(), 300);
-
-            // Using setTimeout to prevent users from scrolling through slides fast
-            // and remove the hidden class from the title element.
-            this.animating = true;
-            setTimeout(() => this.animating = false,
-            this.slideshow__slideTitles[this.previousVideo].classList.remove('slideshow__title-elements--hidden')
-            , 1500);
+                    })
+                .call(() => this.slideshow__videos[this.currentVideo].play())
+                .call(() => setTimeout(() => this.animating = false, 0));
         }
     }
 
@@ -124,22 +127,120 @@ export class ExperimentsComponent implements AfterViewInit {
      * Toggle the title menu when the View All button is clicked.
      */
     public toggleTitleMenu() {
-        this.titleMenuExpanded = !this.titleMenuExpanded;
+        let toggleTimeline = new TimelineMax({}),
+            prevVid;
 
-        if (this.titleMenuExpanded) {
-            this.showTitleBtn.nativeElement.classList.add('slideshow__view-all--active');
-        } else {
-            this.showTitleBtn.nativeElement.classList.remove('slideshow__view-all--active');
+        this.slideshow__slide[this.currentVideo - 1] == null ? prevVid = 0 : prevVid = this.currentVideo - 1;
+        if (!this.animating) {
+            this.titleMenuExpanded = !this.titleMenuExpanded;
+            if (this.titleMenuExpanded) {
+                this.animating = true;
+                this.toggleMenuOut(prevVid);
+
+            } else if (!this.animating) {
+                this.animating = true;
+                this.toggleMenuIn(prevVid);
+            }
         }
+
     }
 
     /**
-     * Set the current slide to be active, and previous slide to unactive.
+     * Slide to tile
      */
-    public setActiveSlide() {
-        this.slideshow__slide[this.previousVideo].classList.remove('active');
-        this.slideshow__slide[this.currentVideo].classList.add('active');
-        this.playActiveVideo();
+    public slideToTitle(videoNumber: number) {
+        let toggleTimeline = new TimelineMax({}),
+            prevVid;
+
+        this.slideshow__slide[this.currentVideo - 1] == null ? prevVid = 0 : prevVid = this.currentVideo - 1;
+
+        toggleTimeline
+            .set(this.showTitleBtn.nativeElement, { className: "-=slideshow__view-all--active" })
+            .set(this.slideshow__slideTitles[this.currentVideo], { className: "+=slideshow__title-elements--hidden" })
+            .fromTo([".slideshow__title-elements--hidden"], .5, {
+                y: function (index) {
+                    return 0;
+                }, opacity: 1
+            },
+            {
+                y: function (index) {
+                    return (index + 1) * 105;
+                }, opacity: 0, clearProps: "all"
+            })
+            .to([this.slideshow__slide[this.currentVideo], this.slideshow__slide[this.currentVideo + 1]], .5, { x: "0%" }, "slide-video")
+            .to(this.slideshow__slide[prevVid], .5, { x: "0%" }, "slide-video")
+            .set(this.slideShowTitlesContainer.nativeElement, { className: "-=slideshow__slides-titles--view-all" })
+            .call(() => setTimeout(() => this.switchVideo(videoNumber), 0));
+    }
+
+    /**
+     * Toggle Menu expand in
+     */
+    public toggleMenuIn(previousVideo: number) {
+
+        let toggleTimeline = new TimelineMax({}),
+            prevVid = previousVideo;
+
+        toggleTimeline
+            .set(this.showTitleBtn.nativeElement, { className: "-=slideshow__view-all--active" })
+            .set(this.slideshow__slideTitles[this.currentVideo], { className: "+=slideshow__title-elements--hidden" })
+            .fromTo([".slideshow__title-elements--hidden"], .5, {
+                y: function (index) {
+                    return 0;
+                }, opacity: 1
+            },
+            {
+                y: function (index) {
+                    return (index + 1) * 105;
+                }, opacity: 0, clearProps: "all"
+            })
+            .set(this.slideshow__slide[this.currentVideo], { className: "+=active" })
+            .to([this.slideshow__slide[this.currentVideo], this.slideshow__slide[this.currentVideo + 1]], .5, { x: "0%" }, "slide-video")
+            .to(this.slideshow__slide[prevVid], .5, { x: "0%" }, "slide-video")
+            .set(this.slideShowTitlesContainer.nativeElement, { className: "-=slideshow__slides-titles--view-all" })
+            .set(this.slideshow__slideTitles[this.currentVideo], { className: "-=slideshow__title-elements--hidden" })
+            .from(this.slideshow__slideTitles[this.currentVideo].children, .5, {
+                y: function (index) {
+                    return (index + 1) * 105;
+                }
+            })
+            .call(() => setTimeout(() => this.animating = false, 200));
+    }
+
+    /**
+     * Toggle Menu expand in
+     */
+    public toggleMenuOut(previousVideo: number) {
+        let toggleTimeline = new TimelineMax({}),
+            prevVid = previousVideo;
+
+        toggleTimeline
+            .set(this.showTitleBtn.nativeElement, { className: "+=slideshow__view-all--active" })
+            .set(this.slideshow__slide[this.currentVideo], { className: "-=active" })
+            .to(this.slideshow__slideTitles[this.currentVideo].children, .5, {
+                y: function (index) {
+                    return (index + 1) * 105;
+                }
+            })
+            .set(this.slideShowTitlesContainer.nativeElement, { className: "+=slideshow__slides-titles--view-all" })
+            .to(this.slideshow__slide[prevVid], .5, { x: "-75%" }, "slide-video")
+            .to([this.slideshow__slide[this.currentVideo], this.slideshow__slide[this.currentVideo + 1]], .5, { x: "75%" }, "slide-video")
+            .to(this.slideshow__slideTitles[this.currentVideo].children, .5, {
+                y: function (index) {
+                    return 0;
+                }
+            }, "slide-video")
+            .fromTo(".slideshow__title-elements--hidden", .5, {
+                y: function (index) {
+                    return (index + 1) * 105;
+                }, opacity: 0, "font-weight": "300", cursor: "pointer"
+            },
+            {
+                y: function (index) {
+                    return 0;
+                }, opacity: 1, visibility: "inherit"
+            })
+            .call(() => setTimeout(() => this.animating = false, 300));
     }
 
     /**
@@ -148,16 +249,21 @@ export class ExperimentsComponent implements AfterViewInit {
 
     // https://codepen.io/anon/pen/KRmaxZ remember
     public pageLoadedAnimation() {
-        let pageLoadTimeLine = new TimelineMax({ onComplete: this.setActiveSlide() });
+        let pageLoadTimeLine = new TimelineMax();
 
         this.slideshow__slideTitles[this.currentVideo].classList.remove('slideshow__title-elements--hidden');
-        pageLoadTimeLine.fromTo(this.slideshow__container.nativeElement, .5, { x: window.innerWidth }, { x: this.centerVideoOffset, delay: .5 })
+        pageLoadTimeLine
+            .fromTo(this.showTitleBtn.nativeElement, 1, { x: 100, opacity: 0 }, { x: 0, opacity: 1 })
+            .fromTo(this.slideshow__container.nativeElement, .5, { x: window.innerWidth }, { x: this.centerVideoOffset })
             .from(this.slideshow__slideTitles[this.currentVideo].children, 1, {
                 y: function (index) {
                     return (index + 1) * 105;
                 }
-            });
-
+            })
+            .set(this.slideshow__slideTitles[this.currentVideo].children, { clearProps: "all" });
+        this.slideshow__slide[this.previousVideo].classList.remove('active');
+        this.slideshow__slide[this.currentVideo].classList.add('active');
+        this.playActiveVideo();
     }
 
     /**
@@ -194,13 +300,14 @@ export class ExperimentsComponent implements AfterViewInit {
      */
     public move(event) {
         if (this.mousePosX || this.mousePosX === 0) {
-            let dx = this.unify(event).clientX - (this.mousePosX as any), s = Math.sign(dx);
+            let dx = this.unify(event).clientX - (this.mousePosX as any),
+                s = Math.sign(dx);
 
             if (dx !== 0) {
                 if (dx < this.minDragDistance) {
-                    this.switchVideo('-');
+                    this.switchVideo((this.currentVideo + 1));
                 } else if (dx > -(this.minDragDistance)) {
-                    this.switchVideo('+');
+                    this.switchVideo((this.currentVideo - 1));
                 }
             }
 
@@ -215,7 +322,7 @@ export class ExperimentsComponent implements AfterViewInit {
      */
     public findScrollDirection(event) {
         let delta;
-        let direction;
+        let nextVideo;
 
         if (event.wheelDelta) {
             delta = event.wheelDelta;
@@ -224,12 +331,12 @@ export class ExperimentsComponent implements AfterViewInit {
         }
 
         if (delta < 0) {
-            direction = '-';
+            nextVideo = (this.currentVideo + 1);
         } else if (delta > 0) {
-            direction = '+';
+            nextVideo = (this.currentVideo - 1)
         }
 
-        this.switchVideo(direction);
+        this.switchVideo(nextVideo);
         event.preventDefault();
     }
 
@@ -242,7 +349,7 @@ export class ExperimentsComponent implements AfterViewInit {
             this.slideshow__videos[this.previousVideo].pause();
         }
 
-        setTimeout(() => this.slideshow__videos[this.currentVideo].play(), 1000);
+        this.slideshow__videos[this.currentVideo].play();
     }
 
     /**
