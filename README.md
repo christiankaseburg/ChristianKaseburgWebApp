@@ -1,7 +1,4 @@
-## UPDATE WEBSITE CURRENTLY DOWN FOR MAKEOVER (4/24/18-4/28/18)
-You can view one of my experiments here: http://christiankaseburgwebsite20180419110048.azurewebsites.net/experiments/godrays
-
-## Christiankaseburg.com will be up shortly.
+## Christiankaseburg.com will be up shortly, but for now my website is being hosted on http://christiankaseburg.azurewebsites.net/
 
 # Christian Kaseburg's Personal Website
 This is my personal website used to showcase my portfolio/experiments, and give the opportunity for clients to contact me.
