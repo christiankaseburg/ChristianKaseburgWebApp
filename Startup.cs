@@ -42,18 +42,22 @@ namespace ChristianKaseburgWebsite
             }
 
             app.UseStaticFiles();
-
             // Routing magic maps to the home controller to deliver the first view with mvc
             app.UseMvc(routes =>
             {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                // URL: protocol = http, host: localhost:69411, / controller: lab, / action: Index
 
-                //Fall back route so everything gets handled over to angular application
-                routes.MapSpaFallbackRoute(
-                    name: "spa-fallback",
-                    defaults: new { controller = "Home", action = "Index" });
+                routes
+                    .MapRoute(
+                        name: "default",
+                        template: "{controller=Home}/{action=Index}/{id?}")
+                    .MapRoute(
+                        name: "lab",
+                        template: "lab/{id}",
+                        new { controller = "Lab", action = "Index", })
+                    .MapSpaFallbackRoute( //Fall back route so everything gets handled over to angular application
+                        name: "spa-fallback",
+                        defaults: new { controller = "Home", action = "Index" });
             });
         }
     }

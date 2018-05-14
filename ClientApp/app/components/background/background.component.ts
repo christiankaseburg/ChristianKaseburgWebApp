@@ -1,8 +1,8 @@
 ﻿import { Component, AfterViewInit, ElementRef, Input, ViewChild, HostListener } from '@angular/core';
 import * as THREE from 'three';
-import { PingPongTexture } from '../experiments/shared/helpers/PingPongTexture';
-import { DeviceDetectorService } from '../../services/shared/device-detector/device-detector.service';
-import { Godrays } from '../experiments/shared/helpers/postprocessing/godrays';
+import { PingPongTexture } from '../lab/experiment/shared/helpers/PingPongTexture';
+import { DeviceDetectorService } from '../shared/services/device-detector/device-detector.service';
+import { Godrays } from '../lab/experiment/shared/helpers/postprocessing/godrays';
 
 declare const require: (moduleId: string) => any;
 const OrbitControls = require('three-orbit-controls')(THREE);
@@ -47,12 +47,12 @@ export class BackgroundComponent { // Project 1
 
     private godrays: Godrays;
 
-    private materialVertexShader = require('../experiments/shared/shaders/godraysExperimentShaders/mesh.vert');
-    private materialFragmentShader = require('../experiments/shared/shaders/godraysExperimentShaders/mesh.frag');
-    private occlusionFragmentShader = require('../experiments/shared/shaders/godraysExperimentShaders/occlusion.frag');
-    private occlusionVertexShader = require('../experiments/shared/shaders/godraysExperimentShaders/occlusion.vert');
-    private simVertexShader = require('../experiments/shared/shaders/godraysExperimentShaders/simulation.vert');
-    private simFragmentShader = require('../experiments/shared/shaders/godraysExperimentShaders/simulation.frag');
+    private materialVertexShader = require('../lab/experiment/shared/shaders/godraysExperimentShaders/mesh.vert');
+    private materialFragmentShader = require('../lab/experiment/shared/shaders/godraysExperimentShaders/mesh.frag');
+    private occlusionFragmentShader = require('../lab/experiment/shared/shaders/godraysExperimentShaders/occlusion.frag');
+    private occlusionVertexShader = require('../lab/experiment/shared/shaders/godraysExperimentShaders/occlusion.vert');
+    private simVertexShader = require('../lab/experiment/shared/shaders/godraysExperimentShaders/simulation.vert');
+    private simFragmentShader = require('../lab/experiment/shared/shaders/godraysExperimentShaders/simulation.frag');
 
     private volumetricLightingSettings = {
         postProcessing: true,

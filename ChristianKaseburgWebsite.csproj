@@ -7,8 +7,17 @@
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.3" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -17,26 +26,31 @@
 
   <ItemGroup>
     <!-- Files not to publish (note that the 'dist' subfolders are re-added below) -->
+    <Compile Remove="wwwroot\assets\img\**" />
     <Content Remove="ClientApp\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Remove="wwwroot\assets\img\logo.svg" />
+    <Content Remove="wwwroot\assets\img\**" />
+    <EmbeddedResource Remove="wwwroot\assets\img\**" />
+    <None Remove="wwwroot\assets\img\**" />
   </ItemGroup>
 
   <ItemGroup>
     <None Remove="ClientApp\app\components\background\background.component.ts" />
     <None Remove="ClientApp\app\components\background\PingPongTexture.ts" />
     <None Remove="ClientApp\app\components\contact\contact.component.ts" />
-    <None Remove="ClientApp\app\components\experiments\experiments.routes.ts" />
-    <None Remove="ClientApp\app\components\experiments\experiment\godraysExperiment\godrays.experiment.component.ts" />
-    <None Remove="ClientApp\app\components\experiments\mock-experiments.ts" />
-    <None Remove="ClientApp\app\components\experiments\shared\models\experiment.model.ts" />
+    <None Remove="ClientApp\app\components\lab\experiment\godraysExperiment\godrays.experiment.component.ts" />
+    <None Remove="ClientApp\app\components\lab\lab.routes.ts" />
+    <None Remove="ClientApp\app\components\lab\mock-experiments.ts" />
+    <None Remove="ClientApp\app\components\lab\models\experiment.model.ts" />
+    <None Remove="ClientApp\app\components\lab\services\labResolver.service.ts" />
+    <None Remove="ClientApp\app\components\portfolio\models\project.ts" />
     <None Remove="ClientApp\app\components\portfolio\portfolio.component.ts" />
     <None Remove="ClientApp\app\components\background\simulation.ts" />
-    <None Remove="ClientApp\app\services\shared\device-detector\device-detector.constants.ts" />
-    <None Remove="ClientApp\app\services\shared\eventListeners\horizontalScroll.service.ts" />
-    <None Remove="ClientApp\app\services\shared\eventListeners\verticalScroll.service.ts" />
+    <None Remove="ClientApp\app\components\portfolio\portfolio.module.ts" />
+    <None Remove="ClientApp\app\components\portfolio\portfolio.routes.ts" />
+    <None Remove="ClientApp\app\components\portfolio\services\portfolioResolver.service.ts" />
+    <None Remove="ClientApp\app\components\shared\services\device-detector\device-detector.constants.ts" />
+    <None Remove="ClientApp\app\components\shared\services\eventListeners\horizontalScroll.service.ts" />
+    <None Remove="ClientApp\app\components\shared\services\eventListeners\verticalScroll.service.ts" />
     <None Remove="Properties\PublishProfiles\ChristianKaseburgWebsite20180419095524 - Web Deploy.pubxml" />
     <None Remove="Properties\PublishProfiles\ChristianKaseburgWebsite20180419100932 - Web Deploy.pubxml" />
     <None Remove="Properties\PublishProfiles\ChristianKaseburgWebsite20180419104646 - Web Deploy.pubxml" />
@@ -48,31 +62,29 @@
   </ItemGroup>
 
   <ItemGroup>
-    <TypeScriptCompile Include="ClientApp\app\components\experiments\experiments.routes.ts" />
-    <TypeScriptCompile Include="ClientApp\app\components\experiments\experiment\godraysExperiment\godrays.experiment.component.ts" />
-    <TypeScriptCompile Include="ClientApp\app\components\experiments\mock-experiments.ts" />
-    <TypeScriptCompile Include="ClientApp\app\components\experiments\shared\helpers\PingPongTexture.ts" />
-    <TypeScriptCompile Include="ClientApp\app\components\experiments\shared\helpers\postprocessing\godrays.ts" />
-    <TypeScriptCompile Include="ClientApp\app\components\experiments\shared\models\experiment.model.ts" />
-    <TypeScriptCompile Include="ClientApp\app\services\shared\device-detector\device-detector.constants.ts" />
-    <TypeScriptCompile Include="ClientApp\app\services\shared\device-detector\device-detector.service.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\lab\lab.routes.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\lab\experiment\godraysExperiment\godrays.experiment.component.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\lab\models\mock-experiments.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\lab\experiment\shared\helpers\PingPongTexture.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\lab\experiment\shared\helpers\postprocessing\godrays.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\lab\models\experiment.model.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\lab\services\labResolver.service.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\portfolio\portfolio.module.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\portfolio\portfolio.routes.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\portfolio\models\project.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\portfolio\services\portfolioResolver.service.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\shared\services\device-detector\device-detector.constants.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\shared\services\device-detector\device-detector.service.ts" />
     <TypeScriptCompile Include="ClientApp\app\components\contact\contact.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\components\portfolio\portfolio.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\components\background\background.component.ts" />
-    <TypeScriptCompile Include="ClientApp\app\services\shared\eventListeners\horizontalScroll.service.ts" />
-    <TypeScriptCompile Include="ClientApp\app\services\shared\eventListeners\verticalScroll.service.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\shared\services\eventListeners\horizontalScroll.service.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\shared\services\eventListeners\verticalScroll.service.ts" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="ClientApp\app\assets\font\hkgrotesk\" />
-    <Folder Include="ClientApp\app\assets\imgs\" />
-    <Folder Include="ClientApp\app\assets\videos\" />
-    <Folder Include="ClientApp\app\components\shared\" />
     <Folder Include="Properties\PublishProfiles\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="wwwroot\assets\img\logo.svg" />
   </ItemGroup>
 
   <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">

@@ -1,17 +1,20 @@
 ﻿import { Component, ElementRef, HostListener, AfterViewInit, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { TweenLite, TimelineMax } from 'gsap';
 
-import { TweenLite, TweenMax, TimelineMax } from 'gsap';
-import { EXPERIMENTS } from './mock-experiments';
+import { LabResolver } from './services/labResolver.service';
+import { Experiment } from './models/experiment.model';
+import { EXPERIMENTS } from './models/mock-experiments';
 
 @Component({
-    selector: 'experiments',
-    templateUrl: './experiments.component.html',
-    styleUrls: ['./experiments.component.scss'],
+    selector: 'lab',
+    templateUrl: './lab.component.html',
+    styleUrls: ['./lab.component.scss', '../shared/css/slideshow.scss'],
 })
 
-export class ExperimentsComponent implements AfterViewInit {
+export class LabComponent implements AfterViewInit {
 
-    public experiments = EXPERIMENTS;
+    public experiments: Experiment[];
 
     public currentVideo: number = 0;
     public previousVideo: number = 0;
@@ -32,11 +35,20 @@ export class ExperimentsComponent implements AfterViewInit {
     public videoSize: number;
     public centerVideoOffset: number;
 
+
+    constructor(private activatedRoute: ActivatedRoute) {
+        this.activatedRoute.data.map(data => data.experiments).subscribe((resp) => {
+            this.experiments = resp;
+            console.log('Component fetched experiments from resolver');
+            console.log(this.experiments);
+        }).unsubscribe();
+    }
+
     /**
      * On resize event reset slider values to new screen size
      * @param event
      */
-    onResize(event) {
+    public onResize(event) {
         this.setSliderValues();
     }
 
@@ -62,16 +74,16 @@ export class ExperimentsComponent implements AfterViewInit {
         this.sliderPosX = (this.centerVideoOffset - (this.currentVideo * this.videoSize));
 
         // Apply styles to Container
-        setTimeout(this.slideshow__container.nativeElement.removeAttribute('style'), 50);
-        setTimeout(this.slideshow__container.nativeElement.setAttribute('style',
+        this.slideshow__container.nativeElement.removeAttribute('style');
+        this.slideshow__container.nativeElement.setAttribute('style',
             'width: ' + (this.videoSize * this.experiments.length) + 'px; ' + 'transform: matrix(1, 0, 0, 1, ' + this.sliderPosX +
-            ', 0); touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);'), 100);
+            ', 0); touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);');
     }
 
     /**
-     * Switch through the videos based on the direction the user supplies.
+     * Switch through the videos based on the next video parameter
      * @param direction
-     * The user supplies a direction, and the container will move based on that.
+     * The user supplies the next video, and it will switch to that video
      */
     public switchVideo(nextVideo: number) {
         let direction;
@@ -93,34 +105,41 @@ export class ExperimentsComponent implements AfterViewInit {
                 ? this.sliderPosX -= ((this.currentVideo - this.previousVideo) * this.videoSize)
                 : this.sliderPosX += ((this.previousVideo - this.currentVideo) * this.videoSize);
 
-            let switchVideoTimeLine = new TimelineMax();
-
-            switchVideoTimeLine
-                .call(() => this.slideshow__videos[this.previousVideo].pause())
-                .to(this.slideshow__slideTitles[this.previousVideo].children, 1, {
-                    y: function (index) {
-                        return (index + 1) * 105;
-                    }
-                    })
-                .set(this.slideshow__slideTitles[this.previousVideo].children, { clearProps: "all" })
-                .set(this.slideshow__slide[this.previousVideo], { className: "-=active" }, this.slideshow__slideTitles[this.previousVideo].children)
-                .set(this.slideshow__slideTitles[this.previousVideo], { className: "+=slideshow__title-elements--hidden" })
-                .set(this.slideshow__slideTitles[this.currentVideo], { className: "-=slideshow__title-elements--hidden" })
-                .to(this.slideshow__container.nativeElement, .75, { x: this.sliderPosX }, '-=.5')
-                .set(this.slideshow__slide[this.currentVideo], { className: "+=active" }, this.slideshow__container.nativeElement)
-                .fromTo(this.slideshow__slideTitles[this.currentVideo].children, .75, {
-                    y: function (index) {
-                        return (index + 1) * 105;
-                    }
-                },
-                {
-                    y: function (index) {
-                        return 0;
-                    }
-                    })
-                .call(() => this.slideshow__videos[this.currentVideo].play())
-                .call(() => setTimeout(() => this.animating = false, 0));
+            this.switchVideoAnimation();
         }
+    }
+
+    /**
+     * Switch video animation
+     */
+    public switchVideoAnimation() {
+        let switchVideoTimeLine = new TimelineMax();
+
+        switchVideoTimeLine
+            .call(() => this.slideshow__videos[this.previousVideo].pause())
+            .to(this.slideshow__slideTitles[this.previousVideo].children, 1, {
+                y: function (index) {
+                    return (index + 1) * 105;
+                }
+            })
+            .set(this.slideshow__slideTitles[this.previousVideo].children, { clearProps: "all" })
+            .set(this.slideshow__slide[this.previousVideo], { className: "-=active" }, this.slideshow__slideTitles[this.previousVideo].children)
+            .set(this.slideshow__slideTitles[this.previousVideo], { className: "+=slideshow__title-elements--hidden" })
+            .set(this.slideshow__slideTitles[this.currentVideo], { className: "-=slideshow__title-elements--hidden" })
+            .to(this.slideshow__container.nativeElement, .75, { x: this.sliderPosX }, '-=.5')
+            .set(this.slideshow__slide[this.currentVideo], { className: "+=active" }, this.slideshow__container.nativeElement)
+            .fromTo(this.slideshow__slideTitles[this.currentVideo].children, .75, {
+                y: function (index) {
+                    return (index + 1) * 105;
+                }
+            },
+            {
+                y: function (index) {
+                    return 0;
+                }
+            })
+            .call(() => this.slideshow__videos[this.currentVideo].play())
+            .call(() => setTimeout(() => this.animating = false, 0));
     }
 
     /**
@@ -135,11 +154,11 @@ export class ExperimentsComponent implements AfterViewInit {
             this.titleMenuExpanded = !this.titleMenuExpanded;
             if (this.titleMenuExpanded) {
                 this.animating = true;
-                this.toggleMenuOut(prevVid);
+                this.toggleMenuOutAnimation(prevVid);
 
             } else if (!this.animating) {
                 this.animating = true;
-                this.toggleMenuIn(prevVid);
+                this.toggleMenuInAnimation(prevVid);
             }
         }
 
@@ -148,7 +167,7 @@ export class ExperimentsComponent implements AfterViewInit {
     /**
      * Slide to tile
      */
-    public slideToTitle(videoNumber: number) {
+    public slideToTitleAnimation(videoNumber: number) {
         let toggleTimeline = new TimelineMax({}),
             prevVid;
 
@@ -176,7 +195,7 @@ export class ExperimentsComponent implements AfterViewInit {
     /**
      * Toggle Menu expand in
      */
-    public toggleMenuIn(previousVideo: number) {
+    public toggleMenuInAnimation(previousVideo: number) {
 
         let toggleTimeline = new TimelineMax({}),
             prevVid = previousVideo;
@@ -204,13 +223,13 @@ export class ExperimentsComponent implements AfterViewInit {
                     return (index + 1) * 105;
                 }
             })
-            .call(() => setTimeout(() => this.animating = false, 200));
+            .call(() => setTimeout(() => this.animating = false, 0));
     }
 
     /**
      * Toggle Menu expand in
      */
-    public toggleMenuOut(previousVideo: number) {
+    public toggleMenuOutAnimation(previousVideo: number) {
         let toggleTimeline = new TimelineMax({}),
             prevVid = previousVideo;
 
@@ -240,30 +259,28 @@ export class ExperimentsComponent implements AfterViewInit {
                     return 0;
                 }, opacity: 1, visibility: "inherit"
             })
-            .call(() => setTimeout(() => this.animating = false, 300));
+            .call(() => setTimeout(() => this.animating = false, 0));
     }
 
     /**
      * Once the page has loaded start the load in animation.
      */
-
-    // https://codepen.io/anon/pen/KRmaxZ remember
     public pageLoadedAnimation() {
         let pageLoadTimeLine = new TimelineMax();
 
-        this.slideshow__slideTitles[this.currentVideo].classList.remove('slideshow__title-elements--hidden');
         pageLoadTimeLine
-            .fromTo(this.showTitleBtn.nativeElement, 1, { x: 100, opacity: 0 }, { x: 0, opacity: 1 })
-            .fromTo(this.slideshow__container.nativeElement, .5, { x: window.innerWidth }, { x: this.centerVideoOffset })
-            .from(this.slideshow__slideTitles[this.currentVideo].children, 1, {
+            .set(this.slideshow__slideTitles[this.currentVideo], { className: "-=slideshow__title-elements--hidden" }, 'start')
+            .fromTo(this.showTitleBtn.nativeElement, 1, { x: 50, opacity: 0, visibility: "visible" }, { x: 0, opacity: 1 }, 'view-all')
+            .fromTo("#route", 1, { y: -50, opacity: 0, visibility: "visible" }, { y: 0, opacity: 1 }, 'view-all')
+            .set(this.slideshow__slide[this.currentVideo], { className: "+=active" }, '-=.25')
+            .call(() => this.playActiveVideo())
+            .fromTo(this.slideshow__container.nativeElement, .5, { x: window.innerWidth }, { x: this.centerVideoOffset }, 'start+=.5')
+            .from(this.slideshow__slideTitles[this.currentVideo].children, .5, {
                 y: function (index) {
                     return (index + 1) * 105;
                 }
             })
-            .set(this.slideshow__slideTitles[this.currentVideo].children, { clearProps: "all" });
-        this.slideshow__slide[this.previousVideo].classList.remove('active');
-        this.slideshow__slide[this.currentVideo].classList.add('active');
-        this.playActiveVideo();
+            .set(this.slideshow__slideTitles[0].children, { clearProps: "all" });
     }
 
     /**
@@ -282,8 +299,8 @@ export class ExperimentsComponent implements AfterViewInit {
     }
 
     /**
-     * Check for changed touches, and if there are change touches
-     * switch to that touch and if not use event.
+     * Check for changed touches, and if there is a change
+     * switch to that touch.
      * @param event
      */
     public unify(event) { return event.changedTouches ? event.changedTouches[0] : event };
@@ -295,7 +312,7 @@ export class ExperimentsComponent implements AfterViewInit {
     public lock(event) { this.mousePosX = this.unify(event).clientX };
 
     /**
-     * This is where the magic happens.
+     * Take the mouse change in posX, and then check if the user swiped left or right.
      * @param event
      */
     public move(event) {
@@ -365,9 +382,9 @@ export class ExperimentsComponent implements AfterViewInit {
      * and then start page Loaded animation to slide the slider in.
      */
     ngAfterViewInit() {
+        console.log('Experiment Component AfterViewInit');
         this.onResize(event);
         this.setEventListeners();
         this.pageLoadedAnimation();
-
     }
 }

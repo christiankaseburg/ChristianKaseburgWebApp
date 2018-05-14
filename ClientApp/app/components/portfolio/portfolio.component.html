@@ -1,1 +1,34 @@
-﻿<p>Portfolio</p>
+﻿<div class="slideshow" (window:resize)="onResize($event)">
+    <div #slideTitlesBlock class="slideshow__slide-titles">
+        <div class="slideshow__slide-titles-container">
+            <div class="slideshow__title-elements slideshow__title-elements--hidden" *ngFor="let project of projects" (click)="slideToTitleAnimation(project.id)">
+                <div class="slideshow__title-elements-char" *ngFor="let letter of project.title">
+                    {{letter}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div #slideshow__container class="slideshow__container">
+        <div #slideshow__slide class="slideshow__slide" *ngFor="let project of projects">
+            <article class="slideshow__content">
+                <div class="slideshow__info slideshow__info--slide-up">
+                    <span>{{project.subtitle}}</span>
+                    <span>{{project.date}}</span>
+                </div>
+                <a *ngIf="project.route" class="slideshow__info slideshow__info--slide-down" [href]="project.route" target="blank">
+                    <span>Visit Project</span>
+                </a>
+                <div #slideshow__video_container class="slideshow__video-container">
+                    <img class="slideshow__portfolio-img" src="{{project.image}}" />
+                </div>
+            </article>
+        </div>
+    </div>
+    <div #showTitleBtn (click)="toggleTitleMenu()" class="slideshow__view-all">
+        <span class="slideshow_view-all-bar"></span>
+        <span class="slideshow_view-all-bar"></span>
+        <span class="slideshow_view-all-text">View All</span>
+    </div>
+</div>
+
+<div id="route">Portfolio</div>

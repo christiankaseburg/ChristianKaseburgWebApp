@@ -1,39 +1,32 @@
-﻿html
-
-Pages
-
+﻿Pages
 		Header
 		[X] - Setup routing to each page
+		[X] - Build Mockup of design
 		[X] - responsive for desktop, ipad, and mobile
-		[X] - Fix navbar from snapping to top when hamburger pressed
+		[X] - Status bar with heart pulse
 
-		WebGl Content
-		[X] - Make mobile friendly
-		[X] - Make component more modular for reusing features for experiments
-		
-
-		Footer
-		[X] - Social icons
-		[X] - Social icons loaded with other CSS
 		
 		Experiments
 		[X] - build experiment page mockup
+		[X] - Use resolver to get data from server, and then load component
 		[X] - Fix javascript onResize listener for resizing videos aspect so it stays consistent across all devices
 		[X] - Load videos, pause videos, and play videos handled for mobile and desktop devices.
-		[X] - Component handles everything related to carousel with variables to prevent user bugs.
-		[ ? ] - Add page animation to match the rest of the website when switching project and loading experiment page.
-
-		[] - When user clicks Demo I need to serve a new page with the project information.
+		[X] - Animate carousel, and view all experiments.
+		[X] - Display experiments when user chooses visit experiment
 
 			Projects
-			[X] - Setup editable Godrays experiment
+			[ ] - Load project as its own individual page
+
+				Godrays
+				[X] - Setup editable Godrays experiment
 		
 		Portfolio
-		[] - Will not have portfolio page until I finish another project besides this website.
+		[] - Follow same design as Experiments, except it will be loading portfolio projects
 		
 		Contact 
-		[X] - Add form 
-		[X] - Send form to server
+		[ ] - Add Contact Form
+		[ ] - Create contact form controller, and services to handle form submissions.
+		[ ] - Save contact form submissions
 		
 		Admin
 		[] - Admin panel ?
@@ -42,6 +35,7 @@ Pages
 		Miscellanious
 		[X] - Build service for collecting device data
 		[X] - Structure ClientApp/app for easier to read img/css/video/font assets
+		[X] - Structure CSS to Block, element, modifier naming conventions.
 		[ ] - Create loader for when website is loading different components, videos, ect...
 		
 		Bundling
@@ -50,16 +44,14 @@ Pages
 		[X] - bundle all javascript that every page needs together
 		[X] - Bundle css that all pages use into vendor.css
 		[X] - Bundle imgs/mp3/mp4 files
-		[X] - Fix production
+		[X] - Fix webpacks problem with switching to production environment
+		[ ] - Get initial bundle size smaller
 		[] - CSS auto prefixer ? not sure
 
 
 ---- TO DO LATER ----
 Statistics
 - Googleanalytics?
-
-Logo idea -
-- Set a sun that switches to a moon based on my timezone for top left corner
 
 Portfolio/ideas
 - writing code, and executing it in browser

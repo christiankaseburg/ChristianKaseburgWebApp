@@ -1,20 +1,59 @@
 ﻿<!DOCTYPE html>
-<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>    <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!-->
-<html class="no-js" lang="en">
-<!--<![endif]-->
+<html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale= 1.0, maximum-scale = 1.0, shrink-to-fit=no" />
     <title>@ViewData["Title"] - ChristianKaseburgWebsite</title>
     <base href="~/" />
+    <style>
+        #splash {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            padding: 10px;
+            z-index: 100;
+            background: white;
+        }
+        #splash__square-holder {
+            position: absolute;
+            width: 55px;
+            height: 55px;
+            transform: translate(-50%, -40%);
+            top: 40%;
+            left: 50%;
+        }
 
+        .splash__square {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        #splash__square-1 {
+            stroke-dasharray: 600;
+            stroke-dashoffset: 600;
+        }
+
+        #splash__square-2,
+        #splash__square-3 {
+            opacity: 0.1;
+        }
+        #splash__state {
+            position: relative;
+            font-family: monospace;
+            text-align: center;
+            top: 50%;
+        }
+    </style>
     <link rel="stylesheet" href="~/dist/vendor.css" asp-append-version="true" />
-    <script>document.documentElement.className = document.documentElement.className.replace("no-js", "js");</script>
 </head>
+
 <body>
     @RenderBody()
 

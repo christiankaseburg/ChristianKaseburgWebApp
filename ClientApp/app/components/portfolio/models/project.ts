@@ -1,10 +1,9 @@
-﻿export class Experiment {
+﻿export class Project {
     id: number;
     title: any;
     subtitle: string;
-    details: string;
+    tags: string;
     date: string;
     route: string;
-    video: any;
     image: any;
 }

@@ -2,10 +2,24 @@
     ViewData["Title"] = "Home Page";
 }
 
-<app>Loading...</app>
+<app></app>
+
+<div id="splash">
+    <svg style="display: none;" xmlns="http://www.w3.org/2000/svg">
+        <symbol id="square" viewBox="0 0 217.6 217.6">
+            <rect x="41.9" y="41.9" transform="matrix(0.7071 -0.7071 0.7071 0.7071 -45.0717 108.8126)" fill="#FFFFFF" stroke="#3d72a4" stroke-width="12" stroke-miterlimit="10" width="133.9" height="133.9" />
+        </symbol>
+    </svg>
+    <div id="splash__square-holder">
+        <svg class="splash__square" id="splash__square-1"><use xlink:href="#square"></use></svg>
+        <svg class="splash__square" id="splash__square-2"><use xlink:href="#square"></use></svg>
+    </div>
+    <div id="splash__state">
+        Loading stuff
+    </div>
+</div>
 
 <script src="~/dist/vendor.js" asp-append-version="true"></script>
-<script src="~/dist/dat.gui.min.js"></script>
 @section scripts {
     <script src="~/dist/main-client.js" asp-append-version="true"></script>
 }

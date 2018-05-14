@@ -55,10 +55,6 @@ html {
     padding: 10px;
 }
 
-body {
-    border: 1px solid #3D72A4;
-}
-
 @media only screen and (min-width: 768px) {
     html {
         padding: 30px;
@@ -201,6 +197,12 @@ a {
     &:hover, &:active {
         text-decoration: none;
     }
+}
+
+#route {
+    position: absolute;
+    bottom: 1rem;
+    right: 1.5rem;
 }
 
 /* Headings */

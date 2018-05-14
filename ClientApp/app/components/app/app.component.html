@@ -1,4 +1,5 @@
 <div class="main">
+    <div id="main__border"></div>
     <!-- Navigation -->
     <header id="header" [class.active]="showMenu">
 
@@ -29,7 +30,7 @@
             <ul id="header__nav-list">
                 <li class="header__nav-list-item" (click)='toggleNavMenu()' [routerLinkActive]="['active']" [routerLinkActiveOptions]="{ exact: true }" [routerLink]="['/'] "><a class="header__route-link">Home<span class="header__tick"></span></a></li>
                 <li class="header__nav-list-item" (click)='toggleNavMenu()' [routerLinkActive]="['active']" [routerLink]="['portfolio']"><a class="header__route-link">Portfolio<span class="header__tick"></span></a></li>
-                <li class="header__nav-list-item" (click)='toggleNavMenu()' [routerLinkActive]="['active']" [routerLink]="['experiments']"><a class="header__route-link">Experiments<span class="header__tick"></span></a></li>
+                <li class="header__nav-list-item" (click)='toggleNavMenu()' [routerLinkActive]="['active']" [routerLink]="['lab']"><a class="header__route-link">Lab<span class="header__tick"></span></a></li>
                 <li class="header__nav-list-item" (click)='toggleNavMenu()' [routerLinkActive]="['active']" [routerLink]="['contact']"><a class="header__route-link">Contact<span class="header__tick"></span></a></li>
 
             </ul>

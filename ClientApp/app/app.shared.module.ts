@@ -8,11 +8,10 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './components/app/app.component';
 import { BackgroundComponent } from './components/background/background.component';
 import { HomeComponent } from './components/home/home.component';
-import { PortfolioComponent } from './components/portfolio/portfolio.component';
 import { ContactComponent } from './components/contact/contact.component';
 
 //import statements for services
-import { DeviceDetectorService } from './services/shared/device-detector/device-detector.service';
+import { DeviceDetectorService } from './components/shared/services/device-detector/device-detector.service';
 
 /*
  Declaration for NgModule takes these metadata objects, and tells
@@ -25,7 +24,6 @@ import { DeviceDetectorService } from './services/shared/device-detector/device-
         AppComponent,
         BackgroundComponent,
         HomeComponent,
-        PortfolioComponent,
         ContactComponent
     ],
     providers: [ DeviceDetectorService ],
@@ -34,18 +32,48 @@ import { DeviceDetectorService } from './services/shared/device-detector/device-
         HttpModule,
         FormsModule,
         RouterModule.forRoot([
-            { path: '', component: HomeComponent, pathMatch: 'full', data: { state: 'home' } },
-            { path: 'portfolio', component: PortfolioComponent, data: { state: 'portfolio' } },
             {
-                path: 'experiments',
-                loadChildren: './components/experiments/experiments.module#ExperimentsModule',
-                data: { state: 'experiments' }
+                path: '',
+                component: HomeComponent,
+                pathMatch: 'full',
+                data: { state: 'home' }
             },
-            { path: 'contact', component: ContactComponent, data: { state: 'contact' } },
-            { path: '**', redirectTo: '' }
+            {
+                path: 'portfolio',
+                loadChildren: './components/portfolio/portfolio.module#PortfolioModule',
+                data: { state: 'portfolio' }
+            },
+            {
+                path: 'lab',
+                loadChildren: './components/lab/lab.module#LabModule',
+                data: { state: 'lab' }
+            },
+            {
+                path: 'contact',
+                component: ContactComponent,
+                data: { state: 'contact' }
+            }
         ])
     ]
 })
 
 export class AppModuleShared {
 }
+
+/* Idealy this is what the route interface looks like this
+export interface Route {
+    path?: string;
+    pathMatch?: string;
+    component?: Type<any>;
+    redirectTo?: string;
+    outlet?: string;
+    canActivate?: any[];
+    canActivateChild?: any[];
+    canDeactivate?: any[];
+    canLoad?: any[];
+    data?: Data;
+    resolve?: ResolveData;
+    children?: Route[];
+    loadChildren?: LoadChildren;
+}
+*/

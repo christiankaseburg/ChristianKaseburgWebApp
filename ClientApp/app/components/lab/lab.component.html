@@ -1,7 +1,7 @@
 ﻿<div class="slideshow" (window:resize)="onResize($event)" (window:focus)="playActiveVideo()" (window:blur)="pauseActiveVideo()">
     <div #slideTitlesBlock class="slideshow__slide-titles">
         <div class="slideshow__slide-titles-container">
-            <div class="slideshow__title-elements slideshow__title-elements--hidden" *ngFor="let experiment of experiments"  (click)="slideToTitle(experiment.id)">
+            <div class="slideshow__title-elements slideshow__title-elements--hidden" *ngFor="let experiment of experiments" (click)="slideToTitleAnimation(experiment.id)">
                 <div class="slideshow__title-elements-char" *ngFor="let letter of experiment.title">
                     {{letter}}
                 </div>
@@ -15,12 +15,11 @@
                     <span>{{experiment.subtitle}}</span>
                     <span>{{experiment.date}}</span>
                 </div>
-                <a class="slideshow__info slideshow__info--slide-down" [routerLink]="[experiment.route]" target="blank">
+                <a class="slideshow__info slideshow__info--slide-down" href="lab/{{experiment.route}}" target="blank">
                     <span>Visit Experiment</span>
                 </a>
                 <div #slideshow__video_container class="slideshow__video-container">
-                    <img src="{{experiment.image}}" />
-                    <video class="slide-video__video" src="{{experiment.video}}" type="video/mp4" preload="metadata" webkit-playsinline playsinline muted loop></video>
+                    <video defaultMuted muted webkit-playsinline playsinline loop poster="{{experiment.image}}" class="slide-video__video" src="{{experiment.video}}" type="video/mp4" preload="metadata"></video>
                 </div>
             </article>
         </div>
@@ -31,3 +30,5 @@
         <span class="slideshow_view-all-text">View All</span>
     </div>
 </div>
+
+<div id="route">Lab</div>
