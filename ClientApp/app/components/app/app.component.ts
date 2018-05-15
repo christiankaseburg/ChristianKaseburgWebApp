@@ -86,18 +86,6 @@ export class AppComponent implements AfterViewInit {
     }
 
     /**
-     * Temp workaround  until I figure out subdomains for showing experiments
-     * @param route
-     */
-    public checkRoute(route: string) {
-        if (this.router.url.includes('/lab/')) {
-            clearInterval(this.clockInterval);
-            return false;
-        }
-        return true;
-    }
-
-    /**
      * app has loaded, so switch from loading to hold to continue
      */
     public hideSplashScreen() {

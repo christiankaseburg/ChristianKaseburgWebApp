@@ -26,10 +26,13 @@
 
   <ItemGroup>
     <!-- Files not to publish (note that the 'dist' subfolders are re-added below) -->
+    <Compile Remove="ClientApp\app\components\lab\experiment\**" />
     <Compile Remove="wwwroot\assets\img\**" />
     <Content Remove="ClientApp\**" />
     <Content Remove="wwwroot\assets\img\**" />
+    <EmbeddedResource Remove="ClientApp\app\components\lab\experiment\**" />
     <EmbeddedResource Remove="wwwroot\assets\img\**" />
+    <None Remove="ClientApp\app\components\lab\experiment\**" />
     <None Remove="wwwroot\assets\img\**" />
   </ItemGroup>
 
@@ -37,7 +40,6 @@
     <None Remove="ClientApp\app\components\background\background.component.ts" />
     <None Remove="ClientApp\app\components\background\PingPongTexture.ts" />
     <None Remove="ClientApp\app\components\contact\contact.component.ts" />
-    <None Remove="ClientApp\app\components\lab\experiment\godraysExperiment\godrays.experiment.component.ts" />
     <None Remove="ClientApp\app\components\lab\lab.routes.ts" />
     <None Remove="ClientApp\app\components\lab\mock-experiments.ts" />
     <None Remove="ClientApp\app\components\lab\models\experiment.model.ts" />
@@ -51,6 +53,8 @@
     <None Remove="ClientApp\app\components\shared\services\device-detector\device-detector.constants.ts" />
     <None Remove="ClientApp\app\components\shared\services\eventListeners\horizontalScroll.service.ts" />
     <None Remove="ClientApp\app\components\shared\services\eventListeners\verticalScroll.service.ts" />
+    <None Remove="Properties\PublishProfiles\ChristianKaseburg - Web Deploy.pubxml" />
+    <None Remove="Properties\PublishProfiles\ChristianKaseburgWebsite - Web Deploy.pubxml" />
     <None Remove="Properties\PublishProfiles\ChristianKaseburgWebsite20180419095524 - Web Deploy.pubxml" />
     <None Remove="Properties\PublishProfiles\ChristianKaseburgWebsite20180419100932 - Web Deploy.pubxml" />
     <None Remove="Properties\PublishProfiles\ChristianKaseburgWebsite20180419104646 - Web Deploy.pubxml" />
@@ -63,10 +67,7 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\app\components\lab\lab.routes.ts" />
-    <TypeScriptCompile Include="ClientApp\app\components\lab\experiment\godraysExperiment\godrays.experiment.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\components\lab\models\mock-experiments.ts" />
-    <TypeScriptCompile Include="ClientApp\app\components\lab\experiment\shared\helpers\PingPongTexture.ts" />
-    <TypeScriptCompile Include="ClientApp\app\components\lab\experiment\shared\helpers\postprocessing\godrays.ts" />
     <TypeScriptCompile Include="ClientApp\app\components\lab\models\experiment.model.ts" />
     <TypeScriptCompile Include="ClientApp\app\components\lab\services\labResolver.service.ts" />
     <TypeScriptCompile Include="ClientApp\app\components\portfolio\portfolio.module.ts" />

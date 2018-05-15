@@ -9,6 +9,8 @@ using ChristianKaseburgWebsite.Models;
 
 namespace ChristianKaseburgWebsite.Controllers
 {
+    [Route("api/[controller]")] // api/Lab
+    [Route("[controller]/{id}")] // experiment index.html plz
     public class LabController : Controller
     {
         // Temp static data
@@ -46,13 +48,12 @@ namespace ChristianKaseburgWebsite.Controllers
             }
         };
 
-        [Route("[controller]/{id}")] // api/Lab
         public IActionResult Index(string id)
         {
             return View();
         }
 
-        [Route("api/[controller]/[action]")] // api/Lab
+        [HttpGet("[action]")]
         public IActionResult GetExperiments()
         {
             return new ObjectResult(_experiments);

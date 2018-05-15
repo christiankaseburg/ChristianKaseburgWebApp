@@ -52,6 +52,10 @@ import { DeviceDetectorService } from './components/shared/services/device-detec
                 path: 'contact',
                 component: ContactComponent,
                 data: { state: 'contact' }
+            },
+            {
+                path: '**', // Wild card path is selected when the router does not match any other paths.
+                redirectTo: ''
             }
         ])
     ]

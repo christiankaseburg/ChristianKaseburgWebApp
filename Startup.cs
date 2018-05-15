@@ -50,11 +50,13 @@ namespace ChristianKaseburgWebsite
                 routes
                     .MapRoute(
                         name: "default",
-                        template: "{controller=Home}/{action=Index}/{id?}")
+                        template: "{controller=Home}/{action=Index}/{id?}");
+                routes
                     .MapRoute(
                         name: "lab",
                         template: "lab/{id}",
-                        new { controller = "Lab", action = "Index", })
+                        defaults: new { controller = "Lab", action = "Index", });
+                routes
                     .MapSpaFallbackRoute( //Fall back route so everything gets handled over to angular application
                         name: "spa-fallback",
                         defaults: new { controller = "Home", action = "Index" });

@@ -24,7 +24,7 @@ module.exports = (env) => {
                 { test: /\.(png|jpg|jpeg|gif|svg)$/, use: 'url-loader?limit=25000' },
                 { test: /\.(glsl|frag|vert)$/, exclude: /node_modules/, use: 'raw-loader' },
                 { test: /\.(glsl|frag|vert)$/, exclude: /node_modules/, use: 'glslify-loader' },
-                { test: /\.mp4/, use: { loader: 'url-loader', options: { limit: 10000, mimtetype: 'video/mp4', } } },
+                { test: /\.mp4/, use: { loader: 'url-loader', options: { limit: 10000, mimtetype: 'video/mp4' } } },
                 { test: /\.(woff|woff2|eot|ttf|otf)$/, use: "file-loader" } // Not really needed
             ]
         },
