@@ -41,6 +41,7 @@ namespace ChristianKaseburgWebsite
                 app.UseExceptionHandler("/Home/Error");
             }
 
+            app.UseDefaultFiles();
             app.UseStaticFiles();
             // Routing magic maps to the home controller to deliver the first view with mvc
             app.UseMvc(routes =>

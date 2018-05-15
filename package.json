@@ -57,7 +57,6 @@
     "rxjs": "^5.5.6",
     "sass": "^1.0.0-beta.4",
     "sass-loader": "^6.0.6",
-    "scrollmagic": "^2.0.5",
     "style-loader": "0.18.2",
     "three": "^0.89.0",
     "three-effectcomposer": "0.0.1",

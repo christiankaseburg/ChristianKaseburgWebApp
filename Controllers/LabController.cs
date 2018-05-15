@@ -50,7 +50,13 @@ namespace ChristianKaseburgWebsite.Controllers
 
         public IActionResult Index(string id)
         {
-            return View();
+            if (id == "godrays")
+            {
+                return View("~/Views/Lab/" + id + "/index.cshtml");
+            } else
+            {
+                return View();
+            }
         }
 
         [HttpGet("[action]")]
