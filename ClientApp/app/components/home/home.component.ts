@@ -13,10 +13,10 @@ export class HomeComponent implements AfterViewInit {
     @ViewChild('test') public test: ElementRef;
 
     public startPageLoadedAnimations() {
-
         let tl = new TimelineLite();
-        tl.fromTo(this.title.nativeElement, .75, { y: 105, opacity: 0 }, { y: 0, opacity: 1})
-        .fromTo(this.subtitle.nativeElement, .75, { y: 105, opacity: 0 }, { y: 0, opacity: .5}, "-=0.5");
+        tl
+            .fromTo(this.title.nativeElement, .75, { y: 105, opacity: 0 }, { y: 0, opacity: 1 })
+            .fromTo(this.subtitle.nativeElement, .75, { y: 105, opacity: 0 }, { y: 0, opacity: .5}, "-=0.5");
     }
 
     ngAfterViewInit() {

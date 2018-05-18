@@ -86,13 +86,12 @@ export class LabComponent implements AfterViewInit {
      * The user supplies the next video, and it will switch to that video
      */
     public switchVideo(nextVideo: number) {
-        let direction;
-        this.currentVideo < nextVideo ? direction = '-' : direction = '+';
+        let direction = this.currentVideo < nextVideo ? '-' : '+';
         
         // True as long if video positioned at front is moving to next video,
         // currentVideo is within the 0 and total experiment limit,
         // and if currentvideo is last video and is moving backwards
-        if ((this.currentVideo === 0 && direction === '-'
+        if (this.experiments.length !== 1 && (this.currentVideo === 0 && direction === '-'
             || (0 < this.currentVideo && this.currentVideo < this.experiments.length - 1)
             || this.currentVideo === this.experiments.length - 1 && direction === '+')
             && !this.animating) {
@@ -147,9 +146,8 @@ export class LabComponent implements AfterViewInit {
      */
     public toggleTitleMenu() {
         let toggleTimeline = new TimelineMax({}),
-            prevVid;
+            prevVid = this.slideshow__slide[this.currentVideo - 1] == null ? 0 : this.currentVideo - 1;
 
-        this.slideshow__slide[this.currentVideo - 1] == null ? prevVid = 0 : prevVid = this.currentVideo - 1;
         if (!this.animating) {
             this.titleMenuExpanded = !this.titleMenuExpanded;
             if (this.titleMenuExpanded) {
@@ -169,27 +167,29 @@ export class LabComponent implements AfterViewInit {
      */
     public slideToTitleAnimation(videoNumber: number) {
         let toggleTimeline = new TimelineMax({}),
-            prevVid;
+        prevVid = this.slideshow__slide[this.currentVideo - 1] == null ?  0 : this.currentVideo - 1;
 
-        this.slideshow__slide[this.currentVideo - 1] == null ? prevVid = 0 : prevVid = this.currentVideo - 1;
-
-        toggleTimeline
-            .set(this.showTitleBtn.nativeElement, { className: "-=slideshow__view-all--active" })
-            .set(this.slideshow__slideTitles[this.currentVideo], { className: "+=slideshow__title-elements--hidden" })
-            .fromTo([".slideshow__title-elements--hidden"], .5, {
-                y: function (index) {
-                    return 0;
-                }, opacity: 1
-            },
-            {
-                y: function (index) {
-                    return (index + 1) * 105;
-                }, opacity: 0, clearProps: "all"
-            })
-            .to([this.slideshow__slide[this.currentVideo], this.slideshow__slide[this.currentVideo + 1]], .5, { x: "0%" }, "slide-video")
-            .to(this.slideshow__slide[prevVid], .5, { x: "0%" }, "slide-video")
-            .set(this.slideShowTitlesContainer.nativeElement, { className: "-=slideshow__slides-titles--view-all" })
-            .call(() => setTimeout(() => this.switchVideo(videoNumber), 0));
+        if (videoNumber == this.currentVideo) {
+            this.toggleMenuInAnimation(prevVid);
+        } else {
+            toggleTimeline
+                .set(this.showTitleBtn.nativeElement, { className: "-=slideshow__view-all--active" })
+                .set(this.slideshow__slideTitles[this.currentVideo], { className: "+=slideshow__title-elements--hidden" })
+                .fromTo([".slideshow__title-elements--hidden"], .5, {
+                    y: function (index) {
+                        return 0;
+                    }, opacity: 1
+                },
+                {
+                    y: function (index) {
+                        return (index + 1) * 105;
+                    }, opacity: 0, clearProps: "all"
+                })
+                .to([this.slideshow__slide[this.currentVideo], this.slideshow__slide[this.currentVideo + 1]], .5, { x: "0%" }, "slide-video")
+                .to(this.slideshow__slide[prevVid], .5, { x: "0%" }, "slide-video")
+                .set(this.slideShowTitlesContainer.nativeElement, { className: "-=slideshow__slides-titles--view-all" })
+                .call(() => setTimeout(() => this.switchVideo(videoNumber), 0));
+        }
     }
 
     /**

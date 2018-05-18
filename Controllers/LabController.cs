@@ -25,26 +25,6 @@ namespace ChristianKaseburgWebsite.Controllers
                 Route = "godrays",
                 Video = "/assets/videos/godrays.mp4",
                 Image = "/assets/imgs/godrays/godrays_thumbnail.jpg"
-            },
-            new Experiment {
-                Id = 1,
-                Title = new char[] {'G', 'o', 'd', 'r', 'a', 'y', 's' },
-                Subtitle = "Volumentric Lighting",
-                Tags = "[ WebGl / Instanced / PostProcessing / GPGPU ]",
-                Date = "Feb 2018",
-                Route = "godrays",
-                Video = "/assets/videos/godrays.mp4",
-                Image = "/assets/imgs/godrays/godrays_thumbnail.jpg"
-            },
-            new Experiment {
-                Id = 2,
-                Title = new char[] {'G', 'o', 'd', 'r', 'a', 'y', 's' },
-                Subtitle = "Volumentric Lighting",
-                Tags = "[ WebGl / Instanced / PostProcessing / GPGPU ]",
-                Date = "Feb 2018",
-                Route = "godrays",
-                Video = "/assets/videos/godrays.mp4",
-                Image = "/assets/imgs/godrays/godrays_thumbnail.jpg"
             }
         };
 
