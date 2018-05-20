@@ -18,7 +18,7 @@
 #router-container {
     height: 100%;
     width: 100%;
-    overflow: scroll;
+    overflow: auto;
 }
 
 /* Available Status */
@@ -205,7 +205,7 @@ header {
             position: initial;
         }
         #header__nav-list {
-            position: absolute;
+            position: fixed;
             top: 50%;
             width: 100%;
             transform: translate3d(0, -50%, 0);

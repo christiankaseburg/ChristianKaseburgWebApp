@@ -190,7 +190,7 @@
     object-fit: fill;
 } 
 
-video, img {
+img {
     position: absolute;
     display: block;
     top: 0;
@@ -201,6 +201,19 @@ video, img {
     object-fit: cover;
     z-index: 10;
     pointer-events: none;
+}
+video {
+    /* Make video to at least 100% wide and tall */
+    min-width: 100%;
+    min-height: 100%;
+    /* Setting width & height to auto prevents the browser from stretching or squishing the video */
+    width: auto;
+    height: auto;
+    /* Center the video */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
 }
 
 /* Slide Show View all */

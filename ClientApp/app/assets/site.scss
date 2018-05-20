@@ -52,6 +52,8 @@ html, body {
 }
 
 html {
+    overflow: hidden;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
     padding: 10px;
 }
 
@@ -120,16 +122,8 @@ fieldset {
 }
 
 /*
- * Allow only vertical resizing of textareas.
- */
-
-textarea {
-    resize: vertical;
-}
-
-/*
  * Removing selection blue borders or outlines from all browsers and devices.
- */ 
+ */
 *::selection {
     background-color: transparent;
 }
@@ -152,6 +146,14 @@ input[type="text"], textarea, [contenteditable] {
     -moz-user-select: text;
     -ms-user-select: text;
     user-select: text;
+}
+
+/*
+ * Allow only vertical resizing of textareas.
+ */
+
+textarea {
+    resize: vertical;
 }
    
 /*
@@ -223,13 +225,25 @@ li {
    ========================================================================== */
 
 /*
+ * Prevent user selection
+ */
+
+.noSelect {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
+}
+
+/*
  * Hide visually and from screen readers
  */
 
 .hidden {
     display: none !important;
 }
-
 
 /*
  * Change elements opacity to seem disabled.

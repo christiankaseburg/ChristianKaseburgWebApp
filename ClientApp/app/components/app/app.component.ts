@@ -131,7 +131,7 @@ export class AppComponent implements AfterViewInit {
 
     public loadingAnimDone() {
         this.isDone = true;
-
+        let splash = document.getElementById('splash');
         let tL = new TimelineMax();
 
         tL.set(this.mainSquare, {
@@ -143,7 +143,13 @@ export class AppComponent implements AfterViewInit {
             .to(this.border, 1, { height: '100%' })
             .to(this.border, .5, { width: '100%' })
             .to(this.splash, .25, { opacity: 0, zIndex: -1 })
-            .set(this.border, { zIndex: -1 });
+            .set(this.border, { zIndex: -1 })
+            .call(() => document.removeEventListener('mousedown', () => this.holdingDown(event)))
+            .call(() => document.removeEventListener('touchstart', () => this.holdingDown(event)))
+            .call(() => document.removeEventListener('mouseup', () => this.holdingUp(event)))
+            .call(() => document.removeEventListener('touchend', () => this.holdingUp(event)))
+            .call(() => splash!.remove());
+        ;
     }
 
     ngAfterViewInit() {
