@@ -19,7 +19,8 @@
                     <span>Visit Experiment</span>
                 </a>
                 <div #slideshow__video_container class="slideshow__video-container">
-                    <video defaultMuted muted webkit-playsinline playsinline loop poster="{{experiment.image}}" class="slide-video__video" src="{{experiment.video}}" type="video/mp4" preload="metadata"></video>
+                    <img src="{{experiment.image}}" />
+                    <video defaultMuted muted webkit-playsinline playsinline loop class="slide-video__video" src="{{experiment.video}}" type="video/mp4" preload="metadata"></video>
                 </div>
             </article>
         </div>

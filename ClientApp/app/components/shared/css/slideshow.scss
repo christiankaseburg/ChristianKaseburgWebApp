@@ -199,7 +199,7 @@ img {
     width: 100%;
     -o-object-fit: cover;
     object-fit: cover;
-    z-index: 10;
+    z-index: 1;
     pointer-events: none;
 }
 video {
@@ -214,6 +214,7 @@ video {
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
+    z-index: 2;
 }
 
 /* Slide Show View all */

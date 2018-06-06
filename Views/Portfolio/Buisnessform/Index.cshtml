@@ -1,0 +1,236 @@
+﻿@{
+    Layout = "";
+}
+<html !DOCTYPE>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Webform</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="~/portfolio/buisnessform/site.css" media="screen" />
+</head>
+<body>
+    <form id="webform">
+
+        <fieldset>
+            <h2 class="webform__title">Baseline Figures & Assumptions</h2>
+
+            <!-- Enter current assumptions -->
+            <h3 class="webform__heading">Enter your current assumptions</h3>
+
+            <table id="webform__baseline-table">
+                <thead>
+                    <tr>
+                        <th scope="col">Assumptions</td>
+                        <th scope="col">Current</th>
+                        <th scope="col">Increase</th>
+                        <th scope="col">Result</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th for="currBookCommission" scope="row">Current Book Commission</th>
+                        <td>
+                            <input id="currBookCommission" class="input-numeral input-required" name="currBookCommission" placeholder="Amount" />
+                        </td>
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <th for="avgCommRateCurr" scope="row">Average Commission Rate</th>
+                        <td>
+                            <input id="avgCommRateCurr" class="input-percentage input-required" name="avgCommRateCurr" placeholder="%" />
+                        </td>
+                        <td>
+                            <input id="avgCommRateInc" class="input-percentage" name="avgCommRateCurr" placeholder="%"></input>
+                        </td>
+                        <td>
+                            <span id="avgCommRateResult">-</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th for="retentionRate" scope="row">Retention Rate</th>
+                        <td>
+                            <input id="retentionRateCurr" class="input-percentage input-required" name="retentionRate" placeholder="%" />
+                        </td>
+                        <td>
+                            <input id="retentionRateInc" class="input-pts" name="retentionRate" placeholder="pts"></input>
+                        </td>
+                        <td>
+                            <span id="retentionRateResult">-</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th for="avgAccPrem" scope="row">Average Account Premium</th>
+                        <td>
+                            <input id="avgAccPremCurr" class="input-numeral input-required" name="avgAccPrem" placeholder="Amount" />
+                        </td>
+                        <td>
+                            <input id="avgAccPremInc" class="input-percentage" name="avgAccPrem" placeholder="%"></input>
+                        </td>
+                        <td>
+                            <span id="avgAccPremResult">-</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th for="avgClosingRatio" scope="row">Average Closing Ratio</th>
+                        <td>
+                            <input id="avgClosingRatioCurr" class="input-percentage input-required" name="avgClosingRatio" placeholder="%" />
+                        </td>
+                        <td>
+                            <input id="avgClosingRatioInc" class="input-percentage" name="avgClosingRatio" placeholder="%"></input>
+                        </td>
+                        <td>
+                            <span id="avgClosingRatioResult">-</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- Commision growth section -->
+            <h3 class="webform__heading">Set your commission growth goal</h3>
+            <div class="webform__row">
+                <label for="growthGoal">Percentage or Dollars</label>
+                <div>
+                    <input id="growthGoalDollar" class="input-dollar" name="growthGoal" />
+                    <input id="growthGoalPercentage" class="input-percentage" name="growthGoal" placeholder="%" />
+                </div>
+                <input type="button" class="webform__button webform__button-calc" value="Calculate" onclick="calculateBuisnessMath()" />
+                <span id="warningSpan" class="webform__calculate-message"></span>
+            </div>
+
+            <!-- Results -->
+            <div id="webform__results">
+                <div id="webform__results-calculations">
+                    <h3 class="webform__heading">Your current business math</h3>
+                    <!-- Table for calculations-->
+                    <table id="webform__calc-table">
+                        <tr>
+                            <td class="webform__calc-table-label">Commission growth target</td>
+                            <td id="commissionGrowthTarget">-</td>
+                        </tr>
+                        <tr>
+                            <td class="webform__calc-table-label">Attrition To Replace</td>
+                            <td id="attritionToReplace">-</td>
+                        </tr>
+                        <tr>
+                            <td class="webform__calc-table-label">Written Commission Target</td>
+                            <td id="writtenCommissionTarget">-</td>
+                        </tr>
+                    </table>
+
+                    <div class="webform__row">
+                        <label>Written Premium Target</label>
+                        <span id="writtenPremiumTarget" class="webform__results-span">-</span>
+                    </div>
+                    <div class="webform__row">
+                        <label>Written Accounts Target</label>
+                        <span id="writtenAccTarget" class="webform__results-span">-</span>
+                    </div>
+                    <div class="webform__row">
+                        <label>Qualified Prospects Required</label>
+                        <span id="qualifiedProspectsReq" class="webform__results-span">-</span>
+                    </div>
+                </div>
+
+                <div id="webform__result-options" class="hide">
+                    <h3 class="webform__heading show">Your increased results</h3>
+                    <div id="webform__result-options-box">
+                        <h3 class="webform__result-options-header">Make more money</h3>
+                        <p>
+                            <span id="commissionIncrease1"></span> Commission INCREASE
+                            <br> from the same prospects!
+                        </p>
+                        <span id="commission-increase-link" class="webform__result-options-details-link">View details</span>
+
+                        <h3 class="webform__result-options-header">Or work less</h3>
+                        <p>
+                            <span id="workLoadReduction1"></span> LESS prospects
+                            <br> to make the same commission!
+                        </p>
+                        <span id="workless-link" class="webform__result-options-details-link">View details</span>
+                    </div>
+                </div>
+
+            </div>
+        </fieldset>
+    </form>
+
+    <div id="makeMoreMoneyPopUp" class="option-popup hide">
+        <h2 class="webform__title">Make More money</h2>
+        <!-- Table for calculations-->
+        <span id="commissionClose" class="close"></span>
+        <table class="option-popup__table option-popup__table-more">
+            <tr>
+                <td>Qualified Prospects</td>
+                <td id="makeMoreMoneyProspects">-</td>
+            </tr>
+            <tr>
+                <td>Written Accounts</td>
+                <td id="writtenAccounts">-</td>
+            </tr>
+            <tr>
+                <td>Written Premium</td>
+                <td id="writtenPremium">-</td>
+            </tr>
+            <tr>
+                <td>Written Commission</td>
+                <td id="writtenCommission">-</td>
+            </tr>
+            <tr>
+                <td>Attrition</td>
+                <td id="attrition">-</td>
+            </tr>
+            <tr>
+                <td>Commission Growth</td>
+                <td id="commissionGrowth">-</td>
+            </tr>
+            <tr>
+                <td>Increase</td>
+                <td id="commissionIncrease2">-</td>
+            </tr>
+        </table>
+    </div>
+
+    <div id="workLessPopUp" class="option-popup hide">
+        <h2 class="webform__title">Work Less</h2>
+        <!-- Table for calculations-->
+        <span id="workLessClose" class="close"></span>
+        <table class="option-popup__table option-popup__table-less">
+            <tr>
+                <td>Commission Growth Target</td>
+                <td id="commissionGrowthTarget2">-</td>
+            </tr>
+            <tr>
+                <td>Attrition to Replace</td>
+                <td id="attritionToReplace2">-</td>
+            </tr>
+            <tr>
+                <td>Written Commission Target</td>
+                <td id="writtenCommissionTarget2"></td>-</td>
+            </tr>
+            <tr>
+                <td>Written Premium Target</td>
+                <td id="writtenPremiumTarget2">-</td>
+            </tr>
+
+            <tr>
+                <td>Written Accounts Target</td>
+                <td id="writtenAccountsTarget2">-</td>
+            </tr>
+            <tr>
+                <td>Qualified Prospects Required</td>
+                <td id="qualifiedProspectsReq2">-</td>
+            </tr>
+            <tr>
+                <td>Wordload REDUCTION</td>
+                <td id="workLoadReduction2">-</td>
+            </tr>
+        </table>
+    </div>
+
+    <script src="~/portfolio/buisnessform/bundle.js"></script>
+</body>
+
+</html>

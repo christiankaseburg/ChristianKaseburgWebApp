@@ -90,6 +90,8 @@
   <ItemGroup>
     <Folder Include="ClientApp\app\assets\font\hkgrotesk\" />
     <Folder Include="Properties\PublishProfiles\" />
+    <Folder Include="wwwroot\assets\imgs\buisnessform\" />
+    <Folder Include="wwwroot\portfolio\" />
   </ItemGroup>
 
   <ItemGroup>

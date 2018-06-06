@@ -54,6 +54,11 @@ namespace ChristianKaseburgWebsite
                         template: "{controller=Home}/{action=Index}/{id?}");
                 routes
                     .MapRoute(
+                        name: "portfolio",
+                        template: "portfolio/{id}",
+                        defaults: new { controller = "Portfolio", action = "Index", });
+                routes
+                    .MapRoute(
                         name: "lab",
                         template: "lab/{id}",
                         defaults: new { controller = "Lab", action = "Index", });
